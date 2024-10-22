@@ -15,7 +15,7 @@ export default function Login({
     canResetPassword: boolean;
 }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        username: '',
+        email: '',
         password: '',
         remember: false,
     });
@@ -40,20 +40,20 @@ export default function Login({
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="username" value="Username" />
+                    <InputLabel htmlFor="email" value="Email" />
 
                     <TextInput
-                        id="username"
-                        type="text"
-                        name="username"
-                        value={data.username}
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={data.email}
                         className="mt-1 block w-full"
                         autoComplete="username"
                         isFocused={true}
-                        onChange={(e) => setData('username', e.target.value)}
+                        onChange={(e) => setData('email', e.target.value)}
                     />
 
-                    <InputError message={errors.username} className="mt-2" />
+                    <InputError message={errors.email} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
