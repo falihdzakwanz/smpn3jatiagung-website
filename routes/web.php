@@ -14,7 +14,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/berita', function () {
+Route::get('/news', function () {
     return Inertia::render('News');
 })->name('news');
 

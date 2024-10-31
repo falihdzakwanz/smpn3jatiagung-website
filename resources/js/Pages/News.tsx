@@ -6,7 +6,7 @@ import { Head } from '@inertiajs/react';
 const News = () => {
     return (
         <>
-            <Head title="Berita" />
+            <Head title="News" />
             <header>
                 <Navbar />
             </header>
