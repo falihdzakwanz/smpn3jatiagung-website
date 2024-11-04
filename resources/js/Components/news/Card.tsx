@@ -17,7 +17,7 @@ const Card = (props: any) => {
                     {title}
                 </h2>
                 <p className="mb-2 text-justify md:text-base">{body}</p>
-                <Link href="#" className="font-bold">
+                <Link href={route('news.show', id)} className="font-bold">
                     Read More <span>&#187;</span>
                 </Link>
             </div>
