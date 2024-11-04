@@ -1,7 +1,7 @@
 import Footer from '@/Components/fragments/Footer';
 import Navbar from '@/Components/fragments/Navbar';
 import NewsBody from '@/Components/newsDetail/NewsBody';
-import NewsImage from '@/Components/newsDetail/newsImage';
+import NewsImage from '@/Components/newsDetail/NewsImage';
 import { Head } from '@inertiajs/react';
 
 const NewsDetail = (props: any) => {
