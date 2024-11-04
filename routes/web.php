@@ -18,6 +18,10 @@ Route::get('/news', function () {
     return Inertia::render('News');
 })->name('news');
 
+Route::get('/greeting', function () {
+    return Inertia::render('Greeting');
+})->name('greeting');
+
 Route::get('/news/{id}', function ($id) {
     return Inertia::render('NewsDetail', ['id' => $id]);
 })->name('news.show');
