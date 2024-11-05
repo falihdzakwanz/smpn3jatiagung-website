@@ -1,90 +1,46 @@
-import Footer from '@/Components/fragments/Footer';
-import Navbar from '@/Components/fragments/Navbar';
+import ProfileImage from '@/Components/greeting/ProfileImage';
+import Quote from '@/Components/greeting/Quote';
+import GuestLayout from '@/Layouts/GuestLayout';
 import { Head } from '@inertiajs/react';
 
 const Greeting = () => {
     return (
-        <>
+        <GuestLayout>
             <Head title="Sambutan" />
-            <header>
-                <Navbar />
-            </header>
-            <div className="mx-8 my-4 flex flex-col items-center justify-center gap-8">
-                <h1 className="text-2xl font-bold md:text-4xl">
+            <div className="px-8 py-4 flex flex-col items-center justify-center gap-8 bg-color-secondary">
+                <h1 className="text-2xl font-bold md:text-4xl text-color-primary">
                     Sambutan Kepala Sekolah
                 </h1>
-                <div className="flex w-full flex-col items-center justify-center gap-4">
-                    <img
-                        src="https://www.dummyimage.com/450x300/000/fff&text=LOGO"
-                        alt="Berita"
-                        className="h-48 w-48 overflow-hidden rounded-full object-cover shadow-xl"
+                <ProfileImage />
+                <Quote text="Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Corrupti sunt eligendi quia numquam, perspiciatis adipisci
+                    at quis ratione iste animi voluptate pariatur suscipit!
+                    Accusantium voluptatem fuga qui molestias aliquam dolorum
+                    doloremque blanditiis iure temporibus quas dicta, aperiam
+                    commodi cum, sit eos ea excepturi rerum beatae earum tempore
+                    ipsum consequuntur? Harum deleniti aut doloremque vero,
+                    voluptates maxime. Tempore quam dolor exercitationem sequi
+                    quibusdam nulla voluptatum aliquid quisquam modi? Nisi
+                    doloremque ipsa quisquam. Harum quia voluptatem aliquam,
+                    esse et aut animi eligendi at ab rem, nobis ratione. Velit
+                    ducimus officiis ullam. Molestias, accusantium. Aspernatur
+                    ut voluptates porro quos. Repudiandae adipisci optio,
+                    maiores accusantium voluptates in beatae incidunt. Iste
+                    dignissimos assumenda perferendis natus voluptatibus dolores
+                    minima reiciendis et voluptates beatae minus sint veniam at
+                    quasi voluptatum sapiente explicabo odit non, possimus
+                    soluta magnam aut dolore quisquam? Doloribus facere animi
+                    vel amet asperiores accusantium quisquam, eligendi maxime?
+                    Aperiam ea delectus, et exercitationem error sint iure velit
+                    ex adipisci placeat quis maxime quibusdam accusantium hic
+                    voluptas dolor tenetur odit maiores repellat illo ut ad,
+                    culpa provident? Repellendus corporis magnam sint. Minus
+                    assumenda pariatur quod quos harum deserunt ullam fuga nam!
+                    Nulla omnis dignissimos, nobis amet harum provident
+                    obcaecati fugiat maiores laborum velit molestias ab soluta."
                     />
-                    <h3 className="text-lg font-bold md:text-2xl">
-                        Ir. Dr. Sihombing Panjaitan
-                    </h3>
-                </div>
-                <div className="relative">
-                    <div className="absolute -top-2 -left-4 h-7 w-7">
-                        <svg
-                            className="max-h-full max-w-full"
-                            viewBox="0 0 63 45"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M27.2144 3.50325C16.4341 8.9542 11.044 15.5188 11.044 23.1972C11.044 25.586 11.5707 26.7804 12.6241 26.7804L13.7085 26.549C14.5611 26.2895 15.2512 26.1598 15.7788 26.1598C18.8677 26.1598 21.4464 27.0464 23.5148 28.8197C25.5832 30.5929 26.6183 32.7814 26.6201 35.385C26.6183 37.8877 25.5001 40.0121 23.2656 41.7579C21.031 43.5023 18.3364 44.3745 15.1818 44.3745C10.7784 44.3745 7.14544 42.9451 4.28289 40.0863C1.42763 37.2318 2.05587e-06 33.6442 2.05587e-06 29.3235C-0.00182355 24.4363 1.21221 19.9649 3.6421 15.9095C6.07746 11.8556 9.79075 8.19012 14.782 4.9132C19.7768 1.63918 22.9644 0.00144167 24.3445 0C25.2646 0 26.0204 0.350325 26.6119 1.05098C27.2034 1.75018 27.4992 2.35929 27.4992 2.87829L27.2062 3.50109L27.2144 3.50325ZM62.7043 3.50325C51.924 8.95276 46.5348 15.5181 46.5366 23.1993C46.5366 25.5882 47.0633 26.7826 48.1167 26.7826L49.2011 26.5512C50.0537 26.2917 50.7438 26.1619 51.2714 26.1619C54.2946 26.1619 56.8568 27.0486 58.9581 28.8218C61.063 30.5922 62.1146 32.7806 62.1128 35.3872C62.1109 37.8899 60.9927 40.0142 58.7582 41.7601C56.5236 43.5045 53.829 44.3767 50.6744 44.3767C46.271 44.3767 42.6381 42.9473 39.7755 40.0885C36.9202 37.234 35.4926 33.6464 35.4926 29.3257C35.489 24.3865 36.7212 19.877 39.1895 15.7971C41.654 11.7157 45.3664 8.06325 50.3266 4.83968C55.2959 1.61467 58.4679 0.00216338 59.8426 0.00216338C60.7645 0.00216338 61.5222 0.352488 62.1155 1.05314C62.7052 1.75379 63 2.36361 63 2.88262L62.7043 3.50325Z"
-                                fill="black"
-                            />
-                        </svg>
-                    </div>
-                    <p className="px-8 text-justify">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Corrupti sunt eligendi quia numquam, perspiciatis
-                        adipisci at quis ratione iste animi voluptate pariatur
-                        suscipit! Accusantium voluptatem fuga qui molestias
-                        aliquam dolorum doloremque blanditiis iure temporibus
-                        quas dicta, aperiam commodi cum, sit eos ea excepturi
-                        rerum beatae earum tempore ipsum consequuntur? Harum
-                        deleniti aut doloremque vero, voluptates maxime. Tempore
-                        quam dolor exercitationem sequi quibusdam nulla
-                        voluptatum aliquid quisquam modi? Nisi doloremque ipsa
-                        quisquam. Harum quia voluptatem aliquam, esse et aut
-                        animi eligendi at ab rem, nobis ratione. Velit ducimus
-                        officiis ullam. Molestias, accusantium. Aspernatur ut
-                        voluptates porro quos. Repudiandae adipisci optio,
-                        maiores accusantium voluptates in beatae incidunt. Iste
-                        dignissimos assumenda perferendis natus voluptatibus
-                        dolores minima reiciendis et voluptates beatae minus
-                        sint veniam at quasi voluptatum sapiente explicabo odit
-                        non, possimus soluta magnam aut dolore quisquam?
-                        Doloribus facere animi vel amet asperiores accusantium
-                        quisquam, eligendi maxime? Aperiam ea delectus, et
-                        exercitationem error sint iure velit ex adipisci placeat
-                        quis maxime quibusdam accusantium hic voluptas dolor
-                        tenetur odit maiores repellat illo ut ad, culpa
-                        provident? Repellendus corporis magnam sint. Minus
-                        assumenda pariatur quod quos harum deserunt ullam fuga
-                        nam! Nulla omnis dignissimos, nobis amet harum provident
-                        obcaecati fugiat maiores laborum velit molestias ab
-                        soluta.
-                    </p>
-                    <div className="absolute -bottom-2 -right-4 h-7 w-7">
-                        <svg
-                            className="max-h-full max-w-full"
-                            viewBox="0 0 71 64"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M13.6202 0C6.10015 0 0 6.51201 0 14.5466C0 22.5763 6.10015 29.0931 13.6202 29.0931C27.2358 29.0931 18.1603 57.2116 0 57.2116V64C32.4111 64.0049 45.1112 0 13.6202 0ZM52.8555 0C45.34 0 39.2399 6.51201 39.2399 14.5466C39.2399 22.5763 45.34 29.0931 52.8555 29.0931C66.4757 29.0931 57.4002 57.2116 39.2399 57.2116V64C71.6463 64.0049 84.3464 0 52.8555 0Z"
-                                fill="black"
-                            />
-                        </svg>
-                    </div>
-                </div>
             </div>
-            <Footer />
-        </>
+        </GuestLayout>
     );
 };
 
