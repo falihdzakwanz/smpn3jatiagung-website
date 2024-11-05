@@ -20,7 +20,8 @@ export default {
             color: {
                 primary: '#2B4834',
                 secondary: '#FDFFEC',
-                accent: '#406B4E'
+                accent: '#406B4E',
+                white: '#FFFFFF'
             }
         }
     },
