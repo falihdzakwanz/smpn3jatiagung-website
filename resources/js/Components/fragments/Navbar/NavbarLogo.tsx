@@ -6,7 +6,7 @@ const NavbarLogo = ({ text }: { text: string }) => {
                 alt="Logo"
                 className="mr-2 h-8 w-8"
             />
-            <span className="text-xl font-bold">{text}</span>
+            <span className="text-lg font-bold uppercase text-color-secondary">{text}</span>
         </div>
     );
 };

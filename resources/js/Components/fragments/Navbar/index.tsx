@@ -1,70 +1,114 @@
-import { Link } from '@inertiajs/react';
+import { useState } from 'react';
 import NavbarLogo from './NavbarLogo';
+import NavLink from './NavLink';
+
+interface SubMenuOpen {
+    isProfile: boolean;
+    isBerita: boolean;
+}
 
 const Navbar = () => {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [subMenuOpen, setSubMenuOpen] = useState<SubMenuOpen>({
+        isProfile: false,
+        isBerita: false,
+    });
+
+    const toggleSubMenu = (menu: keyof SubMenuOpen) => {
+        setSubMenuOpen((prevState) => ({
+            ...prevState,
+            [menu]: !prevState[menu],
+        }));
+    };;
+    
+    const id = 1;
+
     return (
-        <nav className="h-20 bg-white shadow-md">
-            <div className="flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-                <NavbarLogo text={'SPANTIJA'} />
-                <div className="flex h-full items-center justify-center bg-white">
-                    <div className="group relative flex h-full items-center justify-center">
-                        <button className="mx-4 flex items-center justify-center text-black hover:text-gray-700">
+        <nav className="h-20 w-full bg-color-primary">
+            <div className="block h-full md:flex md:flex-row md:items-center md:justify-between">
+                <div className="flex h-full w-full items-center justify-between px-4 py-2">
+                    <NavbarLogo text={'SPANTIJA'} />
+                    <div className="flex md:hidden">
+                        <button
+                            onClick={() => setIsOpen(!isOpen)}
+                            type="button"
+                            className="inline-flex items-center justify-center rounded-md bg-color-secondary p-2 text-color-accent hover:text-color-primary focus:outline-none"
+                        >
+                            <svg
+                                className="h-6 w-6"
+                                stroke="currentColor"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    className={!isOpen ? 'block' : 'hidden'}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                                <path
+                                    className={isOpen ? 'block' : 'hidden'}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    className={`${isOpen ? 'block' : 'hidden'} w-full bg-color-primary md:flex md:items-center md:justify-center`}
+                >
+                    <div className="group block h-full bg-color-primary md:relative md:flex md:items-center md:justify-center">
+                        <button
+                            className="flex w-full md:min-w-40 items-center justify-start gap-1 border-b border-b-color-secondary px-4 py-2 text-color-secondary md:border-none"
+                            onClick={() => toggleSubMenu('isProfile')}
+                        >
                             Profil Sekolah
-                            <span className="ml-1">&#9662;</span>
+                            {subMenuOpen.isProfile || window.innerWidth > 768 ? (
+                                <span className="text-2xl">&#9662;</span>
+                            ) : (
+                                <span className="ml-1 text-xs">&#9650;</span>
+                            )}
                         </button>
-                        <div className="invisible absolute left-0 top-full hidden w-48 rounded-md bg-white opacity-0 shadow-lg ring-1 ring-black ring-opacity-5 transition-opacity duration-200 group-hover:visible group-hover:flex group-hover:flex-col group-hover:opacity-100">
-                            <Link
-                                href="#"
-                                className="block px-4 py-2 text-black hover:bg-gray-100"
-                            >
-                                Sejarah
-                            </Link>
-                            <Link
-                                href="#"
-                                className="block px-4 py-2 text-black hover:bg-gray-100"
-                            >
-                                Visi & Misi
-                            </Link>
+                        <div
+                            className={`${subMenuOpen.isProfile ? 'hidden' : 'block'} w-full px-4 md:px-0 md:absolute md:left-0 md:top-full md:hidden md:w-48 md:group-hover:flex md:flex-col`}
+                        >
+                            <NavLink
+                                href="/visimisi"
+                                text="Visi, Misi, dan Sejarah Sekolah"
+                            />
+                            <NavLink href="/staff" text="Tenaga Pendidik" />
                         </div>
                     </div>
-                    <div className="group relative flex h-full items-center justify-center">
-                        <button className="mx-4 flex items-center justify-center text-black hover:text-gray-700">
+                    <div className="group block h-full bg-color-primary md:relative md:flex md:items-center md:justify-center">
+                        <button
+                            className="flex w-full items-center justify-start gap-1 border-b border-b-color-secondary px-4 py-2 text-color-secondary md:border-none"
+                            onClick={() => toggleSubMenu('isBerita')}
+                        >
                             Berita
-                            <span className="ml-1">&#9662;</span>
+                            {subMenuOpen.isBerita || window.innerWidth > 768 ? (
+                                <span className="text-2xl">&#9662;</span>
+                            ) : (
+                                <span className="ml-1 text-xs">&#9650;</span>
+                            )}
                         </button>
-                        <div className="invisible absolute left-0 top-full hidden w-48 rounded-md bg-white opacity-0 shadow-lg ring-1 ring-black ring-opacity-5 transition-opacity duration-200 group-hover:visible group-hover:flex group-hover:flex-col group-hover:opacity-100">
-                            <Link
-                                href="#"
-                                className="block px-4 py-2 text-black hover:bg-gray-100"
-                            >
-                                Berita Terkini
-                            </Link>
-                            <Link
-                                href="#"
-                                className="block px-4 py-2 text-black hover:bg-gray-100"
-                            >
-                                Pengumuman
-                            </Link>
+                        <div
+                            className={`${subMenuOpen.isBerita ? 'hidden' : 'block'} px-4 md:px-0 md:hidden w-full bg-color-primary md:absolute md:left-0 md:top-full md:w-48 md:group-hover:flex`}
+                        >
+                            <NavLink href={`/news/${id}`} text={`news ${id}`} />
                         </div>
                     </div>
-                    <Link
-                        href="#"
-                        className="mx-4 text-black hover:text-gray-700"
-                    >
-                        Ekstrakurikuler
-                    </Link>
-                    <Link
-                        href="#"
-                        className="mx-4 text-black hover:text-gray-700"
-                    >
-                        Prestasi
-                    </Link>
-                    <Link
-                        href="#"
-                        className="mx-4 text-black hover:text-gray-700"
-                    >
-                        Kontak
-                    </Link>
+                    <NavLink
+                        href="/ekstrakurikuler/detail"
+                        text="Ekstrakurikuler"
+                    />
+                    <NavLink href="/prestasi" text="Prestasi" />
+                    <NavLink href="/modul" text="Modul" />
+                    <NavLink href="/#kontak" text="Kontak" />
                 </div>
             </div>
         </nav>
