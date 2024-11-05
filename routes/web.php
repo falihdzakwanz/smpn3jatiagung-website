@@ -14,17 +14,22 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/news', function () {
-    return Inertia::render('News');
-})->name('news');
-
 Route::get('/greeting', function () {
     return Inertia::render('Greeting');
 })->name('greeting');
 
+Route::get('/news', function () {
+    return Inertia::render('News');
+})->name('news');
+
 Route::get('/news/{id}', function ($id) {
     return Inertia::render('NewsDetail', ['id' => $id]);
 })->name('news.show');
+
+Route::get('/ekstrakurikuler/detail', function () {
+    return Inertia::render('EkstrakurikulerDetail');
+})->name('ekstrakurikuler.show');
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
