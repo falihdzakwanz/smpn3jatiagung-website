@@ -18,6 +18,10 @@ Route::get('/greeting', function () {
     return Inertia::render('Greeting');
 })->name('greeting');
 
+Route::get('/staff', function () {
+    return Inertia::render('Staff');
+})->name('staff');
+
 Route::get('/news', function () {
     return Inertia::render('News');
 })->name('news');
@@ -29,7 +33,6 @@ Route::get('/news/{id}', function ($id) {
 Route::get('/ekstrakurikuler/detail', function () {
     return Inertia::render('EkstrakurikulerDetail');
 })->name('ekstrakurikuler.show');
-
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
