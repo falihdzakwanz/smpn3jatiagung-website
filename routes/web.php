@@ -30,6 +30,10 @@ Route::get('/news/{id}', function ($id) {
     return Inertia::render('NewsDetail', ['id' => $id]);
 })->name('news.show');
 
+Route::get('/modul', function () {
+    return Inertia::render('Modul');
+})->name('modul');
+
 Route::get('/ekstrakurikuler/detail', function () {
     return Inertia::render('EkstrakurikulerDetail');
 })->name('ekstrakurikuler.show');
