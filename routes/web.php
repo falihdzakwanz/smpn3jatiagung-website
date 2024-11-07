@@ -27,10 +27,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('moduls', ModulController::class);
-    Route::resource('staffs', StaffController::class);
+    Route::resource('/dashboard/moduls', ModulController::class);
+    Route::resource('/dashboard/staffs', StaffController::class);
 });
 
-Route::get('/staffs123', [StaffController::class, 'guestIndex'])->name('staffs.guest');
+Route::get('/staffs', [StaffController::class, 'guestIndex'])->name('staffs.guest');
 
 require __DIR__.'/auth.php';

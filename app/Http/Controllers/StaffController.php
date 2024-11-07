@@ -12,7 +12,7 @@ class StaffController extends Controller
     public function index()
     {
         $staffs = Staff::all();
-        return view('Staffs/Index', [
+        return Inertia::render('Staffs/Index', [
             'staffs' => $staffs,
             'response' => [
                 'status' => 200,
@@ -25,7 +25,7 @@ class StaffController extends Controller
     public function guestIndex()
     {
         $staffs = Staff::all();
-        return view('Staffs/GuestIndex', [
+        return Inertia::render('Staffs/GuestIndex', [
             'staffs' => $staffs,
             'response' => [
                 'status' => 200,
@@ -37,7 +37,7 @@ class StaffController extends Controller
     
     public function create()
     {
-        return view('Staffs/Create', [
+        return Inertia::render('Staffs/Create', [
             'response' => [
                 'status' => 200,
                 'message' => 'Create form loaded successfully',
@@ -63,17 +63,9 @@ class StaffController extends Controller
         ]);
     }
     
-/*************  ✨ Codeium Command ⭐  *************/
-    /**
-     * Show the specified resource.
-     *
-     * @param  \App\Models\Staff  $staff
-     * @return \Illuminate\Http\Response
-     */
-/******  b721898c-4bde-4d3c-a4be-2c336517e784  *******/
     public function show(Staff $staff)
     {
-        return view('Staffs/Show', [
+        return Inertia::render('Staffs/Show', [
             'staff' => $staff,
             'response' => [
                 'status' => 200,
@@ -85,7 +77,7 @@ class StaffController extends Controller
     
     public function edit(Staff $staff)
     {
-        return view('Staffs/Edit', [
+        return Inertia::render('Staffs/Edit', [
             'staff' => $staff,
             'response' => [
                 'status' => 200,
