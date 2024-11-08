@@ -3,10 +3,10 @@ import { Staff } from '@/types/staff';
 
 type Proptypes = {
     staffs: Staff[];
-}
+};
 
 const Staffs = (props: Proptypes) => {
-    const { staffs } = props;
+    const { staffs = [] } = props;
 
     return (
         <GuestLayout>
