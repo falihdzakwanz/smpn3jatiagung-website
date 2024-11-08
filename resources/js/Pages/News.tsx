@@ -6,7 +6,7 @@ const News = () => {
     return (
         <GuestLayout>
             <Head title="News" />
-            <div className="flex flex-col items-center justify-center gap-8 bg-color-secondary px-8 py-6">
+            <div className="flex flex-col items-center justify-center gap-8 px-8 py-6">
                 <Card
                     id="1"
                     title="Lorem ipsum, dolor sit amet"

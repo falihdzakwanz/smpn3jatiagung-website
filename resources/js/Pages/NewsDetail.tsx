@@ -14,7 +14,7 @@ const NewsDetail = (props: any) => {
     return (
         <GuestLayout>
             <Head title={`Berita ${id}`} />
-            <div className="flex flex-col items-center justify-center px-8 md:px-12 py-4 md:py-8 md:mx-8 gap-4 bg-color-secondary">
+            <div className="flex flex-col items-center justify-center px-8 md:px-12 py-4 md:py-8 md:mx-8 gap-4">
                 <ImageBanner imageSrc={imageSrc} />
                 <ArticleSection title={title} text={text}/>
             </div>
