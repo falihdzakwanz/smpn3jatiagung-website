@@ -42,6 +42,10 @@ Route::get('/ekstrakurikuler/detail', function () {
     return Inertia::render('EkstrakurikulerDetail');
 })->name('ekstrakurikuler.show');
 
+Route::get('/prestasi', function () {
+    return Inertia::render('Achievements');
+})->name('achievements');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
