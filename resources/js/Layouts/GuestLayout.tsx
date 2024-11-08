@@ -1,4 +1,3 @@
-// resources/js/Layouts/GuestLayout.tsx
 import Footer from '@/Components/fragments/Footer';
 import Navbar from '@/Components/fragments/Navbar';
 import { PropsWithChildren } from 'react';
@@ -10,7 +9,7 @@ const GuestLayout = ({ children }: PropsWithChildren) => {
                 <header className="w-full sticky top-0 z-50">
                     <Navbar />
                 </header>
-                <main>{children}</main>
+                <main className="font-roboto">{children}</main>
                 <Footer />
             </div>
         </div>
