@@ -1,20 +1,20 @@
-// resources/js/Layouts/GuestLayout.tsx
-import Footer from '@/Components/fragments/Footer';
 import Navbar from '@/Components/fragments/Navbar';
+import Footer from '@/Components/fragments/Footer';
 import { PropsWithChildren } from 'react';
 
-const GuestLayout = ({ children }: PropsWithChildren) => {
+interface GuestLayoutProps extends PropsWithChildren {
+    isHomePage?: boolean;
+}
+
+export default function GuestLayout({ children, isHomePage = false }: GuestLayoutProps) {
     return (
-        <div className="min-h-screen bg-color-secondary"> 
-            <div className="flex w-full flex-col items-center justify-center">
-                <header className="w-full sticky top-0 z-50">
-                    <Navbar />
-                </header>
-                <main>{children}</main>
-                <Footer />
-            </div>
+        <div className="flex min-h-screen w-full flex-col">
+            <Navbar isHomePage={isHomePage} />
+            {/* Tidak ada padding untuk homepage */}
+            <main className={`w-full ${!isHomePage && 'pt-24'}`}>
+                {children}
+            </main>
+            <Footer />
         </div>
     );
-};
-
-export default GuestLayout;
+}

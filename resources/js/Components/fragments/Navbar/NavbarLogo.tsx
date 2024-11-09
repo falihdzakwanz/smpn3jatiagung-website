@@ -1,13 +1,18 @@
-const NavbarLogo = ({ text }: { text: string }) => {
+interface NavbarLogoProps {
+    text: string;
+    className?: string;
+}
+
+const NavbarLogo = ({ text, className = '' }: NavbarLogoProps) => {
     return (
-        <div className="flex items-center">
+        <a href="/" className={`flex items-center gap-3 ${className}`}>
             <img
-                src="https://www.dummyimage.com/400x200/000/fff&text=LOGO"
-                alt="Logo"
-                className="mr-2 h-8 w-8"
+                src="https://salman-gebaeudereinigung.de/wp-content/uploads/2022/10/logo-salman.png"
+                alt="Logo Sekolah"
+                className="h-12 w-auto object-contain"
             />
-            <span className="text-lg font-bold uppercase text-color-secondary">{text}</span>
-        </div>
+            <span className="font-bold text-2xl">{text}</span>
+        </a>
     );
 };
 
