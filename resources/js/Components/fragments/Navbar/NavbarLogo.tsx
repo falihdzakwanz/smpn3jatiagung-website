@@ -2,39 +2,23 @@ import { Link } from '@inertiajs/react';
 
 interface NavbarLogoProps {
     text: string;
-    isHomePage: boolean;
     className?: string;
 }
 
 const NavbarLogo = (props: NavbarLogoProps) => {
-    const { text, isHomePage, className } = props;
+    const { text, className } = props;
 
-    const Logo = () => (
-        <>
+    return (
+        <Link href="/" className={`flex items-center gap-3 ${className}`}>
             <img
                 src="https://salman-gebaeudereinigung.de/wp-content/uploads/2022/10/logo-salman.png"
                 alt="Logo Sekolah"
                 className="h-12 w-auto object-contain"
             />
-            <span className="text-xl md:text-2xl font-bold tracking-wider">{text}</span>
-        </>
-    );
-
-    return (
-        <>
-            {isHomePage ? (
-                <a href="/" className={`flex items-center gap-3 ${className}`}>
-                    <Logo />
-                </a>
-            ) : (
-                <Link
-                    href="/"
-                    className={`flex items-center gap-3 ${className}`}
-                >
-                    <Logo />
-                </Link>
-            )}
-        </>
+            <span className="text-xl font-bold tracking-wider md:text-2xl">
+                {text}
+            </span>
+        </Link>
     );
 };
 

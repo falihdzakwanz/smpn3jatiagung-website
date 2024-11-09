@@ -1,5 +1,5 @@
-// File: /resources/js/Components/Navbar/index.tsx
-import { useState, useEffect } from 'react';
+import { Link } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import NavbarLogo from './NavbarLogo';
 import NavLink from './NavLink';
 
@@ -25,7 +25,7 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
             const scrollPosition = window.scrollY;
             setIsScrolled(scrollPosition > 50);
         };
-        
+
         if (isHomePage) {
             window.addEventListener('scroll', handleScroll);
             return () => window.removeEventListener('scroll', handleScroll);
@@ -34,10 +34,12 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
         }
     }, [isHomePage]);
 
-    const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    const handleNavClick = (
+        e: React.MouseEvent<HTMLAnchorElement>,
+        id: string,
+    ) => {
         e.preventDefault();
 
-        // Cek apakah kita berada di halaman utama
         if (window.location.pathname !== '/') {
             window.location.href = `/#${id}`;
             return;
@@ -45,15 +47,16 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
 
         const element = document.getElementById(id);
         if (element) {
-            const headerOffset = 95; // Sesuaikan nilai ini untuk mengatur jarak scroll
+            const headerOffset = 95;
             const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            const offsetPosition =
+                elementPosition + window.pageYOffset - headerOffset;
 
             window.scrollTo({
                 top: offsetPosition,
-                behavior: 'smooth'
+                behavior: 'smooth',
             });
-            
+
             history.pushState(null, '', `/#${id}`);
         }
     };
@@ -65,38 +68,46 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
         }));
     };
 
-    const navbarClasses = `fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300
-        ${isScrolled || !isHomePage 
-            ? 'bg-gradient-to-tr from-color-accent to-color-primary shadow-lg shadow-black/10' // Tambah shadow-black/10
-            : 'bg-white/10 backdrop-blur-sm shadow-lg shadow-black/5'}`; // Tambah shadow-lg shadow-black/5
-
     return (
-        <nav className={navbarClasses}>
+        <nav
+            className={`fixed left-0 right-0 top-0 z-50 w-full font-inter-bold text-sm uppercase tracking-wider shadow-lg transition-all duration-200 md:text-base ${
+                isScrolled || !isHomePage
+                    ? 'bg-color-primary'
+                    : 'backdrop-blur-sm'
+            }`}
+        >
             <div className="mx-auto">
                 <div className="flex h-24 items-center justify-between px-4 md:px-8 lg:px-16">
-                    {/* Logo */}
-                    <NavbarLogo 
-                        text="SPANTIJA" 
-                        className={(!isScrolled && isHomePage) ? 'text-color-white' : 'text-color-secondary'}
+                    <NavbarLogo
+                        text="SPANTIJA"
+                        className={
+                            !isScrolled && isHomePage
+                                ? 'text-color-white'
+                                : 'text-color-secondary'
+                        }
                     />
-                    
-                    {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center space-x-0 lg:space-x-1">
-                        {/* Profil Sekolah Dropdown */}
+
+                    <div className="hidden items-center space-x-0 md:flex lg:space-x-1">
                         <div className="group relative">
-                            <button className={`px-2 lg:px-4 py-2 group ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} hover:text-color-accent hover:brightness-150 transition-all duration-300 text-sm lg:text-base`}>
+                            <button
+                                className={`group px-2 py-2 lg:px-4 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} text-sm uppercase transition-all duration-300 hover:text-color-accent hover:brightness-150 lg:text-base`}
+                            >
                                 <span>Profil Sekolah</span>
                                 <span className="ml-1 text-xs">▼</span>
                             </button>
                             <div className="absolute left-0 top-full hidden w-48 bg-color-primary group-hover:block">
-                                <NavLink href="/sejarah" text="Visi, Misi, dan Sejarah Sekolah" />
+                                <NavLink
+                                    href="/sejarah"
+                                    text="Visi, Misi, dan Sejarah Sekolah"
+                                />
                                 <NavLink href="/staff" text="Tenaga Pendidik" />
                             </div>
                         </div>
 
-                        {/* Berita Dropdown */}
                         <div className="group relative">
-                            <button className={`px-2 lg:px-4 py-2 group ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} hover:text-color-accent hover:brightness-150 transition-all duration-300 text-sm lg:text-base`}>
+                            <button
+                                className={`group px-2 py-2 lg:px-4 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} text-sm uppercase transition-all duration-300 hover:text-color-accent hover:brightness-150 lg:text-base`}
+                            >
                                 <span>Berita</span>
                                 <span className="ml-1 text-xs">▼</span>
                             </button>
@@ -105,44 +116,42 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
                             </div>
                         </div>
 
-                        {/* Regular Menu Items */}
-                        <a 
-                            href="/#ekstrakurikuler" 
-                            onClick={(e) => handleNavClick(e, 'ekstrakurikuler')}
-                            className={`px-2 lg:px-4 py-2 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} hover:text-color-accent hover:brightness-150  transition-all duration-300 text-sm lg:text-base`}
+                        <a
+                            href="/#ekstrakurikuler"
+                            onClick={(e) =>
+                                handleNavClick(e, 'ekstrakurikuler')
+                            }
+                            className={`px-2 py-2 lg:px-4 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} text-sm transition-all duration-300 hover:text-color-accent hover:brightness-150 lg:text-base`}
                         >
                             Ekstrakurikuler
                         </a>
-                        <a 
-                            href="/#prestasi" 
+                        <a
+                            href="/#prestasi"
                             onClick={(e) => handleNavClick(e, 'prestasi')}
-                            className={`px-2 lg:px-4 py-2 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} hover:text-color-accent hover:brightness-150 transition-all duration-300 text-sm lg:text-base`}
+                            className={`px-2 py-2 lg:px-4 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} text-sm transition-all duration-300 hover:text-color-accent hover:brightness-150 lg:text-base`}
                         >
                             Prestasi
                         </a>
-                        <a 
-                            href="/modul" 
-                            className={`px-2 lg:px-4 py-2 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} hover:text-color-accent hover:brightness-150 transition-all duration-300 text-sm lg:text-base`}
+                        <Link
+                            href="/modul"
+                            className={`px-2 py-2 lg:px-4 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} text-sm transition-all duration-300 hover:text-color-accent hover:brightness-150 lg:text-base`}
                         >
                             Modul
-                        </a>
-                        <a 
-                            href="/#kontak" 
+                        </Link>
+                        <a
+                            href="/#kontak"
                             onClick={(e) => handleNavClick(e, 'kontak')}
-                            className={`px-2 lg:px-4 py-2 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} hover:text-color-accent hover:brightness-150 transition-all duration-300 text-sm lg:text-base`}
+                            className={`px-2 py-2 lg:px-4 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} text-sm transition-all duration-300 hover:text-color-accent hover:brightness-150 lg:text-base`}
                         >
                             Kontak
                         </a>
                     </div>
 
-                    {/* Mobile Menu Button */}
                     <div className="flex md:hidden">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             type="button"
-                            className={`inline-flex items-center justify-center p-2 group
-                                    ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'}
-                                    hover:text-color-accent transition-all duration-300`}
+                            className={`group inline-flex items-center justify-center p-2 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} transition-all duration-300 hover:text-color-accent`}
                         >
                             <svg
                                 className="h-6 w-6"
@@ -153,21 +162,21 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
                                 {!isOpen ? (
                                     <>
                                         <path
-                                            className="transform transition-all duration-300 origin-right group-hover:scale-x-125"
+                                            className="origin-right transform transition-all duration-300 group-hover:scale-x-125"
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
                                             strokeWidth="2"
                                             d="M4 6h16"
                                         />
                                         <path
-                                            className="transform transition-all duration-500 origin-center group-hover:scale-x-110"
+                                            className="origin-center transform transition-all duration-500 group-hover:scale-x-110"
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
                                             strokeWidth="2"
                                             d="M4 12h16"
                                         />
                                         <path
-                                            className="transform transition-all duration-700 origin-left group-hover:scale-x-125"
+                                            className="origin-left transform transition-all duration-700 group-hover:scale-x-125"
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
                                             strokeWidth="2"
@@ -187,35 +196,42 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
                     </div>
                 </div>
 
-                {/* Mobile Menu */}
                 {isOpen && (
                     <div className="bg-color-primary md:hidden">
-                        <div className="px-2 pt-2 pb-3 space-y-1">
-                            {/* Profil Sekolah Dropdown Mobile */}
+                        <div className="space-y-1 px-2 pb-3 pt-2">
                             <div>
                                 <button
                                     onClick={() => toggleSubMenu('isProfile')}
-                                    className="w-full text-left text-color-secondary px-4 py-2 hover:text-color-accent transition-all duration-300"
+                                    className="w-full px-4 py-2 text-left uppercase text-color-secondary transition-all duration-300 hover:text-color-accent"
                                 >
                                     <span>Profil Sekolah</span>
-                                    <span className="float-right">{subMenuOpen.isProfile ? '▼' : '▶'}</span>
+                                    <span className="float-right">
+                                        {subMenuOpen.isProfile ? '▼' : '▶'}
+                                    </span>
                                 </button>
                                 {subMenuOpen.isProfile && (
                                     <div className="pl-4">
-                                        <NavLink href="/sejarah" text="Visi, Misi, dan Sejarah Sekolah" />
-                                        <NavLink href="/staff" text="Tenaga Pendidik" />
+                                        <NavLink
+                                            href="/sejarah"
+                                            text="Visi, Misi, dan Sejarah Sekolah"
+                                        />
+                                        <NavLink
+                                            href="/staffs"
+                                            text="Tenaga Pendidik"
+                                        />
                                     </div>
                                 )}
                             </div>
 
-                            {/* Berita Dropdown Mobile */}
                             <div>
                                 <button
                                     onClick={() => toggleSubMenu('isBerita')}
-                                    className="w-full text-left text-color-secondary px-4 py-2 hover:text-color-accent transition-all duration-300"
+                                    className="w-full px-4 py-2 text-left uppercase text-color-secondary transition-all duration-300 hover:text-color-accent"
                                 >
                                     <span>Berita</span>
-                                    <span className="float-right">{subMenuOpen.isBerita ? '▼' : '▶'}</span>
+                                    <span className="float-right">
+                                        {subMenuOpen.isBerita ? '▼' : '▶'}
+                                    </span>
                                 </button>
                                 {subMenuOpen.isBerita && (
                                     <div className="pl-4">
@@ -224,31 +240,32 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
                                 )}
                             </div>
 
-                            {/* Regular Menu Items Mobile */}
-                            <a 
+                            <a
                                 href="/#ekstrakurikuler"
-                                onClick={(e) => handleNavClick(e, 'ekstrakurikuler')}
-                                className="block text-color-secondary px-4 py-2 hover:text-color-accent transition-all duration-300"
+                                onClick={(e) =>
+                                    handleNavClick(e, 'ekstrakurikuler')
+                                }
+                                className="block px-4 py-2 text-color-secondary transition-all duration-300 hover:text-color-accent"
                             >
                                 Ekstrakurikuler
                             </a>
-                            <a 
+                            <a
                                 href="/#prestasi"
                                 onClick={(e) => handleNavClick(e, 'prestasi')}
-                                className="block text-color-secondary px-4 py-2 hover:text-color-accent transition-all duration-300"
+                                className="block px-4 py-2 text-color-secondary transition-all duration-300 hover:text-color-accent"
                             >
                                 Prestasi
                             </a>
-                            <a 
+                            <Link
                                 href="/modul"
-                                className="block text-color-secondary px-4 py-2 hover:text-color-accent transition-all duration-300"
+                                className="block px-4 py-2 text-color-secondary transition-all duration-300 hover:text-color-accent"
                             >
                                 Modul
-                            </a>
-                            <a 
+                            </Link>
+                            <a
                                 href="/#kontak"
                                 onClick={(e) => handleNavClick(e, 'kontak')}
-                                className="block text-color-secondary px-4 py-2 hover:text-color-accent transition-all duration-300"
+                                className="block px-4 py-2 text-color-secondary transition-all duration-300 hover:text-color-accent"
                             >
                                 Kontak
                             </a>
