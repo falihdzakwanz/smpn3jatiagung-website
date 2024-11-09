@@ -18,9 +18,9 @@ Route::get('/greeting', function () {
     return Inertia::render('Greeting');
 })->name('greeting');
 
-Route::get('/staff', function () {
-    return Inertia::render('Staff');
-})->name('staff');
+Route::get('/staffs', function () {
+    return Inertia::render('Staffs');
+})->name('staffs');
 
 Route::get('/news', function () {
     return Inertia::render('News');

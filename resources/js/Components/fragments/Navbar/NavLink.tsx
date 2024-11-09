@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { Link } from '@inertiajs/react';
 
 const NavLink = (props: any) => {
     const { text, href } = props; 
@@ -18,6 +18,6 @@ const NavLink = (props: any) => {
             </span>
         </Link>
     );
-}
+};
 
 export default NavLink;
