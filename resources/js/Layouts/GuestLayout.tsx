@@ -2,16 +2,18 @@ import Footer from '@/Components/fragments/Footer';
 import Navbar from '@/Components/fragments/Navbar';
 import { PropsWithChildren } from 'react';
 
-const GuestLayout = ({ children }: PropsWithChildren) => {
+interface GuestLayoutProps extends PropsWithChildren {
+    isHomePage?: boolean;
+}
+
+const GuestLayout = ({ children, isHomePage = false }: GuestLayoutProps) => {
     return (
-        <div className="min-h-screen bg-color-secondary"> 
-            <div className="flex w-full flex-col items-center justify-center">
-                <header className="w-full sticky top-0 z-50">
-                    <Navbar />
-                </header>
-                <main className="font-roboto">{children}</main>
-                <Footer />
-            </div>
+        <div className="flex min-h-screen w-full flex-col scroll-smooth bg-color-secondary">
+            <Navbar isHomePage={isHomePage} />
+            <main className={`w-full ${!isHomePage && 'pt-24'} font-roboto`}>
+                {children}
+            </main>
+            <Footer />
         </div>
     );
 };

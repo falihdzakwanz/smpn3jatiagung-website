@@ -1,15 +1,24 @@
-const NavbarLogo = ({ text }: { text: string }) => {
+import { Link } from '@inertiajs/react';
+
+interface NavbarLogoProps {
+    text: string;
+    className?: string;
+}
+
+const NavbarLogo = (props: NavbarLogoProps) => {
+    const { text, className } = props;
+
     return (
-        <div className="flex items-center">
+        <Link href="/" className={`flex items-center gap-3 ${className}`}>
             <img
-                src="https://www.dummyimage.com/400x200/000/fff&text=LOGO"
-                alt="Logo"
-                className="mr-2 h-8 w-8"
+                src="https://salman-gebaeudereinigung.de/wp-content/uploads/2022/10/logo-salman.png"
+                alt="Logo Sekolah"
+                className="h-12 w-auto object-contain"
             />
-            <span className="text-base font-bold uppercase tracking-widest text-color-secondary md:text-xl">
+            <span className="text-xl font-bold tracking-wider md:text-2xl">
                 {text}
             </span>
-        </div>
+        </Link>
     );
 };
 

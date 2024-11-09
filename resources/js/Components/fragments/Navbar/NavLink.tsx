@@ -2,12 +2,22 @@ import { Link } from '@inertiajs/react';
 
 const NavLink = (props: any) => {
     const { text, href } = props;
+    const isActive =
+        window.location.pathname === href ||
+        (href.includes('#') &&
+            window.location.hash === href.substring(href.indexOf('#')));
+
     return (
         <Link
             href={href}
-            className="block border-b border-b-color-secondary bg-color-primary px-4 py-2 tracking-widest text-color-secondary hover:text-color-accent md:border-none"
+            className="group relative block border-b border-b-color-secondary px-4 py-2 capitalize text-color-secondary hover:bg-color-secondary hover:text-color-accent md:border-none"
         >
-            {text}
+            <span className="relative">
+                {text}
+                <span
+                    className={`bg-current absolute -bottom-1 left-0 h-0.5 w-full origin-left transform transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0'} group-hover:scale-x-100`}
+                />
+            </span>
         </Link>
     );
 };
