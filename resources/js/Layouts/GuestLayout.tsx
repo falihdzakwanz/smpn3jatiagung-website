@@ -1,20 +1,21 @@
-import Navbar from '@/Components/fragments/Navbar';
 import Footer from '@/Components/fragments/Footer';
+import Navbar from '@/Components/fragments/Navbar';
 import { PropsWithChildren } from 'react';
 
 interface GuestLayoutProps extends PropsWithChildren {
     isHomePage?: boolean;
 }
 
-export default function GuestLayout({ children, isHomePage = false }: GuestLayoutProps) {
+const GuestLayout = ({ children, isHomePage = false }: GuestLayoutProps) => {
     return (
-        <div className="flex min-h-screen w-full flex-col">
+        <div className="flex min-h-screen w-full flex-col scroll-smooth bg-color-secondary">
             <Navbar isHomePage={isHomePage} />
-            {/* Tidak ada padding untuk homepage */}
-            <main className={`w-full ${!isHomePage && 'pt-24'}`}>
+            <main className={`w-full ${!isHomePage && 'pt-24'} font-roboto`}>
                 {children}
             </main>
             <Footer />
         </div>
     );
-}
+};
+
+export default GuestLayout;
