@@ -11,6 +11,7 @@ class Ekstrakurikuler extends Model
 
     protected $table = 'ekstrakurikuler';
     protected $primaryKey = 'id';
+    protected $guarded = 'id';
     protected $fillable = [
         'nama',
         'deskripsi',

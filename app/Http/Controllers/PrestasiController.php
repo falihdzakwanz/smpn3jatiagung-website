@@ -21,13 +21,35 @@ class PrestasiController extends Controller
         ]); // return data to frontend
     }
 
+        /**
+     * Display prestasi to Guest
+     */
+
+     public function guestIndex(Prestasi $prestasi)
+     {
+        $prestasi = Prestasi::all();
+         return view('Prestasi/GuestIndex', [
+             'prestasi' => $prestasi,
+             'response' => [
+                 'status' => 200,
+                 'message' => 'Prestasi list retrieved successfully',
+                 'data' => $prestasi,
+             ]
+         ]);
+     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         //
-        return Inertia::render('Prestasi/Create');
+        return view('Prestasi/Create', [
+            'response' => [
+                'status' => 200,
+                'message' => 'Create form loaded successfully',
+            ]
+        ]);
     }
 
     /**
@@ -36,28 +58,50 @@ class PrestasiController extends Controller
     public function store(Request $request, Prestasi $prestasi)
     {
         //
-        $prestasi->create($request->validate([
+        $request->validate([
             'judul' => 'required',
             'foto' => 'required',
-        ]));
+        ]);
 
-        return back()->with('message', 'Student added successfully');
+        $prestasi = Prestasi::create($request->all());
+
+        return redirect()->route('prestasi.index')->with([
+            'response' => [
+                'status' => 201,
+                'message' => 'Prestasi created successfully',
+                'data' => $prestasi,
+            ]
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Prestasi $prestasi)
     {
-        //
+        return view('Prestasi/Show', [
+            'staff' => $prestasi,
+            'response' => [
+                'status' => 200,
+                'message' => 'Staff retrieved successfully',
+                'data' => $prestasi,
+            ]
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Prestasi $prestasi)
     {
-        //
+        return view('Prestasi/Edit', [
+            'staff' => $prestasi,
+            'response' => [
+                'status' => 200,
+                'message' => 'Edit form loaded successfully',
+                'data' => $prestasi,
+            ]
+        ]);
     }
 
     /**
@@ -74,7 +118,7 @@ class PrestasiController extends Controller
         $prestasi = Prestasi::findOrFail($id);
         $prestasi->update($request->only(['judul', 'foto']));
 
-        return redirect()->route('prestasi.edit')->with('success', 'Data prestasi berhasil diupdate');
+        return redirect()->route('prestasi.index')->with('success', 'Data prestasi berhasil diupdate');
 
     }
 
@@ -88,6 +132,6 @@ class PrestasiController extends Controller
 
         $prestasi->delete();
 
-        return redirect()->route('prestasi.edit')->with('success', 'Data prestasi berhasil dihapus');
+        return redirect()->route('prestasi.index')->with('success', 'Data prestasi berhasil dihapus');
     }
 }

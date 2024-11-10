@@ -21,6 +21,21 @@ class EkstrakurikulerController extends Controller
         ]); // return data to frontend
     }
 
+
+    /* Buat nampilin Eskul ke Guest*/
+    public function guestIndex()
+    {
+        $ekstrakurikuler = Ekstrakurikuler::all();
+        return view('Esktrakurikuler/GuestIndex', [
+            'ekstrakurikulerData' => $ekstrakurikuler,
+            'response' => [
+                'status' => 200,
+                'message' => 'Esktrakurikuler list retrieved successfully',
+                'data' => $ekstrakurikuler,
+            ]
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -43,23 +58,41 @@ class EkstrakurikulerController extends Controller
             'foto_kegiatan' => 'required',
         ]));
 
-        return back()->with('message', 'Ekstrakurikuler added successfully');
+        return redirect()->route('ekstrakurikuler.index')->with('message', 'Ekstrakurikuler added successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Ekstrakurikuler $ekstrakurikuler)
     {
         //
+        return Inertia::render('Ekstrakurikuler/Show', [
+            'ekstrakurikuler' => $ekstrakurikuler,
+            'response' => [
+                'status' => 200,
+                'message' => 'Ekstrakurikuler retrieved successfully',
+                'data' => $ekstrakurikuler,
+            ]
+            ]);
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Ekstrakurikuler $ekstrakurikuler)
     {
         //
+        return Inertia::render('Ekstrakurikuler/Edit', [
+            'ekstrakurikuler' => $ekstrakurikuler,
+            'response' => [
+                'status' => 200,
+                'message' => 'Ekstrakurikuler retrieved successfully',
+                'data' => $ekstrakurikuler,
+                ]
+            ]);
+
     }
 
     /**
@@ -78,7 +111,7 @@ class EkstrakurikulerController extends Controller
         $$ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
         $$ekstrakurikuler->update($request->only(['nama', 'deskripsi', 'foto_judul', 'foto_kegiatan']));
 
-        return redirect()->route('ekstrakurikuler.edit')->with('success', 'Data ekstrakurikuler berhasil diupdate');
+        return redirect()->route('ekstrakurikuler.index')->with('success', 'Data ekstrakurikuler berhasil diupdate');
 
     }
 
@@ -92,6 +125,6 @@ class EkstrakurikulerController extends Controller
 
         $$ekstrakurikuler->delete();
 
-        return redirect()->route('ekstrakurikuler.edit')->with('success', 'Data ekstrakurikuler berhasil dihapus');
+        return redirect()->route('ekstrakurikuler.index')->with('success', 'Data ekstrakurikuler berhasil dihapus');
     }
 }

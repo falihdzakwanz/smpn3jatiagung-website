@@ -11,6 +11,7 @@ class Prestasi extends Model
 
     protected $table = 'prestasi';
     protected $primaryKey = 'id';
+    protected $guarded = 'id';
     protected $fillable = [
         'judul',
         'foto',
