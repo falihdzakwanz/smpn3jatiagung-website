@@ -38,8 +38,8 @@ Route::get('/modul', function () {
     return Inertia::render('Modul');
 })->name('modul');
 
-Route::get('/ekstrakurikuler/detail', function () {
-    return Inertia::render('EkstrakurikulerDetail');
+Route::get('/ekstrakurikuler/{id}', function () {
+    return Inertia::render('ExtracurricularDetail');
 })->name('ekstrakurikuler.show');
 
 Route::get('/prestasi', function () {
