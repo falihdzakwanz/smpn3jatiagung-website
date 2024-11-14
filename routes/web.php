@@ -35,7 +35,7 @@ Route::get('/sejarah', function () {
 })->name('sejarah');
 
 Route::get('/modul', function () {
-    return Inertia::render('Modul');
+    return Inertia::render('Modules');
 })->name('modul');
 
 Route::get('/ekstrakurikuler/{id}', function () {
