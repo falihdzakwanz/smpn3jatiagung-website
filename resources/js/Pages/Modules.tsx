@@ -12,7 +12,7 @@ const Modul = (props: Proptypes) => {
     return (
         <GuestLayout>
             <div className="flex w-screen flex-col items-center justify-center bg-color-secondary py-8">
-                <h1 className="mb-4 text-2xl font-bold md:mb-8 md:text-4xl text-color-primary">
+                <h1 className="mb-4 text-2xl font-bold md:mb-8 md:text-4xl text-color-primary font-libre-bold">
                     Modul Pembelajaran
                 </h1>
                 <div className="w-full flex flex-col justify-center items-center gap-4 md:gap-8">
