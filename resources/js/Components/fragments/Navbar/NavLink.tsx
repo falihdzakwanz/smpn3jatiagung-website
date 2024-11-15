@@ -10,7 +10,7 @@ const NavLink = (props: any) => {
     return (
         <Link
             href={href}
-            className="group relative block border-b border-b-color-secondary px-4 py-2 capitalize text-color-secondary hover:bg-color-secondary hover:text-color-accent md:border-none"
+            className="group relative block border-b border-b-color-secondary px-4 py-2 capitalize text-color-secondary hover:bg-color-secondary hover:text-color-accent md:border-none w-full"
         >
             <span className="relative">
                 {text}
