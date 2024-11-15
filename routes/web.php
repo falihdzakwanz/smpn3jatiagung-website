@@ -22,13 +22,13 @@ Route::get('/staffs', function () {
     return Inertia::render('Staffs');
 })->name('staffs');
 
-Route::get('/news', function () {
+Route::get('/berita', function () {
     return Inertia::render('News');
-})->name('news');
+})->name('berita');
 
-Route::get('/news/{id}', function ($id) {
+Route::get('/berita/{id}', function ($id) {
     return Inertia::render('NewsDetail', ['id' => $id]);
-})->name('news.show');
+})->name('berita.show');
 
 Route::get('/sejarah', function () {
     return Inertia::render('Sejarah');
