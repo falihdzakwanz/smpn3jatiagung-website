@@ -31,7 +31,9 @@ export default {
                 primary: '#2B4834',
                 secondary: '#FDFFEC',
                 accent: '#406B4E',
-                white: '#FFFFFF'
+                white: '#FFFFFF',
+                succes: '#25C32B',
+                danger: '#EC3F3F'
             }
         }
     },
