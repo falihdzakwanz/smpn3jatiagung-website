@@ -1,6 +1,6 @@
 const FooterLogoAndDesc = () => {
     return (
-        <div className="mb-4 flex w-full flex-row items-center gap-4 border-r-color-secondary md:w-1/2 md:border-r md:pr-8">
+        <div className="mb-4 flex w-full flex-row items-center gap-4">
             <img
                 src="https://www.dummyimage.com/100x100/000/fff&text=LOGO"
                 alt="Logo"
