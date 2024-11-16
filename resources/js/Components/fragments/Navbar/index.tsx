@@ -159,25 +159,13 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
                         </div>
                     </div>
 
-                    <div className="group block h-full bg-color-primary md:relative md:flex md:items-center md:justify-center md:bg-opacity-0">
-                        <button
-                            className="flex w-full items-center justify-start gap-1 border-b border-b-color-secondary px-4 py-2 uppercase text-color-secondary transition-all duration-300 hover:text-color-accent hover:brightness-150 md:border-none"
-                            onClick={() => toggleSubMenu('isBerita')}
+                    <div className="w-full bg-color-primary md:flex md:bg-opacity-0">
+                        <Link
+                            href="/berita"
+                            className={`px-4 py-2 md:${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} block border-b border-b-color-secondary text-sm text-color-secondary transition-all duration-300 hover:text-color-accent hover:brightness-150 md:border-none lg:text-base`}
                         >
                             Berita
-                            <span className="ml-1 text-sm md:text-base">
-                                {subMenuOpen.isBerita || window.innerWidth > 768
-                                    ? '▼'
-                                    : '▶'}
-                            </span>
-                        </button>
-                        <div
-                            className={`${subMenuOpen.isBerita ? 'hidden' : 'block'} w-full bg-color-primary px-4 md:absolute md:left-0 md:top-full md:hidden md:w-48 md:px-0 md:group-hover:flex`}
-                        >
-                            <NavLink href={`/news/1`} text={`news 1`} />
-                        </div>
-                    </div>
-                    <div className="w-full bg-color-primary md:flex md:bg-opacity-0">
+                        </Link>
                         <a
                             href="/#ekstrakurikuler"
                             onClick={(e) =>
