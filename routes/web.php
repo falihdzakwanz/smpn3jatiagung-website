@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PrestasiController;
+use App\Http\Controllers\EkstrakurikulerController;
 use App\Http\Controllers\ModulController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ProfileController;
@@ -7,6 +9,7 @@ use App\Http\Controllers\BeritaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -27,10 +30,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
     Route::resource('/dashboard/moduls', ModulController::class);
     Route::resource('/dashboard/staffs', StaffController::class);
-    route::resource('/dashboard/berita', BeritaController::class);
+    Route::resource('/dashboard/berita', BeritaController::class);
+    Route::resource('ekstrakurikuler', EkstrakurikulerController::class);
+    /* Prestasi */
+    Route::resource('prestasi', PrestasiController::class);
+
 });
 
 Route::get('/staffs', [StaffController::class, 'guestIndex'])->name('staffs.guest');
