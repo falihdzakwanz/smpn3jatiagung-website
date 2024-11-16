@@ -14,8 +14,28 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                'inter-bold': ['Inter', ...defaultTheme.fontFamily.sans],
+                'libre-bold': ['Libre Baskerville', ...defaultTheme.fontFamily.sans],
+                'roboto': ['Roboto Condensed', ...defaultTheme.fontFamily.sans],
+                'roboto-bold': ['Roboto Condensed', ...defaultTheme.fontFamily.sans],
+            },
+            fontWeight: {
+                'inter-bold': 700,
+                'libre-bold': 700,
+                'roboto': 400,
+                'roboto-bold': 700
             },
         },
+        colors: {
+            color: {
+                primary: '#2B4834',
+                secondary: '#FDFFEC',
+                accent: '#406B4E',
+                white: '#FFFFFF',
+                succes: '#25C32B',
+                danger: '#EC3F3F'
+            }
+        }
     },
 
     plugins: [forms],

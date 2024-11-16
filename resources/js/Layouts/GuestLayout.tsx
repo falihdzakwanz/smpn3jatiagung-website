@@ -1,19 +1,21 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import { Link } from '@inertiajs/react';
+import Footer from '@/Components/fragments/Footer';
+import Navbar from '@/Components/fragments/Navbar';
 import { PropsWithChildren } from 'react';
 
-export default function Guest({ children }: PropsWithChildren) {
-    return (
-        <div className="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
-            <div>
-                <Link href="/">
-                    <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
-                </Link>
-            </div>
+interface GuestLayoutProps extends PropsWithChildren {
+    isHomePage?: boolean;
+}
 
-            <div className="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg">
+const GuestLayout = ({ children, isHomePage = false }: GuestLayoutProps) => {
+    return (
+        <div className="flex min-h-screen w-full flex-col scroll-smooth bg-color-secondary">
+            <Navbar isHomePage={isHomePage} />
+            <main className={`w-full ${!isHomePage && 'pt-24'} font-roboto`}>
                 {children}
-            </div>
+            </main>
+            <Footer />
         </div>
     );
-}
+};
+
+export default GuestLayout;

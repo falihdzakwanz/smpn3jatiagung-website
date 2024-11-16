@@ -20,11 +20,41 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/greeting', function () {
+    return Inertia::render('Greeting');
+})->name('greeting');
+
+Route::get('/staffs', function () {
+    return Inertia::render('Staffs');
+})->name('staffs');
+
+Route::get('/berita', function () {
+    return Inertia::render('News');
+})->name('berita');
+
+Route::get('/berita/{id}', function ($id) {
+    return Inertia::render('NewsDetail', ['id' => $id]);
+})->name('berita.show');
+
+Route::get('/sejarah', function () {
+    return Inertia::render('Sejarah');
+})->name('sejarah');
+
+Route::get('/modul', function () {
+    return Inertia::render('Modules');
+})->name('modul');
+
+Route::get('/ekstrakurikuler/{id}', function () {
+    return Inertia::render('ExtracurricularDetail');
+})->name('ekstrakurikuler.show');
+
+Route::get('/prestasi', function () {
+    return Inertia::render('Achievements');
+})->name('achievements');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -34,9 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/dashboard/staffs', StaffController::class);
     Route::resource('/dashboard/berita', BeritaController::class);
     Route::resource('ekstrakurikuler', EkstrakurikulerController::class);
-    /* Prestasi */
     Route::resource('prestasi', PrestasiController::class);
-
 });
 
 Route::get('/staffs', [StaffController::class, 'guestIndex'])->name('staffs.guest');
