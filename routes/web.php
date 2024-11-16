@@ -24,7 +24,7 @@ Route::get('/greeting', function () {
     return Inertia::render('Greeting');
 })->name('greeting');
 
-Route::get('/staffs', function () {
+Route::get('/', function () {
     return Inertia::render('Staffs');
 })->name('staffs');
 
@@ -63,8 +63,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/dashboard/moduls', ModulController::class);
     Route::resource('/dashboard/staffs', StaffController::class);
     Route::resource('/dashboard/berita', BeritaController::class);
-    Route::resource('ekstrakurikuler', EkstrakurikulerController::class);
-    Route::resource('prestasi', PrestasiController::class);
+    Route::resource('/dashboard/ekstrakurikuler', EkstrakurikulerController::class);
+    Route::resource('/dashboard/prestasi', PrestasiController::class);
 });
 
 Route::get('/staffs', [StaffController::class, 'guestIndex'])->name('staffs.guest');
