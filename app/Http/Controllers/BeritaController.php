@@ -10,28 +10,28 @@ class BeritaController extends Controller
 {
     public function index()
     {
-        $beritas = Berita::all();
+        $berita = Berita::all();
 
         return Inertia::render('Berita/Index', [
-            'beritas' => $beritas,
+            'berita' => $berita,
             'response' => [
                 'status' => 200,
                 'message' => 'Berita retrieved successfully',
-                'data' => $beritas,
+                'data' => $berita,
             ]
         ]);
     }
 
     public function guestIndex()
     {
-        $beritas = Berita::all();
+        $berita = Berita::all();
 
         return Inertia::render('Berita/Index', [
-            'beritas' => $beritas,
+            'berita' => $berita,
             'response' => [
                 'status' => 200,
                 'message' => 'Berita retrieved successfully',
-                'data' => $beritas,
+                'data' => $berita,
             ]
         ]);
     }
@@ -60,12 +60,12 @@ class BeritaController extends Controller
         $berita->deskripsi = $request->deskripsi;
 
         if ($request->hasFile('file')) {
-            $berita->file = $request->file('file')->store('beritas', 'public');
+            $berita->file = $request->file('file')->store('berita', 'public');
         }
 
         $berita->save();
 
-        return redirect()->route('beritas.index')->with([
+        return redirect()->route('berita.index')->with([
             'response' => [
                 'status' => 201,
                 'message' => 'Berita created successfully',
@@ -81,7 +81,7 @@ class BeritaController extends Controller
     
         // Check if the berita exists
         if (!$berita) {
-            return redirect()->route('beritas.index')->with([
+            return redirect()->route('berita.index')->with([
                 'response' => [
                     'status' => 404,
                     'message' => 'Berita not found',
@@ -127,12 +127,12 @@ class BeritaController extends Controller
             if ($berita->file) {
                 Storage::disk('public')->delete($berita->file);
             }
-            $berita->file = $request->file('file')->store('beritas', 'public');
+            $berita->file = $request->file('file')->store('berita', 'public');
         }
 
         $berita->save();
 
-        return redirect()->route('beritas.index')->with([
+        return redirect()->route('berita.index')->with([
             'response' => [
                 'status' => 200,
                 'message' => 'Berita updated successfully',
@@ -150,7 +150,7 @@ class BeritaController extends Controller
 
         $berita->delete();
 
-        return redirect()->route('beritas.index')->with([
+        return redirect()->route('berita.index')->with([
             'response' => [
                 'status' => 200,
                 'message' => 'Berita deleted successfully',
