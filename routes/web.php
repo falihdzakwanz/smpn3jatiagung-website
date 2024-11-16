@@ -58,10 +58,6 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-
-
-
 // Admin Routes
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     // Dashboard
@@ -73,32 +69,32 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/news', function() {
         return Inertia::render('Admin/News/Index');
     })->name('admin.news.index');
-    
+
     // Module Management
     Route::get('/modules', function() {
         return Inertia::render('Admin/Modules/Index');
     })->name('admin.modules.index');
-    
+
     // Ekstrakurikuler Management
     Route::get('/extracurricular', function() {
         return Inertia::render('Admin/Extracurricular/Index');
     })->name('admin.extracurricular.index');
-    
+
     // Prestasi Management
     Route::get('/achievements', function() {
         return Inertia::render('Admin/Achievements/Index');
     })->name('admin.achievements.index');
-    
+
     // Staff Management
     Route::get('/staff', function() {
         return Inertia::render('Admin/Staff/Index');
     })->name('admin.staff.index');
-    
+
     // Sejarah Management
     Route::get('/history', function() {
         return Inertia::render('Admin/History/Index');
     })->name('admin.history.index');
-    
+
     // Kontak Management
     Route::get('/contact', function() {
         return Inertia::render('Admin/Contact/Index');
@@ -126,9 +122,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('ekstrakurikuler', EkstrakurikulerController::class);
     Route::resource('prestasi', PrestasiController::class);
 });
-
-Route::get('/staffs', [StaffController::class, 'guestIndex'])->name('staffs.guest');
-Route::get('/moduls', [ModulController::class, 'guestIndex'])->name('moduls.guest');
-Route::get('/berita', [BeritaController::class, 'guestIndex'])->name('berita.guest');
 
 require __DIR__.'/auth.php';
