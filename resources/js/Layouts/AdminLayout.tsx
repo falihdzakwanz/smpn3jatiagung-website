@@ -193,15 +193,16 @@ export default function AdminLayout({ children, breadcrumbs = [] }: Props) {
                                         </Menu.Item>
                                         <Menu.Item>
                                             {({ active }) => (
-                                                <button
-                                                    onClick={handleLogout}
+                                                <Link
+                                                    href={route('logout')}
+                                                    method="post"
                                                     className={`${
                                                         active ? 'bg-[#7166BA]' : ''
                                                     } flex w-full items-center px-4 py-2 text-white`}
                                                 >
                                                     <FiLogOut className="mr-2 h-5 w-5" />
                                                     Logout
-                                                </button>
+                                                </Link>
                                             )}
                                         </Menu.Item>
                                     </div>
