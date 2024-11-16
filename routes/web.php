@@ -3,6 +3,7 @@
 use App\Http\Controllers\ModulController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BeritaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,8 +30,11 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/dashboard/moduls', ModulController::class);
     Route::resource('/dashboard/staffs', StaffController::class);
+    route::resource('/dashboard/berita', BeritaController::class);
 });
 
 Route::get('/staffs', [StaffController::class, 'guestIndex'])->name('staffs.guest');
+Route::get('/moduls', [ModulController::class, 'guestIndex'])->name('moduls.guest');
+Route::get('/berita', [BeritaController::class, 'guestIndex'])->name('berita.guest');
 
 require __DIR__.'/auth.php';
