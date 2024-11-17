@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Models\Staff;
@@ -11,109 +10,61 @@ class StaffController extends Controller
 {
     public function index()
     {
-        $staffs = Staff::all();
-        return Inertia::render('Staffs/Index', [
-            'staffs' => $staffs,
-            'response' => [
-                'status' => 200,
-                'message' => 'Staff list retrieved successfully',
-                'data' => $staffs,
-            ]
+        return Inertia::render('Admin/Staff/Index', [
+            'staffs' => Staff::all()
         ]);
     }
 
-    public function guestIndex()
-    {
-        $staffs = Staff::all();
-        return Inertia::render('Staffs/GuestIndex', [
-            'staffs' => $staffs,
-            'response' => [
-                'status' => 200,
-                'message' => 'Staff list retrieved successfully',
-                'data' => $staffs,
-            ]
-        ]);
-    }
-    
-    public function create()
-    {
-        return Inertia::render('Staffs/Create', [
-            'response' => [
-                'status' => 200,
-                'message' => 'Create form loaded successfully',
-            ]
-        ]);
-    }
-    
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
-            'nama' => 'required',
-            'posisi' => 'required',
+            'name' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
         ]);
 
-        $staff = Staff::create($request->all());
+        // Buat staff baru
+        Staff::create([
+            'nama' => $request->name,
+            'posisi' => $request->position,
+        ]);
 
-        return redirect()->route('staffs.index')->with([
-            'response' => [
-                'status' => 201,
-                'message' => 'Staff created successfully',
-                'data' => $staff,
-            ]
-        ]);
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back();
     }
-    
-    public function show(Staff $staff)
-    {
-        return Inertia::render('Staffs/Show', [
-            'staff' => $staff,
-            'response' => [
-                'status' => 200,
-                'message' => 'Staff retrieved successfully',
-                'data' => $staff,
-            ]
-        ]);
-    }
-    
-    public function edit(Staff $staff)
-    {
-        return Inertia::render('Staffs/Edit', [
-            'staff' => $staff,
-            'response' => [
-                'status' => 200,
-                'message' => 'Edit form loaded successfully',
-                'data' => $staff,
-            ]
-        ]);
-    }
-    
+
     public function update(Request $request, Staff $staff)
     {
+        // Validasi input
         $request->validate([
-            'nama' => 'required',
-            'posisi' => 'required',
+            'name' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
         ]);
 
-        $staff->update($request->all());
-
-        return redirect()->route('staffs.index')->with([
-            'response' => [
-                'status' => 200,
-                'message' => 'Staff updated successfully',
-                'data' => $staff,
-            ]
+        // Update staff
+        $staff->update([
+            'nama' => $request->name,
+            'posisi' => $request->position,
         ]);
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back();
     }
-    
+
     public function destroy(Staff $staff)
     {
+        // Hapus staff
         $staff->delete();
-        
-        return redirect()->route('staffs.index')->with([
-            'response' => [
-                'status' => 200,
-                'message' => 'Staff deleted successfully',
-            ]
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back();
+    }
+
+    // Method untuk halaman publik/guest
+    public function guestIndex()
+    {
+        return Inertia::render('Staffs', [
+            'staffs' => Staff::all()
         ]);
     }
 }
