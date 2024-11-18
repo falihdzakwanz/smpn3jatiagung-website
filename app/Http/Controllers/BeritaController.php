@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Berita;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,153 +11,101 @@ class BeritaController extends Controller
 {
     public function index()
     {
-        $berita = Berita::all();
-
-        return Inertia::render('Berita/Index', [
-            'berita' => $berita,
-            'response' => [
-                'status' => 200,
-                'message' => 'Berita retrieved successfully',
-                'data' => $berita,
-            ]
+        return Inertia::render('Admin/News/Index', [
+            'news' => Berita::latest()->get()
         ]);
     }
-
+    
     public function guestIndex()
     {
-        $berita = Berita::all();
+        $news = Berita::latest()->get()->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'title' => $item->judul,
+                'body' => $item->deskripsi,
+                'imageSrc' => $item->foto ? asset('storage/' . $item->foto) : null
+            ];
+        });
 
-        return Inertia::render('Berita/Index', [
-            'berita' => $berita,
-            'response' => [
-                'status' => 200,
-                'message' => 'Berita retrieved successfully',
-                'data' => $berita,
-            ]
-        ]);
-    }
-
-
-    public function create()
-    {
-        return Inertia::render('Berita/Create', [
-            'response' => [
-                'status' => 200,
-                'message' => 'Create form loaded successfully',
-            ]
+        return Inertia::render('News', [
+            'news' => $news
         ]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'judul' => 'required',
-            'deskripsi' => 'required',
-            'file' => 'nullable|file',
-        ]);
-
-        $berita = new Berita();
-        $berita->judul = $request->judul;
-        $berita->deskripsi = $request->deskripsi;
-
-        if ($request->hasFile('file')) {
-            $berita->file = $request->file('file')->store('berita', 'public');
-        }
-
-        $berita->save();
-
-        return redirect()->route('berita.index')->with([
-            'response' => [
-                'status' => 201,
-                'message' => 'Berita created successfully',
-                'data' => $berita,
-            ]
-        ]);
-    }
-
-    
-    public function show($id) {
-        // Retrieve the berita by ID
-        $berita = Berita::find($id);
-    
-        // Check if the berita exists
-        if (!$berita) {
-            return redirect()->route('berita.index')->with([
-                'response' => [
-                    'status' => 404,
-                    'message' => 'Berita not found',
-                ]
+        try {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
             ]);
-        }
     
-        // Return the Inertia::render with berita data
-        return Inertia::render('Berita/Show', [
-            'berita' => $berita,
-            'response' => [
-                'status' => 200,
-                'message' => 'Berita retrieved successfully',
-                'data' => $berita,
-            ]
-        ]);
-    }
-    public function edit(Berita $berita)
-    {
-        return Inertia::render('Berita/Edit', [
-            'berita' => $berita,
-            'response' => [
-                'status' => 200,
-                'message' => 'Edit form loaded successfully',
-                'data' => $berita,
-            ]
-        ]);
+            $berita = new Berita();
+            $berita->judul = $request->title;
+            $berita->deskripsi = $request->description;
+    
+            if ($request->hasFile('image')) {
+                $path = $request->file('image')->store('news', 'public');
+                if (!$path) {
+                    throw new \Exception('Gagal menyimpan gambar');
+                }
+                $berita->foto = $path;
+            }
+    
+            $berita->save();
+    
+            return redirect()->back()->with('message', 'Berita berhasil ditambahkan');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Gagal menambahkan berita: ' . $e->getMessage()]);
+        }
     }
 
     public function update(Request $request, Berita $berita)
     {
-        $request->validate([
-            'judul' => 'required',
-            'deskripsi' => 'required',
-            'file' => 'nullable|file',
-        ]);
+        try {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+            ]);
 
-        $berita->judul = $request->judul;
-        $berita->deskripsi = $request->deskripsi;
+            $berita->judul = $request->title;
+            $berita->deskripsi = $request->description;
 
-        if ($request->hasFile('file')) {
-            // Delete the old file if exists
-            if ($berita->file) {
-                Storage::disk('public')->delete($berita->file);
+            if ($request->hasFile('image')) {
+                // Hapus foto lama jika ada
+                if ($berita->foto) {
+                    Storage::disk('public')->delete($berita->foto);
+                }
+
+                $path = $request->file('image')->store('news', 'public');
+                if (!$path) {
+                    throw new \Exception('Gagal menyimpan gambar');
+                }
+                $berita->foto = $path;
             }
-            $berita->file = $request->file('file')->store('berita', 'public');
+
+            $berita->save();
+
+            return redirect()->back()->with('message', 'Berita berhasil diupdate');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Gagal mengupdate berita: ' . $e->getMessage()]);
         }
-
-        $berita->save();
-
-        return redirect()->route('berita.index')->with([
-            'response' => [
-                'status' => 200,
-                'message' => 'Berita updated successfully',
-                'data' => $berita,
-            ]
-        ]);
     }
 
     public function destroy(Berita $berita)
     {
-        // Delete the file if it exists
-        if ($berita->file) {
-            Storage::disk('public')->delete($berita->file);
+        try {
+            if ($berita->foto) {
+                Storage::disk('public')->delete($berita->foto);
+            }
+
+            $berita->delete();
+
+            return redirect()->back()->with('message', 'Berita berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Gagal menghapus berita: ' . $e->getMessage()]);
         }
-
-        $berita->delete();
-
-        return redirect()->route('berita.index')->with([
-            'response' => [
-                'status' => 200,
-                'message' => 'Berita deleted successfully',
-                'data' => null,
-            ]
-        ]);
     }
 }
-

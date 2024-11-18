@@ -1,25 +1,32 @@
 import Card from '@/Components/news/Card';
 import GuestLayout from '@/Layouts/GuestLayout';
-import type { News } from '@/types/news';
+// import type { News } from '@/types/news';
 import { Head } from '@inertiajs/react';
 
-type Proptypes = {
-    someNews: News[];
-};
+interface News {
+    id: number;
+    title: string;
+    deskripsi: string;
+    gambar: string | null;
+}
 
-const NewsComponent = (props: Proptypes) => {
-    const { someNews } = props;
+interface Props {
+    news: News[];
+}
 
+const News = ({ news }: Props) => {
     return (
         <GuestLayout>
             <Head title="Berita" />
             <div className="flex flex-col items-center justify-center gap-8 px-8 py-6">
-                {someNews.map((news: News) => (
+
+                {news.map((item) => (
                     <Card
-                        id={news.id}
-                        judul={news.judul}
-                        deskripsi={news.deskripsi}
-                        foto={news.foto}
+                        key={item.id}
+                        id={item.id}
+                        judul={item.title}
+                        deskripsi={item.deskripsi}
+                        gambar={item.gambar || 'https://www.dummyimage.com/450x300/000/fff&text=LOGO'}
                     />
                 ))}
             </div>
@@ -27,4 +34,4 @@ const NewsComponent = (props: Proptypes) => {
     );
 };
 
-export default NewsComponent;
+export default News;

@@ -56,11 +56,6 @@ export default function AdminLayout({ children, breadcrumbs = [] }: Props) {
             href: '/admin/staff'
         },
         {
-            label: 'SEJARAH',
-            icon: <FiClock className="w-5 h-5" />,
-            href: '/admin/history'
-        },
-        {
             label: 'KONTAK',
             icon: <FiMessageSquare className="w-5 h-5" />,
             href: '/admin/contact'

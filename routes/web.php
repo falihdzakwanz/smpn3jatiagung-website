@@ -10,8 +10,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
-
 // Public Routes
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -26,22 +24,14 @@ Route::get('/greeting', function () {
     return Inertia::render('Greeting');
 })->name('greeting');
 
-Route::get('/staffs', function () {
-    return Inertia::render('Staffs');
-})->name('staffs');
+Route::get('/staffs', [StaffController::class, 'guestIndex'])->name('staffs.guest');
 
-Route::get('/berita', function () {
-    return Inertia::render('News');
-})->name('berita');
-
-Route::get('/berita/{id}', function ($id) {
-    return Inertia::render('NewsDetail', ['id' => $id]);
-})->name('berita.show');
+Route::get('/news', [BeritaController::class, 'guestIndex'])->name('news');
+Route::get('/news/{berita}', [BeritaController::class, 'show'])->name('news.show');
 
 Route::get('/sejarah', function () {
     return Inertia::render('Sejarah');
 })->name('sejarah');
-
 Route::get('/modul', function () {
     return Inertia::render('Modules');
 })->name('modul');
@@ -53,10 +43,6 @@ Route::get('/ekstrakurikuler/{id}', function () {
 Route::get('/prestasi', function () {
     return Inertia::render('Achievements');
 })->name('achievements');
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Admin Routes
 Route::middleware(['auth'])->prefix('admin')->group(function () {
@@ -71,35 +57,29 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     })->name('admin.news.index');
 
     // Module Management
-    Route::get('/modules', function() {
-        return Inertia::render('Admin/Modules/Index');
-    })->name('admin.modules.index');
 
+    // News Management
+    Route::controller(BeritaController::class)->group(function () {
+        Route::get('/news', 'index')->name('admin.news.index');
+        Route::post('/news', 'store')->name('admin.news.store');
+        Route::post('/news/{berita}', 'update')->name('admin.news.update');
+        Route::delete('/news/{berita}', 'destroy')->name('admin.news.destroy');
+    });
+
+    // Module Management
+    Route::get('/modules', [ModulController::class, 'index'])->name('admin.modules.index');
+    
     // Ekstrakurikuler Management
-    Route::get('/extracurricular', function() {
-        return Inertia::render('Admin/Extracurricular/Index');
-    })->name('admin.extracurricular.index');
-
+    Route::get('/extracurricular', [EkstrakurikulerController::class, 'index'])->name('admin.extracurricular.index');
+    
     // Prestasi Management
-    Route::get('/achievements', function() {
-        return Inertia::render('Admin/Achievements/Index');
-    })->name('admin.achievements.index');
-
-    // Staff Management
-    Route::get('/staff', function() {
-        return Inertia::render('Admin/Staff/Index');
-    })->name('admin.staff.index');
-
+    Route::get('/achievements', [PrestasiController::class, 'index'])->name('admin.achievements.index');
+    
     // Sejarah Management
     Route::get('/history', function() {
         return Inertia::render('Admin/History/Index');
     })->name('admin.history.index');
-
-    // Kontak Management
-    Route::get('/contact', function() {
-        return Inertia::render('Admin/Contact/Index');
-    })->name('admin.contact.index');
-
+    
     // Settings
     Route::get('/settings', function() {
         return Inertia::render('Admin/Settings/Index');
@@ -111,16 +91,11 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     })->name('admin.profile.index');
 });
 
-// Authentication & Profile Routes
+// Profile & Authentication Routes
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('/dashboard/moduls', ModulController::class);
-    Route::resource('/dashboard/staffs', StaffController::class);
-    Route::resource('/dashboard/berita', BeritaController::class);
-    Route::resource('ekstrakurikuler', EkstrakurikulerController::class);
-    Route::resource('prestasi', PrestasiController::class);
 });
 
 require __DIR__.'/auth.php';
