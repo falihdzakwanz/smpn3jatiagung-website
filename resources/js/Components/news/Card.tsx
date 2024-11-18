@@ -18,12 +18,12 @@ const Card = (props: News) => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center p-4 gap-4 md:flex-row border-b-2 border-b-color-primary">
+        <div className="flex w-full flex-col items-start justify-start p-4 gap-4 md:flex-row border-b-2 border-b-color-primary">
             <div className="flex items-center md:w-1/4 rounded-xl overflow-hidden">
                 <img
                     src={gambar || ""}
                     alt={`Berita - ${id}`}
-                    className="object-cover max-w-full max-h-48"
+                    className="object-cover max-w-80 max-h-48"
                 />
             </div>
             <div>
@@ -33,7 +33,7 @@ const Card = (props: News) => {
                 <p className="mb-2 text-justify text-sm md:text-base text-color-primary">
                     {truncateAfterFourDots(deskripsi)}
                 </p>
-                <Link href={route('berita.show', id)} className="font-bold text-color-primary text-sm md:text-base">
+                <Link href={route('news.show', id)} className="font-bold text-color-primary text-sm md:text-base">
                     Read More <span>&#187;</span>
                 </Link>
             </div>

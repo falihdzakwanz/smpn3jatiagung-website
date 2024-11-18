@@ -32,6 +32,19 @@ class BeritaController extends Controller
         ]);
     }
 
+public function show($id)
+{
+    $berita = Berita::findOrFail($id);
+    return Inertia::render('NewsDetail', [
+        'id' => $berita->id,
+        'title' => $berita->judul,
+        'text' => $berita->deskripsi,
+        'imageSrc' => $berita->foto ? asset('storage/' . $berita->foto) : null,
+    ]);
+}
+
+
+
     public function store(Request $request)
     {
         try {
