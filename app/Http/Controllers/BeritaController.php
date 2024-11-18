@@ -21,9 +21,9 @@ class BeritaController extends Controller
         $news = Berita::latest()->get()->map(function ($item) {
             return [
                 'id' => $item->id,
-                'title' => $item->judul,
-                'body' => $item->deskripsi,
-                'imageSrc' => $item->foto ? asset('storage/' . $item->foto) : null
+                'judul' => $item->judul,
+                'deskripsi' => $item->deskripsi,
+                'gambar' => $item->foto ? asset('storage/' . $item->foto) : null
             ];
         });
 
@@ -37,9 +37,9 @@ public function show($id)
     $berita = Berita::findOrFail($id);
     return Inertia::render('NewsDetail', [
         'id' => $berita->id,
-        'title' => $berita->judul,
-        'text' => $berita->deskripsi,
-        'imageSrc' => $berita->foto ? asset('storage/' . $berita->foto) : null,
+        'judul' => $berita->judul,
+        'deskripsi' => $berita->deskripsi,
+        'gambar' => $berita->foto ? asset('storage/' . $berita->foto) : null,
     ]);
 }
 

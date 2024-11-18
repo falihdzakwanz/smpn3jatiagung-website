@@ -1,14 +1,7 @@
 import Card from '@/Components/news/Card';
 import GuestLayout from '@/Layouts/GuestLayout';
-// import type { News } from '@/types/news';
+import type { News } from '@/types/news';
 import { Head } from '@inertiajs/react';
-
-interface News {
-    id: number;
-    title: string;
-    body: string;
-    imageSrc: string | null;
-}
 
 interface Props {
     news: News[];
@@ -24,9 +17,9 @@ const News = ({ news }: Props) => {
                     <Card
                         key={item.id}
                         id={item.id}
-                        judul={item.title}
-                        deskripsi={item.body}
-                        gambar={item.imageSrc || 'https://www.dummyimage.com/450x300/000/fff&text=LOGO'}
+                        judul={item.judul}
+                        deskripsi={item.deskripsi}
+                        gambar={item.gambar || 'https://www.dummyimage.com/450x300/000/fff&text=LOGO'}
                     />
                 ))}
             </div>
