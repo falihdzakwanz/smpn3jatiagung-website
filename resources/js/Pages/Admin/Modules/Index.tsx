@@ -5,9 +5,9 @@ import { FiEdit2, FiTrash2, FiFile, FiDownload } from 'react-icons/fi';
 
 interface Module {
     id: number;
-    title: string;
+    judul: string;
     penerbit: string;
-    description: string;
+    deskripsi: string;
     file_path?: string;
     file_name?: string;
 }
@@ -16,16 +16,16 @@ export default function ModulesIndex() {
     const [modules, setModules] = useState<Module[]>([
         {
             id: 1,
-            title: "Modul Matematika Kelas 7",
+            judul: "Modul Matematika Kelas 7",
             penerbit: "PT Jaya Abadi",
-            description: "Materi pembelajaran matematika untuk kelas 7 semester 1",
+            deskripsi: "Materi pembelajaran matematika untuk kelas 7 semester 1",
             file_name: "matematika_7.pdf"
         },
         {
             id: 2,
-            title: "Modul Bahasa Indonesia Kelas 7",
+            judul: "Modul Bahasa Indonesia Kelas 7",
             penerbit: "PT Jaya Abadi",
-            description: "Materi pembelajaran bahasa indonesia untuk kelas 7 semester 1",
+            deskripsi: "Materi pembelajaran bahasa indonesia untuk kelas 7 semester 1",
             file_name: "bahasa_7.pdf"
         }
     ]);
@@ -33,8 +33,8 @@ export default function ModulesIndex() {
     const [editingData, setEditingData] = useState<Module | null>(null);
     const [isAdding, setIsAdding] = useState(false);
     const [newData, setNewData] = useState<Omit<Module, 'id'>>({
-        title: '',
-        description: '',
+        judul: '',
+        deskripsi: '',
         penerbit: '',
         file_path: '',
         file_name: ''
@@ -86,8 +86,8 @@ export default function ModulesIndex() {
             // Di sini implementasi update ke backend
             const formData = new FormData();
             formData.append('_method', 'PUT');
-            formData.append('title', editingData.title);
-            formData.append('description', editingData.description);
+            formData.append('judul', editingData.judul);
+            formData.append('deskripsi', editingData.deskripsi);
             
             if (editFileInputRef.current?.files?.[0]) {
                 formData.append('file', editFileInputRef.current.files[0]);
@@ -110,7 +110,7 @@ export default function ModulesIndex() {
     const handleCancel = () => {
         setEditingData(null);
         setIsAdding(false);
-        setNewData({ title: '', penerbit: '', description: '', file_path: '', file_name: '' });
+        setNewData({ judul: '', penerbit: '', deskripsi: '', file_path: '', file_name: '' });
     };
 
     // Handler untuk delete modul
@@ -129,9 +129,9 @@ export default function ModulesIndex() {
         setIsAdding(true);
         setEditingData(null);
         setNewData({
-            title: '',
+            judul: '',
             penerbit: '',
-            description: '',
+            deskripsi: '',
             file_path: '',
             file_name: '',
         });
@@ -139,11 +139,11 @@ export default function ModulesIndex() {
 
     // Handler untuk save data baru
     const handleSaveNew = () => {
-        if (newData.title && newData.description && fileInputRef.current?.files?.[0]) {
+        if (newData.judul && newData.deskripsi && fileInputRef.current?.files?.[0]) {
             const formData = new FormData();
-            formData.append('title', newData.title);
+            formData.append('judul', newData.judul);
             formData.append('penerbit', newData.penerbit);
-            formData.append('description', newData.description);
+            formData.append('deskripsi', newData.deskripsi);
             formData.append('file', fileInputRef.current.files[0]);
 
             router.post('/admin/modul', formData, {
@@ -151,7 +151,7 @@ export default function ModulesIndex() {
                     const newId = Math.max(0, ...modules.map(item => item.id)) + 1;
                     setModules(current => [...current, { id: newId, ...newData }]);
                     setIsAdding(false);
-                    setNewData({ title: '',  penerbit: '', description: '', file_path: '', file_name: '' });
+                    setNewData({ judul: '',  penerbit: '', deskripsi: '', file_path: '', file_name: '' });
                 }
             });
         } else {
@@ -208,15 +208,15 @@ export default function ModulesIndex() {
                                             {editingData?.id === module.id ? (
                                                 <input
                                                     type="text"
-                                                    value={editingData.title}
+                                                    value={editingData.judul}
                                                     onChange={(e) => setEditingData({
                                                         ...editingData,
-                                                        title: e.target.value
+                                                        judul: e.target.value
                                                     })}
                                                     className="w-full px-2 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-[#7166BA]"
                                                 />
                                             ) : (
-                                                module.title
+                                                module.judul
                                             )}
                                         </td>
                                         <td className="border p-3">
@@ -238,15 +238,15 @@ export default function ModulesIndex() {
                                             {editingData?.id === module.id ? (
                                                 <input
                                                     type="text"
-                                                    value={editingData.description}
+                                                    value={editingData.deskripsi}
                                                     onChange={(e) => setEditingData({
                                                         ...editingData,
-                                                        description: e.target.value
+                                                        deskripsi: e.target.value
                                                     })}
                                                     className="w-full px-2 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-[#7166BA]"
                                                 />
                                             ) : (
-                                                module.description
+                                                module.deskripsi
                                             )}
                                         </td>
                                         <td className="border p-3">
@@ -340,10 +340,10 @@ export default function ModulesIndex() {
                                         <td className="border p-3">
                                             <input
                                                 type="text"
-                                                value={newData.title}
+                                                value={newData.judul}
                                                 onChange={(e) => setNewData({
                                                     ...newData,
-                                                    title: e.target.value
+                                                    judul: e.target.value
                                                 })}
                                                 placeholder="Masukkan judul modul"
                                                 className="w-full px-2 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-[#7166BA]"
@@ -357,17 +357,17 @@ export default function ModulesIndex() {
                                                     ...newData,
                                                     penerbit: e.target.value
                                                 })}
-                                                placeholder="Masukkan judul modul"
+                                                placeholder="Masukkan penerbit modul"
                                                 className="w-full px-2 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-[#7166BA]"
                                             />
                                         </td>
                                         <td className="border p-3">
                                             <input
                                                 type="text"
-                                                value={newData.description}
+                                                value={newData.deskripsi}
                                                 onChange={(e) => setNewData({
                                                     ...newData,
-                                                    description: e.target.value
+                                                    deskripsi: e.target.value
                                                 })}
                                                 placeholder="Masukkan deskripsi"
                                                 className="w-full px-2 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-[#7166BA]"
