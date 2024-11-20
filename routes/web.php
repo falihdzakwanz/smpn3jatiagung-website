@@ -10,7 +10,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Public Routes
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -20,45 +19,32 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/greeting', function () {
+Route::get('/sambutan', function () {
     return Inertia::render('Greeting');
 })->name('greeting');
 
 Route::get('/staffs', [StaffController::class, 'guestIndex'])->name('staffs.guest');
 
-Route::get('/news', [BeritaController::class, 'guestIndex'])->name('news');
-Route::get('/news/{berita}', [BeritaController::class, 'show'])->name('news.show');
+Route::get('/berita', [BeritaController::class, 'guestIndex'])->name('news');
+
+Route::get('/berita/{berita}', [BeritaController::class, 'show'])->name('news.show');
+
+Route::get('/modul', [ModulController::class, 'guestIndex'])->name('modul.guest');
 
 Route::get('/sejarah', function () {
-    return Inertia::render('Sejarah');
-})->name('sejarah');
-Route::get('/modul', function () {
-    return Inertia::render('Modules');
-})->name('modul');
+    return Inertia::render('History');
+})->name('history');
 
-Route::get('/ekstrakurikuler/{id}', function () {
-    return Inertia::render('ExtracurricularDetail');
-})->name('ekstrakurikuler.show');
+Route::get('/ekstrakurikuler/{ekstrakurikuler}', [EkstrakurikulerController::class, 'show'])->name('ekstrakurikuler.show');
 
-Route::get('/prestasi', function () {
-    return Inertia::render('Achievements');
-})->name('achievements');
+Route::get('/prestasi', [PrestasiController::class, 'guestIndex'])->name('prestasi');
 
-// Admin Routes
+
 Route::middleware(['auth'])->prefix('admin')->group(function () {
-    // Dashboard
     Route::get('/', function () {
         return Inertia::render('Admin/Dashboard');
     })->name('admin.dashboard');
 
-    // Berita Management
-    Route::get('/news', function() {
-        return Inertia::render('Admin/News/Index');
-    })->name('admin.news.index');
-
-    // Module Management
-
-    // News Management
     Route::controller(BeritaController::class)->group(function () {
         Route::get('/news', 'index')->name('admin.news.index');
         Route::post('/news', 'store')->name('admin.news.store');
@@ -66,32 +52,36 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::delete('/news/{berita}', 'destroy')->name('admin.news.destroy');
     });
 
-    // Module Management
-    Route::get('/modules', [ModulController::class, 'index'])->name('admin.modules.index');
+    Route::controller(ModulController::class)->group(function () {
+        Route::get('/modul', 'index')->name('admin.modul.index');
+        Route::post('/modul', 'store')->name('admin.modul.store');
+        Route::post('/modul/{modul}', 'update')->name('admin.modul.update');
+        Route::delete('/modul/{modul}', 'destroy')->name('admin.modul.destroy');
+    });
+
+    Route::controller(EkstrakurikulerController::class)->group(function () {
+        Route::get('/ekstrakurikuler', 'index')->name('admin.ekstrakurikuler.index');
+        Route::post('/ekstrakurikuler', 'store')->name('admin.ekstrakurikuler.store');
+        Route::post('/ekstrakurikuler/{ekstrakurikuler}', 'update')->name('admin.ekstrakurikuler.update');
+        Route::delete('/ekstrakurikuler/{ekstrakurikuler}', 'destroy')->name('admin.ekstrakurikuler.destroy');
+    });
+
+    Route::controller(PrestasiController::class)->group(function () {
+        Route::get('/prestasi', 'index')->name('admin.prestasi.index');
+        Route::post('/prestasi', 'store')->name('admin.prestasi.store');
+        Route::post('/prestasi/{prestasi}', 'update')->name('admin.prestasi.update');
+        Route::delete('/prestasi/{prestasi}', 'destroy')->name('admin.prestasi.destroy');
+    });
     
-    // Ekstrakurikuler Management
-    Route::get('/extracurricular', [EkstrakurikulerController::class, 'index'])->name('admin.extracurricular.index');
-    
-    // Prestasi Management
-    Route::get('/achievements', [PrestasiController::class, 'index'])->name('admin.achievements.index');
-    
-    // Sejarah Management
-    Route::get('/history', function() {
-        return Inertia::render('Admin/History/Index');
-    })->name('admin.history.index');
-    
-    // Settings
     Route::get('/settings', function() {
         return Inertia::render('Admin/Settings/Index');
     })->name('admin.settings.index');
 
-    // Profile
     Route::get('/profile', function() {
         return Inertia::render('Admin/Profile/Index');
     })->name('admin.profile.index');
 });
 
-// Profile & Authentication Routes
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
