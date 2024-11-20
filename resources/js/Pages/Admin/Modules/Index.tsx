@@ -1,4 +1,3 @@
-// File: resources/js/Pages/Admin/Modules/Index.tsx
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, router } from '@inertiajs/react';
 import { useState, useRef } from 'react';
@@ -7,6 +6,7 @@ import { FiEdit2, FiTrash2, FiFile, FiDownload } from 'react-icons/fi';
 interface Module {
     id: number;
     title: string;
+    penerbit: string;
     description: string;
     file_path?: string;
     file_name?: string;
@@ -17,12 +17,14 @@ export default function ModulesIndex() {
         {
             id: 1,
             title: "Modul Matematika Kelas 7",
+            penerbit: "PT Jaya Abadi",
             description: "Materi pembelajaran matematika untuk kelas 7 semester 1",
             file_name: "matematika_7.pdf"
         },
         {
             id: 2,
             title: "Modul Bahasa Indonesia Kelas 7",
+            penerbit: "PT Jaya Abadi",
             description: "Materi pembelajaran bahasa indonesia untuk kelas 7 semester 1",
             file_name: "bahasa_7.pdf"
         }
@@ -33,6 +35,7 @@ export default function ModulesIndex() {
     const [newData, setNewData] = useState<Omit<Module, 'id'>>({
         title: '',
         description: '',
+        penerbit: '',
         file_path: '',
         file_name: ''
     });
@@ -107,7 +110,7 @@ export default function ModulesIndex() {
     const handleCancel = () => {
         setEditingData(null);
         setIsAdding(false);
-        setNewData({ title: '', description: '', file_path: '', file_name: '' });
+        setNewData({ title: '', penerbit: '', description: '', file_path: '', file_name: '' });
     };
 
     // Handler untuk delete modul
@@ -125,7 +128,13 @@ export default function ModulesIndex() {
     const handleAdd = () => {
         setIsAdding(true);
         setEditingData(null);
-        setNewData({ title: '', description: '', file_path: '', file_name: '' });
+        setNewData({
+            title: '',
+            penerbit: '',
+            description: '',
+            file_path: '',
+            file_name: '',
+        });
     };
 
     // Handler untuk save data baru
@@ -133,15 +142,16 @@ export default function ModulesIndex() {
         if (newData.title && newData.description && fileInputRef.current?.files?.[0]) {
             const formData = new FormData();
             formData.append('title', newData.title);
+            formData.append('penerbit', newData.penerbit);
             formData.append('description', newData.description);
             formData.append('file', fileInputRef.current.files[0]);
 
-            router.post('/admin/modules', formData, {
+            router.post('/admin/modul', formData, {
                 onSuccess: () => {
                     const newId = Math.max(0, ...modules.map(item => item.id)) + 1;
                     setModules(current => [...current, { id: newId, ...newData }]);
                     setIsAdding(false);
-                    setNewData({ title: '', description: '', file_path: '', file_name: '' });
+                    setNewData({ title: '',  penerbit: '', description: '', file_path: '', file_name: '' });
                 }
             });
         } else {
@@ -184,6 +194,7 @@ export default function ModulesIndex() {
                                 <tr className="bg-gray-50">
                                     <th className="border p-3 text-left">NO</th>
                                     <th className="border p-3 text-left">Judul Modul</th>
+                                    <th className="border p-3 text-left">Penerbit Modul</th>
                                     <th className="border p-3 text-left">Deskripsi</th>
                                     <th className="border p-3 text-left">File</th>
                                     <th className="border p-3 text-center">Aksi</th>
@@ -206,6 +217,21 @@ export default function ModulesIndex() {
                                                 />
                                             ) : (
                                                 module.title
+                                            )}
+                                        </td>
+                                        <td className="border p-3">
+                                            {editingData?.id === module.id ? (
+                                                <input
+                                                    type="text"
+                                                    value={editingData.penerbit}
+                                                    onChange={(e) => setEditingData({
+                                                        ...editingData,
+                                                        penerbit: e.target.value
+                                                    })}
+                                                    className="w-full px-2 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-[#7166BA]"
+                                                />
+                                            ) : (
+                                                module.penerbit
                                             )}
                                         </td>
                                         <td className="border p-3">
@@ -318,6 +344,18 @@ export default function ModulesIndex() {
                                                 onChange={(e) => setNewData({
                                                     ...newData,
                                                     title: e.target.value
+                                                })}
+                                                placeholder="Masukkan judul modul"
+                                                className="w-full px-2 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-[#7166BA]"
+                                            />
+                                        </td>
+                                        <td className="border p-3">
+                                            <input
+                                                type="text"
+                                                value={newData.penerbit}
+                                                onChange={(e) => setNewData({
+                                                    ...newData,
+                                                    penerbit: e.target.value
                                                 })}
                                                 placeholder="Masukkan judul modul"
                                                 className="w-full px-2 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-[#7166BA]"

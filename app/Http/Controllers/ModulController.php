@@ -13,7 +13,7 @@ class ModulController extends Controller
     {
         $moduls = Modul::all();
 
-        return Inertia::render('Moduls/Index', [
+        return Inertia::render('Admin/Modules/Index', [
             'moduls' => $moduls,
             'response' => [
                 'status' => 200,
@@ -33,17 +33,6 @@ class ModulController extends Controller
                 'status' => 200,
                 'message' => 'Moduls retrieved successfully',
                 'data' => $moduls,
-            ]
-        ]);
-    }
-
-
-    public function create()
-    {
-        return Inertia::render('Moduls/Create', [
-            'response' => [
-                'status' => 200,
-                'message' => 'Create form loaded successfully',
             ]
         ]);
     }
@@ -68,7 +57,7 @@ class ModulController extends Controller
 
         $modul->save();
 
-        return redirect()->route('moduls.index')->with([
+        return redirect()->route('admin.modul.index')->with([
             'response' => [
                 'status' => 201,
                 'message' => 'Modul created successfully',
@@ -77,38 +66,24 @@ class ModulController extends Controller
         ]);
     }
 
-    
-    public function show($id) {
-        // Retrieve the modul by ID
+    public function show($id)
+    {
         $modul = Modul::find($id);
-    
-        // Check if the modul exists
+
         if (!$modul) {
-            return redirect()->route('moduls.index')->with([
+            return redirect()->route('admin.modul.index')->with([
                 'response' => [
                     'status' => 404,
                     'message' => 'Modul not found',
                 ]
             ]);
         }
-    
-        // Return the Inertia::render with modul data
+
         return Inertia::render('Moduls/Show', [
             'modul' => $modul,
             'response' => [
                 'status' => 200,
                 'message' => 'Modul retrieved successfully',
-                'data' => $modul,
-            ]
-        ]);
-    }
-    public function edit(Modul $modul)
-    {
-        return Inertia::render('Moduls/Edit', [
-            'modul' => $modul,
-            'response' => [
-                'status' => 200,
-                'message' => 'Edit form loaded successfully',
                 'data' => $modul,
             ]
         ]);
@@ -128,7 +103,6 @@ class ModulController extends Controller
         $modul->deskripsi = $request->deskripsi;
 
         if ($request->hasFile('file')) {
-            // Delete the old file if exists
             if ($modul->file) {
                 Storage::disk('public')->delete($modul->file);
             }
@@ -137,7 +111,7 @@ class ModulController extends Controller
 
         $modul->save();
 
-        return redirect()->route('moduls.index')->with([
+        return redirect()->route('admin.modul.index')->with([
             'response' => [
                 'status' => 200,
                 'message' => 'Modul updated successfully',
@@ -148,14 +122,13 @@ class ModulController extends Controller
 
     public function destroy(Modul $modul)
     {
-        // Delete the file if it exists
         if ($modul->file) {
             Storage::disk('public')->delete($modul->file);
         }
 
         $modul->delete();
 
-        return redirect()->route('moduls.index')->with([
+        return redirect()->route('admin.modul.index')->with([
             'response' => [
                 'status' => 200,
                 'message' => 'Modul deleted successfully',
@@ -164,4 +137,3 @@ class ModulController extends Controller
         ]);
     }
 }
-
