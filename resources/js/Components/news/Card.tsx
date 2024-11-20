@@ -1,5 +1,6 @@
 import { News } from "@/types/news";
 import { Link } from "@inertiajs/react";
+import { FiImage } from 'react-icons/fi';
 
 const Card = (props: News) => {
     const { id, judul, deskripsi, gambar } = props;
@@ -18,22 +19,30 @@ const Card = (props: News) => {
     };
 
     return (
-        <div className="flex w-full flex-col items-start justify-start p-4 gap-4 md:flex-row border-b-2 border-b-color-primary">
-            <div className="flex items-center md:w-1/4 rounded-xl overflow-hidden">
-                <img
-                    src={gambar || ""}
-                    alt={`Berita - ${id}`}
-                    className="object-cover max-w-80 max-h-48"
-                />
+        <div className="flex w-full flex-col items-start justify-start gap-4 border-b-2 border-b-color-primary p-4 md:flex-row">
+            <div className="flex w-full max-h-48 max-w-80 items-center overflow-hidden rounded-xl md:w-1/4">
+                {gambar ? (
+                    <img
+                        src={gambar || ''}
+                        alt={`Berita - ${id}`}
+                        className="max-h-48 max-w-80 object-cover w-full"
+                    />
+                ) : (
+                    <FiImage className="max-w-80 max-h-48 w-full h-1/2" />
+                )}
             </div>
+
             <div>
-                <h2 className="mb-4 font-bold uppercase md:text-2xl text-color-primary">
+                <h2 className="mb-4 font-bold uppercase text-color-primary md:text-2xl">
                     {judul}
                 </h2>
-                <p className="mb-2 text-justify text-sm md:text-base text-color-primary">
+                <p className="mb-2 text-justify text-sm text-color-primary md:text-base">
                     {truncateAfterFourDots(deskripsi)}
                 </p>
-                <Link href={route('news.show', id)} className="font-bold text-color-primary text-sm md:text-base">
+                <Link
+                    href={route('news.show', id)}
+                    className="text-sm font-bold text-color-primary md:text-base"
+                >
                     Read More <span>&#187;</span>
                 </Link>
             </div>

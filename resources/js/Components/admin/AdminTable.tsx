@@ -1,4 +1,3 @@
-// resources/js/Components/admin/AdminTable.tsx
 import { FiEdit2, FiTrash2, FiImage, FiFile } from 'react-icons/fi';
 
 interface BaseItem {
@@ -71,9 +70,9 @@ const AdminTable = ({
                                             </button>
                                         </div>
                                     ) : hasImage && column.type === 'image' ? (
-                                        item[column.key] ? (
+                                        item.gambar ? (
                                             <img 
-                                                src={`/storage/${item[column.key]}`}
+                                                src={`/storage/${item.gambar}`}
                                                 alt="Preview"
                                                 className="w-20 h-20 object-cover rounded"
                                             />

@@ -23,7 +23,7 @@ class BeritaController extends Controller
                 'id' => $item->id,
                 'judul' => $item->judul,
                 'deskripsi' => $item->deskripsi,
-                'gambar' => $item->foto ? asset('storage/' . $item->foto) : null
+                'gambar' => $item->gambar ? asset('storage/' . $item->gambar) : null
             ];
         });
 
@@ -39,7 +39,7 @@ public function show($id)
         'id' => $berita->id,
         'judul' => $berita->judul,
         'deskripsi' => $berita->deskripsi,
-        'gambar' => $berita->foto ? asset('storage/' . $berita->foto) : null,
+        'gambar' => $berita->gambar ? asset('storage/' . $berita->gambar) : null,
     ]);
 }
 
@@ -63,7 +63,7 @@ public function show($id)
                 if (!$path) {
                     throw new \Exception('Gagal menyimpan gambar');
                 }
-                $berita->foto = $path;
+                $berita->gambar = $path;
             }
     
             $berita->save();
@@ -87,16 +87,16 @@ public function show($id)
             $berita->deskripsi = $request->description;
 
             if ($request->hasFile('image')) {
-                // Hapus foto lama jika ada
-                if ($berita->foto) {
-                    Storage::disk('public')->delete($berita->foto);
+                // Hapus gambar lama jika ada
+                if ($berita->gambar) {
+                    Storage::disk('public')->delete($berita->gambar);
                 }
 
                 $path = $request->file('image')->store('news', 'public');
                 if (!$path) {
                     throw new \Exception('Gagal menyimpan gambar');
                 }
-                $berita->foto = $path;
+                $berita->gambar = $path;
             }
 
             $berita->save();
@@ -110,8 +110,8 @@ public function show($id)
     public function destroy(Berita $berita)
     {
         try {
-            if ($berita->foto) {
-                Storage::disk('public')->delete($berita->foto);
+            if ($berita->gambar) {
+                Storage::disk('public')->delete($berita->gambar);
             }
 
             $berita->delete();

@@ -19,7 +19,7 @@ const News = ({ news }: Props) => {
                         id={item.id}
                         judul={item.judul}
                         deskripsi={item.deskripsi}
-                        gambar={item.gambar || 'https://www.dummyimage.com/450x300/000/fff&text=LOGO'}
+                        gambar={item.gambar || ""}
                     />
                 ))}
             </div>
