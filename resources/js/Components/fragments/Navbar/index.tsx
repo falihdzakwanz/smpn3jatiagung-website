@@ -95,7 +95,7 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
                                 fill="none"
                                 viewBox="0 0 24 24"
                             >
-                                {isOpen ? (
+                                {!isOpen ? (
                                     <>
                                         <path
                                             className="origin-right transform transition-all duration-300 group-hover:scale-x-125"
@@ -133,9 +133,9 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
                 </div>
 
                 <div
-                    className={`${isOpen ? 'hidden' : 'block'} items-center space-x-0 md:flex lg:space-x-1`}
+                    className={`${isOpen ? 'block' : 'hidden'} h-full items-center space-x-0 md:flex lg:space-x-1`}
                 >
-                    <div className="group block h-full bg-color-primary md:relative md:flex md:items-center md:justify-center md:bg-opacity-0">
+                    <div className="group block md:h-full bg-color-primary md:relative md:flex md:items-center md:justify-center md:bg-opacity-0">
                         <button
                             className="flex w-full items-center justify-start gap-1 border-b border-b-color-secondary px-4 py-2 uppercase text-color-secondary transition-all duration-300 hover:text-color-accent hover:brightness-150 md:min-w-52 md:border-none"
                             onClick={() => toggleSubMenu('isProfile')}
@@ -171,7 +171,7 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
                             onClick={(e) =>
                                 handleNavClick(e, 'ekstrakurikuler')
                             }
-                            className={`px-4 py-2 lg:px-4 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} block border-b border-b-color-secondary text-sm transition-all duration-300 hover:text-color-accent hover:brightness-150 md:border-none lg:text-base`}
+                            className={`px-4 py-2 md:${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} block border-b border-b-color-secondary text-sm text-color-secondary transition-all duration-300 hover:text-color-accent hover:brightness-150 md:border-none lg:text-base`}
                         >
                             Ekstrakurikuler
                         </a>
