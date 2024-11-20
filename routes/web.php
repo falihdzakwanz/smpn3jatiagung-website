@@ -55,8 +55,15 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::controller(ModulController::class)->group(function () {
         Route::get('/modul', 'index')->name('admin.modul.index');
         Route::post('/modul', 'store')->name('admin.modul.store');
-        Route::post('/modul/{modul}', 'update')->name('admin.modul.update');
+        Route::put('/modul/{modul}', 'update')->name('admin.modul.update');
         Route::delete('/modul/{modul}', 'destroy')->name('admin.modul.destroy');
+    });
+
+    Route::controller(StaffController::class)->group(function () {
+        Route::get('/staff', 'index')->name('admin.staff.index');
+        Route::post('/staff', 'store')->name('admin.staff.store');
+        Route::put('/staff/{staff}', 'update')->name('admin.staff.update');
+        Route::delete('/staff/{staff}', 'destroy')->name('admin.staff.destroy');
     });
 
     Route::controller(EkstrakurikulerController::class)->group(function () {
