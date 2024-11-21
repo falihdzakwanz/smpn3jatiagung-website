@@ -3,5 +3,5 @@ export type Module = {
     nama: string;
     penerbit: string;
     deskripsi: string;
-    file: string | null;
+    file: string;
 };

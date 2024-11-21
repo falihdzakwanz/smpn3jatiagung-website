@@ -15,7 +15,7 @@ const Card = (props: Module) => {
                 <p className="text-sm md:text-lg text-justify">{deskripsi}</p>
             </div>
             <div className="overflow-hidden rounded-xl bg-color-accent shadow-md md:shadow-xl hover:text-color-primary">
-                <a href={file || ""} className="block text-4xl md:text-6xl">
+                <a href={`storage/${file}` || ""} className="block text-4xl md:text-6xl">
                     <MdOutlineFileDownload />
                 </a>
             </div>

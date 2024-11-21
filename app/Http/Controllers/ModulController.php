@@ -11,28 +11,28 @@ class ModulController extends Controller
 {
     public function index()
     {
-        $moduls = Modul::all();
+        $modules = Modul::all();
 
         return Inertia::render('Admin/Modules/Index', [
-            'moduls' => $moduls,
+            'modules' => $modules,
             'response' => [
                 'status' => 200,
                 'message' => 'Moduls retrieved successfully',
-                'data' => $moduls,
+                'data' => $modules,
             ]
         ]);
     }
 
     public function guestIndex()
     {
-        $moduls = Modul::all();
+        $modules = Modul::all();
 
-        return Inertia::render('Moduls/Index', [
-            'moduls' => $moduls,
+        return Inertia::render('Modules', [
+            'modules' => $modules,
             'response' => [
                 'status' => 200,
                 'message' => 'Moduls retrieved successfully',
-                'data' => $moduls,
+                'data' => $modules,
             ]
         ]);
     }
@@ -52,7 +52,10 @@ class ModulController extends Controller
         $modul->deskripsi = $request->deskripsi;
 
         if ($request->hasFile('file')) {
-            $modul->file = $request->file('file')->store('moduls', 'public');
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName() . '_' . time();
+            $path = $file->storeAs('modules', $filename, 'public');
+            $modul->file = $path;
         }
 
         $modul->save();
@@ -65,6 +68,8 @@ class ModulController extends Controller
             ]
         ]);
     }
+
+
 
     public function show($id)
     {
@@ -106,7 +111,12 @@ class ModulController extends Controller
             if ($modul->file) {
                 Storage::disk('public')->delete($modul->file);
             }
-            $modul->file = $request->file('file')->store('moduls', 'public');
+
+
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName() . '_' . time();
+            $path = $file->storeAs('modules', $filename, 'public');
+            $modul->file = $path;
         }
 
         $modul->save();
@@ -119,6 +129,7 @@ class ModulController extends Controller
             ]
         ]);
     }
+
 
     public function destroy(Modul $modul)
     {

@@ -55,7 +55,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::controller(ModulController::class)->group(function () {
         Route::get('/modul', 'index')->name('admin.modul.index');
         Route::post('/modul', 'store')->name('admin.modul.store');
-        Route::put('/modul/{modul}', 'update')->name('admin.modul.update');
+        Route::post('/modul/{modul}', 'update')->name('admin.modul.update');
         Route::delete('/modul/{modul}', 'destroy')->name('admin.modul.destroy');
     });
 
