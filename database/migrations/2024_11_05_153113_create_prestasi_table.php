@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('prestasi', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
-            $table->string('foto')->nullable();
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }
