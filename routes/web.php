@@ -37,7 +37,7 @@ Route::get('/sejarah', function () {
 
 Route::get('/ekstrakurikuler/{ekstrakurikuler}', [EkstrakurikulerController::class, 'show'])->name('ekstrakurikuler.show');
 
-Route::get('/prestasi', [PrestasiController::class, 'guestIndex'])->name('prestasi');
+Route::get('/prestasi', [PrestasiController::class, 'guestIndex'])->name('prestasi.guest');
 
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {

@@ -25,18 +25,20 @@ class PrestasiController extends Controller
      * Display prestasi to Guest
      */
 
-     public function guestIndex(Prestasi $prestasi)
-     {
-        $prestasi = Prestasi::all();
-         return view('Prestasi/GuestIndex', [
-             'prestasi' => $prestasi,
-             'response' => [
-                 'status' => 200,
-                 'message' => 'Prestasi list retrieved successfully',
-                 'data' => $prestasi,
-             ]
-         ]);
-     }
+public function guestIndex()
+{
+    $prestasi = Prestasi::all();
+
+    return Inertia::render('Achievements', [
+        'prestasi' => $prestasi,
+        'response' => [
+            'status' => 200,
+            'message' => 'Prestasi list retrieved successfully',
+            'data' => $prestasi,
+        ]
+    ]);
+}
+
 
     /**
      * Show the form for creating a new resource.
