@@ -63,10 +63,10 @@ public function guestIndex()
                 'title' => 'required|string|max:255',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
             ]);
-    
+
             $prestasi = new Prestasi();
             $prestasi->judul = $request->title;
-    
+
             if ($request->hasFile('image')) {
                 $path = $request->file('image')->store('prestasi', 'public');
                 if (!$path) {
@@ -74,7 +74,7 @@ public function guestIndex()
                 }
                 $prestasi->gambar = $path;
             }
-    
+
             $prestasi->save();
 
         return redirect()->route('admin.prestasi.index')->with([

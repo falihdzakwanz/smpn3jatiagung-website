@@ -15,7 +15,7 @@ class BeritaController extends Controller
             'news' => Berita::latest()->get()
         ]);
     }
-    
+
     public function guestIndex()
     {
         $news = Berita::latest()->get()->map(function ($item) {
@@ -23,7 +23,7 @@ class BeritaController extends Controller
                 'id' => $item->id,
                 'judul' => $item->judul,
                 'deskripsi' => $item->deskripsi,
-                'gambar' => $item->gambar ? asset('storage/' . $item->gambar) : null
+                'gambar' => $item->gambar ? asset(  'storage/'.$item->gambar) : null
             ];
         });
 
@@ -53,21 +53,21 @@ public function show($id)
                 'description' => 'required|string',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
             ]);
-    
+
             $berita = new Berita();
             $berita->judul = $request->title;
             $berita->deskripsi = $request->description;
-    
+
             if ($request->hasFile('image')) {
                 $path = $request->file('image')->store('news', 'public');
                 if (!$path) {
                     throw new \Exception('Gagal menyimpan gambar');
                 }
+
                 $berita->gambar = $path;
             }
-    
             $berita->save();
-    
+
             return redirect()->back()->with('message', 'Berita berhasil ditambahkan');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Gagal menambahkan berita: ' . $e->getMessage()]);
