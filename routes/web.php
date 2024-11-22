@@ -62,7 +62,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::controller(StaffController::class)->group(function () {
         Route::get('/staff', 'index')->name('admin.staff.index');
         Route::post('/staff', 'store')->name('admin.staff.store');
-        Route::put('/staff/{staff}', 'update')->name('admin.staff.update');
+        Route::post('/staff/{staff}', 'update')->name('admin.staff.update');
         Route::delete('/staff/{staff}', 'destroy')->name('admin.staff.destroy');
     });
 
