@@ -1,4 +1,4 @@
-import { FiEdit2, FiTrash2, FiImage, FiFile } from 'react-icons/fi';
+import { FiEdit2, FiFile, FiImage, FiTrash2 } from 'react-icons/fi';
 
 interface BaseItem {
     id: number;
@@ -22,8 +22,8 @@ interface AdminTableProps {
 }
 
 const AdminTable = ({
-    items,
-    columns,
+    items = [],
+    columns = [],
     onEdit,
     onDelete,
     uploadPath,
@@ -37,8 +37,8 @@ const AdminTable = ({
                     <tr className="bg-gray-50">
                         <th className="border p-3 text-left">NO</th>
                         {columns.map((column) => (
-                            <th 
-                                key={column.key} 
+                            <th
+                                key={column.key}
                                 className={`border p-3 ${column.key === 'actions' ? 'text-center' : 'text-left'} ${column.width || ''}`}
                             >
                                 {column.label}
@@ -54,37 +54,39 @@ const AdminTable = ({
                                 <td key={column.key} className="border p-3">
                                     {column.key === 'actions' ? (
                                         <div className="flex justify-center gap-2">
-                                            <button 
+                                            <button
                                                 onClick={() => onEdit(item)}
-                                                className="bg-[#7166BA] hover:bg-[#6357AB] text-white px-4 py-1 rounded flex items-center gap-1 transition duration-300"
+                                                className="text-white flex items-center gap-1 rounded bg-[#7166BA] px-4 py-1 transition duration-300 hover:bg-[#6357AB]"
                                             >
                                                 <FiEdit2 size={16} />
                                                 <span>Edit</span>
                                             </button>
-                                            <button 
-                                                onClick={() => onDelete(item.id)}
-                                                className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded flex items-center gap-1 transition duration-300"
+                                            <button
+                                                onClick={() =>
+                                                    onDelete(item.id)
+                                                }
+                                                className="bg-red-500 hover:bg-red-600 text-white flex items-center gap-1 rounded px-4 py-1 transition duration-300"
                                             >
                                                 <FiTrash2 size={16} />
                                                 <span>Hapus</span>
                                             </button>
                                         </div>
                                     ) : hasImage && column.type === 'image' ? (
-                                        item.gambar ? (
-                                            <img 
-                                                src={`/storage/${item.gambar}`}
+                                        item[column.key] ? (
+                                            <img
+                                                src={`/storage/${item[column.key]}`}
                                                 alt="Preview"
-                                                className="w-20 h-20 object-cover rounded"
+                                                className="h-20 w-20 rounded object-cover"
                                             />
                                         ) : (
-                                            <div className="w-20 h-20 bg-gray-100 rounded flex items-center justify-center">
-                                                <FiImage className="w-8 h-8 text-gray-400" />
+                                            <div className="bg-gray-100 flex h-20 w-20 items-center justify-center rounded">
+                                                <FiImage className="text-gray-400 h-8 w-8" />
                                             </div>
                                         )
                                     ) : hasFile && column.type === 'file' ? (
                                         <div className="flex items-center gap-2">
                                             <FiFile className="text-gray-600" />
-                                            <span className="text-sm truncate max-w-[150px]">
+                                            <span className="max-w-[150px] truncate text-sm">
                                                 {item[column.key] || 'No file'}
                                             </span>
                                         </div>

@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('nama');
             $table->text('deskripsi');
             $table->string('foto_judul')->nullable();
-            $table->string('foto_kegiatan')->nullable();
+            $table->string('foto_kegiatan_1')->nullable();
+            $table->string('foto_kegiatan_2')->nullable();
+            $table->string('foto_kegiatan_3')->nullable();
             $table->timestamps();
         });
     }

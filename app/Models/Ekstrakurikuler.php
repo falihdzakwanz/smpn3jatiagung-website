@@ -16,6 +16,8 @@ class Ekstrakurikuler extends Model
         'nama',
         'deskripsi',
         'foto_judul',
-        'foto_kegiatan'
+        'foto_kegiatan_1',
+        'foto_kegiatan_2',
+        'foto_kegiatan_3'
     ];
 }

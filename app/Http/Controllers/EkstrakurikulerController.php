@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class EkstrakurikulerController extends Controller
 {
@@ -15,9 +16,9 @@ class EkstrakurikulerController extends Controller
      */
     public function index(Ekstrakurikuler $ekstrakurikuler)
     {
-        return Inertia::render('Ekstrakurikuler/Index', [
-            'ekstrakurikulerData' => $ekstrakurikuler->all(),
-            'count' => $$ekstrakurikuler->count(),
+        return Inertia::render('Admin/Extracurricular/Index', [
+            'ekstrakurikuler' => $ekstrakurikuler->all(),
+            'count' => $ekstrakurikuler->count(),
         ]); // return data to frontend
     }
 
@@ -26,7 +27,7 @@ class EkstrakurikulerController extends Controller
     public function guestIndex()
     {
         $ekstrakurikuler = Ekstrakurikuler::all();
-        return view('Esktrakurikuler/GuestIndex', [
+        return Inertia::render('Esktrakurikuler/GuestIndex', [
             'ekstrakurikulerData' => $ekstrakurikuler,
             'response' => [
                 'status' => 200,
@@ -48,35 +49,83 @@ class EkstrakurikulerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Ekstrakurikuler $ekstrakurikuler)
+    public function store(Request $request)
     {
-        //
-        $$ekstrakurikuler->create($request->validate([
-            'nama' => 'required',
-            'deskripsi' => 'required',
-            'foto_judul' => 'required',
-            'foto_kegiatan' => 'required',
-        ]));
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'required|string|max:1000',
+            'foto_judul' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_kegiatan_1' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_kegiatan_2' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_kegiatan_3' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
-        return redirect()->route('ekstrakurikuler.index')->with('message', 'Ekstrakurikuler added successfully');
+        $ekstrakurikuler = new Ekstrakurikuler();
+        $ekstrakurikuler->nama = $validatedData['nama'];
+        $ekstrakurikuler->deskripsi = $validatedData['deskripsi'];
+
+        if ($request->hasFile('foto_judul')) {
+            $path = $request->file('foto_judul')->store('extracurriculars', 'public');
+            if (!$path) {
+                throw new \Exception('Gagal menyimpan gambar judul');
+            }
+            $ekstrakurikuler->foto_judul = $path;
+        }
+
+        if ($request->hasFile('foto_kegiatan_1')) {
+            $path = $request->file('foto_kegiatan_1')->store('extracurriculars', 'public');
+            if (!$path) {
+                throw new \Exception('Gagal menyimpan gambar kegiatan 1');
+            }
+            $ekstrakurikuler->foto_kegiatan_1 = $path;
+        }
+
+        if ($request->hasFile('foto_kegiatan_2')) {
+            $path = $request->file('foto_kegiatan_2')->store('extracurriculars', 'public');
+            if (!$path) {
+                throw new \Exception('Gagal menyimpan gambar kegiatan 2');
+            }
+            $ekstrakurikuler->foto_kegiatan_2 = $path;
+        }
+
+        if ($request->hasFile('foto_kegiatan_3')) {
+            $path = $request->file('foto_kegiatan_3')->store('extracurriculars', 'public');
+            if (!$path) {
+                throw new \Exception('Gagal menyimpan gambar kegiatan 3');
+            }
+            $ekstrakurikuler->foto_kegiatan_3 = $path;
+        }
+
+        $ekstrakurikuler->save();
+
+        return redirect()->route('admin.ekstrakurikuler.index')->with([
+            'response' => [
+                'status' => 201,
+                'message' => 'Ekstrakurikuler created successfully',
+                'data' => $ekstrakurikuler,
+            ]
+        ]);
     }
+
 
     /**
      * Display the specified resource.
      */
-    public function show(Ekstrakurikuler $ekstrakurikuler)
+    public function show($id)
     {
-        //
-        return Inertia::render('Ekstrakurikuler/Show', [
-            'ekstrakurikuler' => $ekstrakurikuler,
-            'response' => [
-                'status' => 200,
-                'message' => 'Ekstrakurikuler retrieved successfully',
-                'data' => $ekstrakurikuler,
-            ]
-            ]);
-        
+        $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
+        return Inertia::render('ExtracurricularDetail', [
+            'id' => $ekstrakurikuler->id,
+            'nama' => $ekstrakurikuler->nama,
+            'deskripsi' => $ekstrakurikuler->deskripsi,
+            'foto_judul' => $ekstrakurikuler->foto_judul ? asset('storage/' . $ekstrakurikuler->foto_judul) : null,
+            'foto_kegiatan_1' => $ekstrakurikuler->foto_kegiatan_1 ? asset('storage/' . $ekstrakurikuler->foto_kegiatan_1) : null,
+            'foto_kegiatan_2' => $ekstrakurikuler->foto_kegiatan_2 ? asset('storage/' . $ekstrakurikuler->foto_kegiatan_2) : null,
+            'foto_kegiatan_3' => $ekstrakurikuler->foto_kegiatan_3 ? asset('storage/' . $ekstrakurikuler->foto_kegiatan_3) : null,
+        ]);
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -98,33 +147,118 @@ class EkstrakurikulerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ekstrakurikuler $ekstrakurikuler, $id)
+    public function update(Request $request, Ekstrakurikuler $ekstrakurikuler)
     {
-        //
-        $request->validate([
-            'nama' => 'required',
-            'deskripsi' => 'required',
-            'foto_judul' => 'required',
-            'foto_kegiatan' => 'required', // Sesuaikan dengan validasi yang dibutuhkan
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'required|string|max:1000',
+            'foto_judul' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_kegiatan_1' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_kegiatan_2' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_kegiatan_3' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $$ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
-        $$ekstrakurikuler->update($request->only(['nama', 'deskripsi', 'foto_judul', 'foto_kegiatan']));
+        $ekstrakurikuler->nama = $validatedData['nama'];
+        $ekstrakurikuler->deskripsi = $validatedData['deskripsi'];
 
-        return redirect()->route('ekstrakurikuler.index')->with('success', 'Data ekstrakurikuler berhasil diupdate');
+        if ($request->hasFile('foto_judul')) {
+            if ($ekstrakurikuler->foto_judul) {
+                Storage::disk('public')->delete($ekstrakurikuler->foto_judul);
+            }
+            $path = $request->file('foto_judul')->store('extracurriculars', 'public');
+            if (!$path) {
+                throw new \Exception('Gagal menyimpan gambar judul');
+            }
+            $ekstrakurikuler->foto_judul = $path;
+        }
 
+        if ($request->hasFile('foto_kegiatan_1')) {
+            if ($ekstrakurikuler->foto_kegiatan_1) {
+                Storage::disk('public')->delete($ekstrakurikuler->foto_kegiatan_1);
+            }
+            $path = $request->file('foto_kegiatan_1')->store('extracurriculars', 'public');
+            if (!$path) {
+                throw new \Exception('Gagal menyimpan gambar kegiatan 1');
+            }
+            $ekstrakurikuler->foto_kegiatan_1 = $path;
+        }
+
+        if ($request->hasFile('foto_kegiatan_2')) {
+            if ($ekstrakurikuler->foto_kegiatan_2) {
+                Storage::disk('public')->delete($ekstrakurikuler->foto_kegiatan_2);
+            }
+            $path = $request->file('foto_kegiatan_2')->store('extracurriculars', 'public');
+            if (!$path) {
+                throw new \Exception('Gagal menyimpan gambar kegiatan 2');
+            }
+            $ekstrakurikuler->foto_kegiatan_2 = $path;
+        }
+
+        if ($request->hasFile('foto_kegiatan_3')) {
+            if ($ekstrakurikuler->foto_kegiatan_3) {
+                Storage::disk('public')->delete($ekstrakurikuler->foto_kegiatan_3);
+            }
+            $path = $request->file('foto_kegiatan_3')->store('extracurriculars', 'public');
+            if (!$path) {
+                throw new \Exception('Gagal menyimpan gambar kegiatan 3');
+            }
+            $ekstrakurikuler->foto_kegiatan_3 = $path;
+        }
+
+        $ekstrakurikuler->save();
+
+        return redirect()->route('admin.ekstrakurikuler.index')->with([
+            'response' => [
+                'status' => 200,
+                'message' => 'Ekstrakurikuler updated successfully',
+                'data' => $ekstrakurikuler,
+            ]
+        ]);
     }
+
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ekstrakurikuler $ekstrakurikuler, $id)
+    public function destroy(Ekstrakurikuler $ekstrakurikuler)
     {
-        //
-        $$ekstrakurikuleri = Ekstrakurikuler::findOrFail($id);
+        try {
+            // Hapus file gambar jika ada
+            if ($ekstrakurikuler->foto_judul) {
+                Storage::disk('public')->delete($ekstrakurikuler->foto_judul);
+            }
 
-        $$ekstrakurikuler->delete();
+            if ($ekstrakurikuler->foto_kegiatan_1) {
+                Storage::disk('public')->delete($ekstrakurikuler->foto_kegiatan_1);
+            }
 
-        return redirect()->route('ekstrakurikuler.index')->with('success', 'Data ekstrakurikuler berhasil dihapus');
+            if ($ekstrakurikuler->foto_kegiatan_2) {
+                Storage::disk('public')->delete($ekstrakurikuler->foto_kegiatan_2);
+            }
+
+            if ($ekstrakurikuler->foto_kegiatan_3) {
+                Storage::disk('public')->delete($ekstrakurikuler->foto_kegiatan_3);
+            }
+
+            // Hapus data dari database
+            $ekstrakurikuler->delete();
+
+            return redirect()->route('admin.ekstrakurikuler.index')->with([
+                'response' => [
+                    'status' => 200,
+                    'message' => 'Ekstrakurikuler berhasil dihapus',
+                    'data' => $ekstrakurikuler,
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('admin.ekstrakurikuler.index')->withErrors([
+                'response' => [
+                    'status' => 500,
+                    'error' => 'Gagal menghapus ekstrakurikuler: ' . $e->getMessage(),
+                ]
+            ]);
+        }
     }
+
 }

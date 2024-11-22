@@ -1,6 +1,5 @@
-// resources/js/Components/admin/AdminForm.tsx
-import { useRef } from 'react';
-import { FiImage, FiFile } from 'react-icons/fi';
+import { useState } from 'react';
+import { FiFile, FiImage } from 'react-icons/fi';
 
 type FieldType = 'text' | 'textarea' | 'image' | 'file';
 
@@ -30,51 +29,72 @@ const AdminForm = ({
     hasImage = false,
     hasFile = false,
 }: AdminFormProps) => {
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [filePreviews, setFilePreviews] = useState<Record<string, string>>(
+        {},
+    );
+
+    const handleFileChange = (key: string, file: File | null) => {
+        if (file) {
+            onChange(key, file);
+            setFilePreviews((prev) => ({
+                ...prev,
+                [key]: URL.createObjectURL(file),
+            }));
+        }
+    };
 
     return (
         <div className="space-y-4">
             {fields.map((field) => (
                 <div key={field.key} className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="text-gray-700 block text-sm font-medium">
                         {field.label}
                     </label>
-                    
+
                     {field.type === 'textarea' ? (
                         <textarea
                             value={values[field.key] || ''}
-                            onChange={(e) => onChange(field.key, e.target.value)}
+                            onChange={(e) =>
+                                onChange(field.key, e.target.value)
+                            }
                             placeholder={field.placeholder}
                             rows={3}
-                            className="w-full px-2 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-[#7166BA]"
+                            className="w-full rounded border px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#7166BA]"
                         />
                     ) : field.type === 'image' && hasImage ? (
                         <div className="flex items-center gap-4">
-                            {values[field.key] && (
+                            {(filePreviews[field.key] ||
+                                typeof values[field.key] === 'string') && (
                                 <img
-                                    src={typeof values[field.key] === 'string' ? values[field.key] : URL.createObjectURL(values[field.key])}
+                                    src={
+                                        filePreviews[field.key] ||
+                                        `/storage/${values[field.key]}`
+                                    }
                                     alt="Preview"
-                                    className="w-20 h-20 object-cover rounded"
+                                    className="h-20 w-20 rounded object-cover"
                                 />
                             )}
                             <input
                                 type="file"
                                 accept="image/*"
-                                ref={fileInputRef}
-                                onChange={(e) => {
-                                    const file = e.target.files?.[0];
-                                    if (file) onChange(field.key, file);
-                                }}
+                                onChange={(e) =>
+                                    handleFileChange(
+                                        field.key,
+                                        e.target.files?.[0] || null,
+                                    )
+                                }
                                 className="hidden"
+                                id={field.key}
                             />
-                            <button
-                                type="button"
-                                onClick={() => fileInputRef.current?.click()}
-                                className="px-3 py-1 bg-[#7166BA] hover:bg-[#6357AB] text-white rounded-md flex items-center gap-1 text-sm"
+                            <label
+                                htmlFor={field.key}
+                                className="text-white flex cursor-pointer items-center gap-1 rounded-md bg-[#7166BA] px-3 py-1 text-sm hover:bg-[#6357AB]"
                             >
-                                <FiImage className="w-4 h-4" />
-                                {values[field.key] ? 'Ganti Gambar' : 'Upload Gambar'}
-                            </button>
+                                <FiImage className="h-4 w-4" />
+                                {values[field.key]
+                                    ? 'Ganti Gambar'
+                                    : 'Upload Gambar'}
+                            </label>
                         </div>
                     ) : field.type === 'file' && hasFile ? (
                         <div className="flex items-center gap-4">
@@ -82,8 +102,8 @@ const AdminForm = ({
                                 <div className="flex items-center gap-2">
                                     <FiFile className="text-gray-600" />
                                     <span className="text-sm">
-                                        {typeof values[field.key] === 'string' 
-                                            ? values[field.key] 
+                                        {typeof values[field.key] === 'string'
+                                            ? values[field.key]
                                             : values[field.key].name}
                                     </span>
                                 </div>
@@ -91,44 +111,49 @@ const AdminForm = ({
                             <input
                                 type="file"
                                 accept=".pdf,.doc,.docx"
-                                ref={fileInputRef}
-                                onChange={(e) => {
-                                    const file = e.target.files?.[0];
-                                    if (file) onChange(field.key, file);
-                                }}
+                                onChange={(e) =>
+                                    handleFileChange(
+                                        field.key,
+                                        e.target.files?.[0] || null,
+                                    )
+                                }
                                 className="hidden"
+                                id={field.key}
                             />
-                            <button
-                                type="button"
-                                onClick={() => fileInputRef.current?.click()}
-                                className="px-3 py-1 bg-[#7166BA] hover:bg-[#6357AB] text-white rounded-md flex items-center gap-1 text-sm"
+                            <label
+                                htmlFor={field.key}
+                                className="text-white flex cursor-pointer items-center gap-1 rounded-md bg-[#7166BA] px-3 py-1 text-sm hover:bg-[#6357AB]"
                             >
-                                <FiFile className="w-4 h-4" />
-                                {values[field.key] ? 'Ganti File' : 'Upload File'}
-                            </button>
+                                <FiFile className="h-4 w-4" />
+                                {values[field.key]
+                                    ? 'Ganti File'
+                                    : 'Upload File'}
+                            </label>
                         </div>
                     ) : (
                         <input
                             type="text"
                             value={values[field.key] || ''}
-                            onChange={(e) => onChange(field.key, e.target.value)}
+                            onChange={(e) =>
+                                onChange(field.key, e.target.value)
+                            }
                             placeholder={field.placeholder}
-                            className="w-full px-2 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-[#7166BA]"
+                            className="w-full rounded border px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#7166BA]"
                         />
                     )}
                 </div>
             ))}
-            
+
             <div className="flex justify-end gap-2">
                 <button
                     onClick={onSubmit}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1 rounded"
+                    className="bg-emerald-500 hover:bg-emerald-600 text-white rounded px-4 py-1"
                 >
                     Save
                 </button>
                 <button
                     onClick={onCancel}
-                    className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-1 rounded"
+                    className="bg-gray-500 hover:bg-gray-600 text-white rounded px-4 py-1"
                 >
                     Cancel
                 </button>
