@@ -33,22 +33,22 @@ export default function AdminLayout({ children, breadcrumbs = [] }: Props) {
         {
             label: 'LAMAN BERITA',
             icon: <BiNews className="w-5 h-5" />,
-            href: '/admin/news'
+            href: '/admin/berita'
         },
         {
             label: 'MODULE',
             icon: <FiBook className="w-5 h-5" />,
-            href: '/admin/modules'
+            href: '/admin/modul'
         },
         {
             label: 'EKSTRAKURIKULER',
             icon: <FiAward className="w-5 h-5" />,
-            href: '/admin/extracurricular'
+            href: '/admin/ekstrakurikuler'
         },
         {
             label: 'PRESTASI',
             icon: <FiAward className="w-5 h-5" />,
-            href: '/admin/achievements'
+            href: '/admin/prestasi'
         },
         {
             label: 'PROFIL STAFF',
