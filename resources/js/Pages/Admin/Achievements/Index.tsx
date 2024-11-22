@@ -1,14 +1,9 @@
 import AdminForm from '@/Components/admin/AdminForm';
 import AdminPageContainer from '@/Components/admin/AdminPageContainer';
 import AdminTable from '@/Components/admin/AdminTable';
+import { Achievement } from '@/types/achievement';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
-
-interface Prestasi {
-    id: number;
-    judul: string;
-    foto?: string;
-}
 
 interface Column {
     key: string;
@@ -25,24 +20,24 @@ interface FormField {
 }
 
 interface Props {
-    prestasi: Prestasi[];
+    prestasi: Achievement[];
 }
 
 interface FormData {
     judul: string;
-    foto?: File | string;
+    gambar?: File | string;
 }
 
 export default function NewsIndex({ prestasi }: Props) {
-    const [editingData, setEditingData] = useState<Prestasi | null>(null);
+    const [editingData, setEditingData] = useState<Achievement | null>(null);
     const [isAdding, setIsAdding] = useState(false);
     const [formData, setFormData] = useState<FormData>({
         judul: '',
-        foto: undefined,
+        gambar: undefined,
     });
 
     const columns: Column[] = [
-        { key: 'foto', label: 'Gambar', type: 'image', width: 'w-24' },
+        { key: 'gambar', label: 'Gambar', type: 'image', width: 'w-24' },
         { key: 'judul', label: 'Judul', type: 'text' },
         { key: 'actions', label: 'Aksi', width: 'w-48' },
     ];
@@ -54,15 +49,15 @@ export default function NewsIndex({ prestasi }: Props) {
             type: 'text',
             placeholder: 'Masukkan judul',
         },
-        { key: 'foto', label: 'Gambar', type: 'image' },
+        { key: 'gambar', label: 'Gambar', type: 'image' },
     ];
 
-    const handleEdit = (item: Prestasi) => {
+    const handleEdit = (item: Achievement) => {
         setEditingData(item);
         setIsAdding(false);
         setFormData({
             judul: item.judul,
-            foto: item.foto,
+            gambar: item.gambar,
         });
     };
 
@@ -71,7 +66,7 @@ export default function NewsIndex({ prestasi }: Props) {
         setEditingData(null);
         setFormData({
             judul: '',
-            foto: undefined,
+            gambar: undefined,
         });
     };
 
@@ -80,7 +75,7 @@ export default function NewsIndex({ prestasi }: Props) {
         setIsAdding(false);
         setFormData({
             judul: '',
-            foto: undefined,
+            gambar: undefined,
         });
     };
 
@@ -102,8 +97,8 @@ export default function NewsIndex({ prestasi }: Props) {
 
         form.append('title', formData.judul);
 
-        if (formData.foto instanceof File) {
-            form.append('image', formData.foto);
+        if (formData.gambar instanceof File) {
+            form.append('image', formData.gambar);
         }
 
         if (editingData) {
@@ -112,7 +107,7 @@ export default function NewsIndex({ prestasi }: Props) {
                     setEditingData(null);
                     setFormData({
                         judul: '',
-                        foto: undefined,
+                        gambar: undefined,
                     });
                 },
                 preserveScroll: true,
@@ -123,7 +118,7 @@ export default function NewsIndex({ prestasi }: Props) {
                     setIsAdding(false);
                     setFormData({
                         judul: '',
-                        foto: undefined,
+                        gambar: undefined,
                     });
                 },
                 preserveScroll: true,
