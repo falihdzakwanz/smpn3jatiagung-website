@@ -46,10 +46,10 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     })->name('admin.dashboard');
 
     Route::controller(BeritaController::class)->group(function () {
-        Route::get('/news', 'index')->name('admin.news.index');
-        Route::post('/news', 'store')->name('admin.news.store');
-        Route::post('/news/{berita}', 'update')->name('admin.news.update');
-        Route::delete('/news/{berita}', 'destroy')->name('admin.news.destroy');
+        Route::get('/berita', 'index')->name('admin.berita.index');
+        Route::post('/berita', 'store')->name('admin.berita.store');
+        Route::post('/berita/{berita}', 'update')->name('admin.berita.update');
+        Route::delete('/berita/{berita}', 'destroy')->name('admin.berita.destroy');
     });
 
     Route::controller(ModulController::class)->group(function () {

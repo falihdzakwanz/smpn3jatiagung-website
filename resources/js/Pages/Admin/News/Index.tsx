@@ -1,16 +1,9 @@
-// File: resources/js/Pages/Admin/News/Index.tsx
 import AdminForm from '@/Components/admin/AdminForm';
 import AdminPageContainer from '@/Components/admin/AdminPageContainer';
 import AdminTable from '@/Components/admin/AdminTable';
+import { News } from '@/types/news';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
-
-interface News {
-    id: number;
-    judul: string;
-    deskripsi: string;
-    image?: string;
-}
 
 interface Column {
     key: string;
@@ -33,7 +26,7 @@ interface Props {
 interface FormData {
     judul: string;
     deskripsi: string;
-    image?: File | string;
+    gambar?: File | string | null;
 }
 
 export default function NewsIndex({ news }: Props) {
@@ -42,11 +35,11 @@ export default function NewsIndex({ news }: Props) {
     const [formData, setFormData] = useState<FormData>({
         judul: '',
         deskripsi: '',
-        image: undefined,
+        gambar: undefined,
     });
 
     const columns: Column[] = [
-        { key: 'image', label: 'Gambar', type: 'image', width: 'w-24' },
+        { key: 'gambar', label: 'Gambar', type: 'image', width: 'w-24' },
         { key: 'judul', label: 'Judul', type: 'text' },
         { key: 'deskripsi', label: 'Deskripsi', type: 'textarea' },
         { key: 'actions', label: 'Aksi', width: 'w-48' },
@@ -65,7 +58,7 @@ export default function NewsIndex({ news }: Props) {
             type: 'textarea',
             placeholder: 'Masukkan deskripsi',
         },
-        { key: 'image', label: 'Gambar', type: 'image' },
+        { key: 'gambar', label: 'Gambar', type: 'image' },
     ];
 
     const handleEdit = (item: News) => {
@@ -74,7 +67,7 @@ export default function NewsIndex({ news }: Props) {
         setFormData({
             judul: item.judul,
             deskripsi: item.deskripsi,
-            image: item.image,
+            gambar: item.gambar,
         });
     };
 
@@ -84,7 +77,7 @@ export default function NewsIndex({ news }: Props) {
         setFormData({
             judul: '',
             deskripsi: '',
-            image: undefined,
+            gambar: undefined,
         });
     };
 
@@ -94,13 +87,13 @@ export default function NewsIndex({ news }: Props) {
         setFormData({
             judul: '',
             deskripsi: '',
-            image: undefined,
+            gambar: undefined,
         });
     };
 
     const handleDelete = (id: number) => {
         if (confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
-            router.delete(`/admin/news/${id}`);
+            router.delete(`/admin/berita/${id}`);
         }
     };
 
@@ -117,30 +110,30 @@ export default function NewsIndex({ news }: Props) {
         form.append('title', formData.judul);
         form.append('description', formData.deskripsi);
 
-        if (formData.image instanceof File) {
-            form.append('image', formData.image);
+        if (formData.gambar instanceof File) {
+            form.append('image', formData.gambar);
         }
 
         if (editingData) {
-            router.post(`/admin/news/${editingData.id}`, form, {
+            router.post(`/admin/berita/${editingData.id}`, form, {
                 onSuccess: () => {
                     setEditingData(null);
                     setFormData({
                         judul: '',
                         deskripsi: '',
-                        image: undefined,
+                        gambar: undefined,
                     });
                 },
                 preserveScroll: true,
             });
         } else {
-            router.post('/admin/news', form, {
+            router.post('/admin/berita', form, {
                 onSuccess: () => {
                     setIsAdding(false);
                     setFormData({
                         judul: '',
                         deskripsi: '',
-                        image: undefined,
+                        gambar: undefined,
                     });
                 },
                 preserveScroll: true,
