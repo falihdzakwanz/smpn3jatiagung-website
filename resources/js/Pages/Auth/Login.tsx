@@ -1,5 +1,5 @@
-import Checkbox from '@/Components/Checkbox';
-import InputError from '@/Components/InputError';
+import Checkbox from '@/Components/ui/Checkbox';
+import InputError from '@/Components/ui/InputError';
 import InputLabel from '@/Components/ui/InputLabel';
 import PrimaryButton from '@/Components/ui/PrimaryButton';
 import TextInput from '@/Components/ui/TextInput';
