@@ -1,44 +1,63 @@
-import { BsPersonCircle } from 'react-icons/bs';
-import { FaBook, FaSuitcase } from 'react-icons/fa6';
-import { GiTrophyCup } from 'react-icons/gi';
-import { IoNewspaper } from 'react-icons/io5';
+import { ReactNode } from 'react';
+import { FiChevronDown, FiChevronUp, FiGlobe } from 'react-icons/fi';
 import SidebarLink from './SidebarLink';
 
-type Proptypes = {
+interface MenuItem {
+    label: string;
+    icon: ReactNode;
+    href: string;
+}
+interface Proptypes {
     isOpen: boolean;
-};
+    isWebsiteOpen: boolean;
+    setIsWebsiteOpen: (isWebsiteOpen: boolean) => void;
+    menuItems: MenuItem[];
+}
 
-const Sidebar = ({ isOpen }: Proptypes) => {
+const Sidebar = (props: Proptypes) => {
+    const { isOpen, isWebsiteOpen, setIsWebsiteOpen, menuItems } = props;
     return (
-        <div
-            className={`fixed left-0 top-0 h-full w-96 transform bg-color-accent text-color-secondary ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}
+        <aside
+            className={`fixed left-0 top-0 z-40 h-screen w-[250px] transition-transform ${
+                isOpen ? 'translate-x-0' : '-translate-x-full'
+            } bg-[#464B5E] transition-all duration-300 text-color-white`}
         >
-            <div className="flex w-full items-center justify-center bg-color-primary px-8 py-4">
-                <h1 className="font-libre-bold uppercase md:text-4xl">
-                    Spantija Admin
+            <div className="flex h-[80px] items-center bg-[#2B2E3C] px-4">
+                <h1 className="text-white text-2xl font-bold">
+                    SPANTIJA ADMIN
                 </h1>
             </div>
-            <div className="w-full">
-                <SidebarLink href="/dashboard/berita" title="Laman Berita">
-                    <IoNewspaper />
-                </SidebarLink>
-                <SidebarLink href="/dashboard/modul" title="Modul">
-                    <FaBook />
-                </SidebarLink>
-                <SidebarLink
-                    href="/dashboard/ekstrakurikuler"
-                    title="Ekstrakurikuler"
+
+            <div>
+                <button
+                    onClick={() => setIsWebsiteOpen(!isWebsiteOpen)}
+                    className="flex w-full cursor-pointer items-center justify-between bg-[#7166BA] px-4 py-4 transition-colors hover:bg-[#6357AB]"
                 >
-                    <FaSuitcase />
-                </SidebarLink>
-                <SidebarLink href="/dashboard/prestasi" title="Prestasi">
-                    <GiTrophyCup />
-                </SidebarLink>
-                <SidebarLink href="/dashboard/staff" title="Staff">
-                    <BsPersonCircle />
-                </SidebarLink>
+                    <div className="flex items-center gap-3">
+                        <FiGlobe className="text-white h-5 w-5" />
+                        <span className="text-white text-sm">WEBSITE</span>
+                    </div>
+                    {isWebsiteOpen ? (
+                        <FiChevronUp className="text-white h-5 w-5" />
+                    ) : (
+                        <FiChevronDown className="text-white h-5 w-5" />
+                    )}
+                </button>
+
+                <div
+                    className={`transition-all duration-300 ${isWebsiteOpen ? 'max-h-[1000px]' : 'max-h-0 overflow-hidden'}`}
+                >
+                    {menuItems.map((item) => (
+                        <SidebarLink
+                            key={item.label}
+                            label={item.label}
+                            href={item.href}
+                            icon={item.icon}
+                        />
+                    ))}
+                </div>
             </div>
-        </div>
+        </aside>
     );
 };
 

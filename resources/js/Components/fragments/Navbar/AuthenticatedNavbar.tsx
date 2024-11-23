@@ -1,60 +1,69 @@
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
+import { Link } from '@inertiajs/react';
+import { FiEdit, FiLogOut, FiMenu, FiUser } from 'react-icons/fi';
+import { Fragment } from 'react';
+
+
 interface Proptypes {
-    toggleSidebar: () => void;
     isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
 }
 
 const AuthenticatedNavbar = (props: Proptypes) => {
-    const { toggleSidebar, isOpen } = props;
+    const { setIsOpen, isOpen } = props;
     return (
-        <nav
-            className={`bg-color-accent ${isOpen && 'ml-96'} px-8 py-4 transition-all duration-300 sticky top-0 left-0`}
-        >
-            <div className="flex">
-                <button
-                    onClick={toggleSidebar}
-                    type="button"
-                    className={`group inline-flex items-center justify-center p-2 transition-all duration-300 hover:text-color-secondary`}
-                >
-                    <svg
-                        className="h-6 w-6"
-                        stroke="currentColor"
-                        fill="none"
-                        viewBox="0 0 24 24"
+        <nav className="flex h-[80px] items-center justify-between bg-[#7166BA] px-6 text-color-white">
+            <button onClick={() => setIsOpen(!isOpen)} className="text-white">
+                <FiMenu className="h-6 w-6" />
+            </button>
+
+            <div className="flex items-center gap-4">
+                <Menu as="div" className="relative">
+                    <MenuButton className="text-white">
+                        <FiUser className="h-6 w-6" />
+                    </MenuButton>
+                    <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
                     >
-                        {!isOpen ? (
-                            <>
-                                <path
-                                    className="origin-right transform transition-all duration-300 group-hover:scale-x-125"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M4 6h16"
-                                />
-                                <path
-                                    className="origin-center transform transition-all duration-500 group-hover:scale-x-110"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M4 12h16"
-                                />
-                                <path
-                                    className="origin-left transform transition-all duration-700 group-hover:scale-x-125"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M4 18h16"
-                                />
-                            </>
-                        ) : (
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        )}
-                    </svg>
-                </button>
+                        <MenuItems className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-[#7166BA]/80 shadow-lg focus:outline-none">
+                            <div className="py-1">
+                                <MenuItem>
+                                    {({ active }) => (
+                                        <Link
+                                            href="/admin/profile"
+                                            className={`${
+                                                active ? 'bg-[#7166BA]' : ''
+                                            } text-white flex items-center px-4 py-2`}
+                                        >
+                                            <FiEdit className="mr-2 h-5 w-5" />
+                                            Edit Profile
+                                        </Link>
+                                    )}
+                                </MenuItem>
+                                <MenuItem>
+                                    {({ active }) => (
+                                        <Link
+                                            href={route('logout')}
+                                            method="post"
+                                            className={`${
+                                                active ? 'bg-[#7166BA]' : ''
+                                            } text-white flex w-full items-center px-4 py-2`}
+                                        >
+                                            <FiLogOut className="mr-2 h-5 w-5" />
+                                            Logout
+                                        </Link>
+                                    )}
+                                </MenuItem>
+                            </div>
+                        </MenuItems>
+                    </Transition>
+                </Menu>
             </div>
         </nav>
     );

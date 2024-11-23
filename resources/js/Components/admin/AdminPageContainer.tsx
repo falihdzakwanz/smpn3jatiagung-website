@@ -1,4 +1,3 @@
-// resources/js/Components/admin/AdminPageContainer.tsx
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head } from '@inertiajs/react';
 
