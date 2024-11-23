@@ -32,18 +32,16 @@ class BeritaController extends Controller
         ]);
     }
 
-public function show($id)
-{
-    $berita = Berita::findOrFail($id);
-    return Inertia::render('NewsDetail', [
-        'id' => $berita->id,
-        'judul' => $berita->judul,
-        'deskripsi' => $berita->deskripsi,
-        'gambar' => $berita->gambar ? asset('storage/' . $berita->gambar) : null,
-    ]);
-}
-
-
+    public function show($nama)
+    {
+        $berita = Berita::where('judul', str_replace('-', ' ', $nama))->firstOrFail();
+        return Inertia::render('NewsDetail', [
+            'id' => $berita->id,
+            'judul' => $berita->judul,
+            'deskripsi' => $berita->deskripsi,
+            'gambar' => $berita->gambar ? asset('storage/' . $berita->gambar) : null,
+        ]);
+    }
 
     public function store(Request $request)
     {

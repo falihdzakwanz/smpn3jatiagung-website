@@ -1,4 +1,6 @@
 import { News } from "@/types/news";
+import { formatNameToUrl } from "@/utils/formatNameToUrl";
+import { getImageSrc } from "@/utils/getImageSrc";
 import { Link } from "@inertiajs/react";
 import { FiImage } from 'react-icons/fi';
 
@@ -23,7 +25,7 @@ const Card = (props: News) => {
             <div className="flex w-full max-h-48 max-w-80 items-center overflow-hidden rounded-xl md:w-1/4">
                 {gambar ? (
                     <img
-                        src={gambar || ''}
+                        src={getImageSrc(gambar)}
                         alt={`Berita - ${id}`}
                         className="max-h-48 max-w-80 object-cover w-full"
                     />
@@ -40,7 +42,7 @@ const Card = (props: News) => {
                     {truncateAfterFourDots(deskripsi)}
                 </p>
                 <Link
-                    href={route('news.show', id)}
+                    href={route('news.show', formatNameToUrl(judul))}
                     className="text-sm font-bold text-color-primary md:text-base"
                 >
                     Read More <span>&#187;</span>
