@@ -10,7 +10,9 @@ const GuestLayout = ({ children, isHomePage = false }: GuestLayoutProps) => {
     return (
         <div className="flex min-h-screen w-full flex-col scroll-smooth bg-color-secondary">
             <Navbar isHomePage={isHomePage} />
-            <main className={`w-full ${!isHomePage && 'pt-24'} font-roboto`}>
+            <main
+                className={`w-full flex-grow ${!isHomePage && 'pt-24'} font-roboto`}
+            >
                 {children}
             </main>
             <Footer />
