@@ -21,23 +21,29 @@ class PrestasiController extends Controller
         ]);
     }
 
-        /**
+    /**
      * Display prestasi to Guest
      */
 
-public function guestIndex()
-{
-    $prestasi = Prestasi::all();
+    public function guestIndex()
+    {
+        $prestasi = Prestasi::all();
 
-    return Inertia::render('Achievements', [
-        'prestasi' => $prestasi,
-        'response' => [
-            'status' => 200,
-            'message' => 'Prestasi list retrieved successfully',
-            'data' => $prestasi,
-        ]
-    ]);
-}
+        return Inertia::render('Achievements', [
+            'prestasi' => $prestasi,
+            'response' => [
+                'status' => 200,
+                'message' => 'Prestasi list retrieved successfully',
+                'data' => $prestasi,
+            ]
+        ]);
+    }
+
+    public function welcomeIndex()
+    {
+        $prestasi = Prestasi::latest()->take(8)->get();
+        return $prestasi;
+    }
 
 
     /**
@@ -59,23 +65,23 @@ public function guestIndex()
      */
     public function store(Request $request, Prestasi $prestasi)
     {
-            $request->validate([
-                'title' => 'required|string|max:255',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
-            ]);
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
 
-            $prestasi = new Prestasi();
-            $prestasi->judul = $request->title;
+        $prestasi = new Prestasi();
+        $prestasi->judul = $request->title;
 
-            if ($request->hasFile('image')) {
-                $path = $request->file('image')->store('prestasi', 'public');
-                if (!$path) {
-                    throw new \Exception('Gagal menyimpan gambar');
-                }
-                $prestasi->gambar = $path;
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('prestasi', 'public');
+            if (!$path) {
+                throw new \Exception('Gagal menyimpan gambar');
             }
+            $prestasi->gambar = $path;
+        }
 
-            $prestasi->save();
+        $prestasi->save();
 
         return redirect()->route('admin.prestasi.index')->with([
             'response' => [

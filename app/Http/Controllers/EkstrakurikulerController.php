@@ -37,6 +37,11 @@ class EkstrakurikulerController extends Controller
         ]);
     }
 
+    public function welcomeIndex()
+    {
+        $ekstrakurikuler = Ekstrakurikuler::all();
+        return $ekstrakurikuler;
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -111,9 +116,9 @@ class EkstrakurikulerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($nama)
     {
-        $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
+        $ekstrakurikuler = Ekstrakurikuler::where('nama', str_replace('-', ' ', $nama))->firstOrFail();
         return Inertia::render('ExtracurricularDetail', [
             'id' => $ekstrakurikuler->id,
             'nama' => $ekstrakurikuler->nama,
@@ -124,7 +129,6 @@ class EkstrakurikulerController extends Controller
             'foto_kegiatan_3' => $ekstrakurikuler->foto_kegiatan_3 ? asset('storage/' . $ekstrakurikuler->foto_kegiatan_3) : null,
         ]);
     }
-
 
 
     /**

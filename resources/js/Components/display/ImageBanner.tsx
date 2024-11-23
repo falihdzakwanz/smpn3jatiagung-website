@@ -1,3 +1,5 @@
+import { getImageSrc } from "@/utils/getImageSrc";
+
 interface Proptypes {
     imageSrc: string | File | null;
     imageAlt: string;
@@ -6,10 +8,7 @@ interface Proptypes {
 const ImageBanner = (props: Proptypes) => {
     const { imageSrc, imageAlt } = props;
 
-    const src =
-        imageSrc instanceof File
-            ? URL.createObjectURL(imageSrc)
-            : imageSrc || '';
+    const src = getImageSrc(imageSrc);
 
     return (
         <div className="flex w-full items-center justify-center">

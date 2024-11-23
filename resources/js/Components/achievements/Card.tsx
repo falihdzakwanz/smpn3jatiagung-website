@@ -1,17 +1,8 @@
 import { Achievement } from '@/types/achievement';
+import { formatDate } from '@/utils/formatDate';
 
 const Card = (props: Achievement) => {
     const { id, gambar, judul, created_at } = props;
-
-    const formatDate = (dateString: string) => {
-        const options: Intl.DateTimeFormatOptions = {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-        };
-        const date = new Date(dateString);
-        return date.toLocaleDateString('id-ID', options);
-    };
 
     return (
         <div
