@@ -55,7 +55,7 @@ const ContactSection = () => {
                                         Email
                                     </h4>
                                     <span className="text-lg text-color-primary">
-                                        Pukimay@Student.Itb.Ac.Id
+                                        spantija@gmail.com
                                     </span>
                                 </div>
                             </div>
