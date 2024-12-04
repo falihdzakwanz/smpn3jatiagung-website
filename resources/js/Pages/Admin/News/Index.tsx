@@ -1,23 +1,12 @@
 import AdminForm from '@/Components/admin/AdminForm';
 import AdminPageContainer from '@/Components/admin/AdminPageContainer';
 import AdminTable from '@/Components/admin/AdminTable';
+import Toaster from '@/Components/Toaster';
+import AddButton from '@/Components/ui/AddButton';
+import { Column, FormField } from '@/types/admin';
 import { News } from '@/types/news';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
-
-interface Column {
-    key: string;
-    label: string;
-    type?: 'text' | 'textarea' | 'image' | 'file';
-    width?: string;
-}
-
-interface FormField {
-    key: string;
-    label: string;
-    type: 'text' | 'textarea' | 'image' | 'file';
-    placeholder?: string;
-}
 
 interface Props {
     news: News[];
@@ -37,6 +26,11 @@ export default function NewsIndex({ news }: Props) {
         deskripsi: '',
         gambar: undefined,
     });
+
+    const [toast, setToast] = useState<{
+        message: string;
+        type: 'success' | 'error';
+    } | null>(null);
 
     const columns: Column[] = [
         { key: 'gambar', label: 'Gambar', type: 'image', width: 'w-24' },
@@ -58,7 +52,11 @@ export default function NewsIndex({ news }: Props) {
             type: 'textarea',
             placeholder: 'Masukkan deskripsi',
         },
-        { key: 'gambar', label: 'Gambar', type: 'image' },
+        {
+            key: 'gambar',
+            label: 'Gambar',
+            type: 'image',
+        },
     ];
 
     const handleEdit = (item: News) => {
@@ -93,7 +91,21 @@ export default function NewsIndex({ news }: Props) {
 
     const handleDelete = (id: number) => {
         if (confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
-            router.delete(`/admin/berita/${id}`);
+            router.delete(`/admin/berita/${id}`, {
+                onSuccess: () => {
+                    setToast({
+                        message: 'Berita berhasil dihapus!',
+                        type: 'success',
+                    });
+                },
+                onError: () => {
+                    setToast({
+                        message: 'Terjadi kesalahan saat menghapus berita.',
+                        type: 'error',
+                    });
+                },
+                preserveScroll: true,
+            });
         }
     };
 
@@ -114,44 +126,60 @@ export default function NewsIndex({ news }: Props) {
             form.append('image', formData.gambar);
         }
 
-        if (editingData) {
-            router.post(`/admin/berita/${editingData.id}`, form, {
-                onSuccess: () => {
+        const options = {
+            onSuccess: () => {
+                setToast({
+                    message: 'Berita berhasil disimpan!',
+                    type: 'success',
+                });
+                if (editingData) {
                     setEditingData(null);
-                    setFormData({
-                        judul: '',
-                        deskripsi: '',
-                        gambar: undefined,
-                    });
-                },
-                preserveScroll: true,
-            });
-        } else {
-            router.post('/admin/berita', form, {
-                onSuccess: () => {
+                } else {
                     setIsAdding(false);
-                    setFormData({
-                        judul: '',
-                        deskripsi: '',
-                        gambar: undefined,
-                    });
-                },
-                preserveScroll: true,
-            });
+                }
+                setFormData({
+                    judul: '',
+                    deskripsi: '',
+                    gambar: undefined,
+                });
+            },
+            onError: () => {
+                setToast({
+                    message: 'Terjadi kesalahan saat menyimpan berita.',
+                    type: 'error',
+                });
+            },
+            preserveScroll: true,
+        };
+
+        if (editingData) {
+            router.post(`/admin/berita/${editingData.id}`, form, options);
+        } else {
+            router.post('/admin/berita', form, options);
         }
     };
 
     return (
-        <AdminPageContainer title="Daftar Berita">
+        <AdminPageContainer
+            title="Daftar Berita"
+            breadcrumbs={[
+                { text: 'Home', href: '/' },
+                { text: 'Dashboard', href: '/admin' },
+                { text: 'Berita' },
+            ]}
+        >
+            {toast && (
+                <Toaster
+                    message={toast.message}
+                    type={toast.type}
+                    duration={3000}
+                    onClose={() => setToast(null)}
+                />
+            )}
+
             {!isAdding && !editingData && (
                 <div className="mb-6">
-                    <button
-                        onClick={handleAdd}
-                        className="bg-emerald-500 hover:bg-emerald-600 text-white flex items-center gap-2 rounded px-6 py-2.5 font-medium"
-                    >
-                        <span className="text-xl leading-none">+</span>
-                        <span>Tambah Berita</span>
-                    </button>
+                    <AddButton handleAdd={handleAdd} title={'Berita'} />
                 </div>
             )}
 

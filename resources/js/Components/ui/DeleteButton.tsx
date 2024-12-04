@@ -1,17 +1,20 @@
+import { FiTrash2 } from 'react-icons/fi';
+
 interface Proptypes {
-    onClick?: () => void;
+    item: any;
+    onDelete: (item: any) => void;
 }
 
 const DeleteButton = (props: Proptypes) => {
-    const { onClick } = props;
+    const { onDelete, item } = props;
 
     return (
         <button
-            className="bg-color-danger rounded-md px-4 py-2 text-color-white"
-            type="button"
-            onClick={onClick}
+            onClick={() => onDelete(item)}
+            className="flex items-center gap-1 rounded bg-color-danger px-4 py-1 text-color-white transition duration-300 hover:text-color-darker-purple"
         >
-            Delete
+            <FiTrash2 size={16} />
+            <span>Hapus</span>
         </button>
     );
 };

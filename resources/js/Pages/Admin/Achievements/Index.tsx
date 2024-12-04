@@ -1,23 +1,12 @@
 import AdminForm from '@/Components/admin/AdminForm';
 import AdminPageContainer from '@/Components/admin/AdminPageContainer';
 import AdminTable from '@/Components/admin/AdminTable';
+import Toaster from '@/Components/Toaster';
+import AddButton from '@/Components/ui/AddButton';
 import { Achievement } from '@/types/achievement';
+import { Column, FormField } from '@/types/admin';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
-
-interface Column {
-    key: string;
-    label: string;
-    type?: 'text' | 'textarea' | 'image' | 'file';
-    width?: string;
-}
-
-interface FormField {
-    key: string;
-    label: string;
-    type: 'text' | 'textarea' | 'image' | 'file';
-    placeholder?: string;
-}
 
 interface Props {
     prestasi: Achievement[];
@@ -35,6 +24,11 @@ export default function NewsIndex({ prestasi }: Props) {
         judul: '',
         gambar: undefined,
     });
+
+    const [toast, setToast] = useState<{
+        message: string;
+        type: 'success' | 'error';
+    } | null>(null);
 
     const columns: Column[] = [
         { key: 'gambar', label: 'Gambar', type: 'image', width: 'w-24' },
@@ -81,7 +75,21 @@ export default function NewsIndex({ prestasi }: Props) {
 
     const handleDelete = (id: number) => {
         if (confirm('Apakah Anda yakin ingin menghapus prestasi ini?')) {
-            router.delete(`/admin/prestasi/${id}`);
+            router.delete(`/admin/prestasi/${id}`, {
+                onSuccess: () => {
+                    setToast({
+                        message: 'Prestasi berhasil dihapus!',
+                        type: 'success',
+                    });
+                },
+                onError: () => {
+                    setToast({
+                        message: 'Terjadi kesalahan saat menghapus prestasi.',
+                        type: 'error',
+                    });
+                },
+                preserveScroll: true,
+            });
         }
     };
 
@@ -104,10 +112,20 @@ export default function NewsIndex({ prestasi }: Props) {
         if (editingData) {
             router.post(`/admin/prestasi/${editingData.id}`, form, {
                 onSuccess: () => {
+                    setToast({
+                        message: 'Prestasi berhasil disimpan!',
+                        type: 'success',
+                    });
                     setEditingData(null);
                     setFormData({
                         judul: '',
                         gambar: undefined,
+                    });
+                },
+                onError: () => {
+                    setToast({
+                        message: 'Terjadi kesalahan saat menyimpan prestasi.',
+                        type: 'error',
                     });
                 },
                 preserveScroll: true,
@@ -115,10 +133,20 @@ export default function NewsIndex({ prestasi }: Props) {
         } else {
             router.post('/admin/prestasi', form, {
                 onSuccess: () => {
+                    setToast({
+                        message: 'Prestasi berhasil ditambahkan!',
+                        type: 'success',
+                    });
                     setIsAdding(false);
                     setFormData({
                         judul: '',
                         gambar: undefined,
+                    });
+                },
+                onError: () => {
+                    setToast({
+                        message: 'Terjadi kesalahan saat menambahkan prestasi.',
+                        type: 'error',
                     });
                 },
                 preserveScroll: true,
@@ -127,16 +155,26 @@ export default function NewsIndex({ prestasi }: Props) {
     };
 
     return (
-        <AdminPageContainer title="Daftar Prestasi">
+        <AdminPageContainer
+            title="Daftar Prestasi"
+            breadcrumbs={[
+                { text: 'Home', href: '/' },
+                { text: 'Dashboard', href: '/admin' },
+                { text: 'Prestasi' },
+            ]}
+        >
+            {toast && (
+                <Toaster
+                    message={toast.message}
+                    type={toast.type}
+                    duration={3000}
+                    onClose={() => setToast(null)}
+                />
+            )}
+
             {!isAdding && !editingData && (
                 <div className="mb-6">
-                    <button
-                        onClick={handleAdd}
-                        className="bg-emerald-500 hover:bg-emerald-600 text-white flex items-center gap-2 rounded px-6 py-2.5 font-medium"
-                    >
-                        <span className="text-xl leading-none">+</span>
-                        <span>Tambah Prestasi</span>
-                    </button>
+                    <AddButton handleAdd={handleAdd} title='Prestasi'/>
                 </div>
             )}
 

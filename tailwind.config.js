@@ -33,7 +33,11 @@ export default {
                 accent: '#406B4E',
                 white: '#FFFFFF',
                 succes: '#25C32B',
-                danger: '#EC3F3F'
+                danger: '#EC3F3F',
+                gray: '#A09E9E',
+                purple: '#7166BA',
+                'darker-purple': '#2B2E3C',
+                'dark-danger': '#7A0404'
             }
         }
     },

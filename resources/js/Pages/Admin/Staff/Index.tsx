@@ -1,23 +1,12 @@
 import AdminForm from '@/Components/admin/AdminForm';
 import AdminPageContainer from '@/Components/admin/AdminPageContainer';
 import AdminTable from '@/Components/admin/AdminTable';
+import Toaster from '@/Components/Toaster';
+import AddButton from '@/Components/ui/AddButton';
+import { Column, FormField } from '@/types/admin';
 import { Staff } from '@/types/staff';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
-
-interface Column {
-    key: string;
-    label: string;
-    type?: 'text' | 'textarea' | 'image' | 'file';
-    width?: string;
-}
-
-interface FormField {
-    key: string;
-    label: string;
-    type: 'text' | 'textarea' | 'image' | 'file';
-    placeholder?: string;
-}
 
 interface Props {
     staffs: Staff[];
@@ -35,6 +24,11 @@ export default function StaffIndex({ staffs: initialStaffs }: Props) {
         nama: '',
         posisi: '',
     });
+
+    const [toast, setToast] = useState<{
+        message: string;
+        type: 'success' | 'error';
+    } | null>(null);
 
     const columns: Column[] = [
         { key: 'nama', label: 'Nama Staff', type: 'text' },
@@ -76,6 +70,18 @@ export default function StaffIndex({ staffs: initialStaffs }: Props) {
         if (confirm('Apakah Anda yakin ingin menghapus staff ini?')) {
             router.delete(`/admin/staff/${id}`, {
                 preserveScroll: true,
+                onSuccess: () => {
+                    setToast({
+                        message: 'Staff berhasil dihapus!',
+                        type: 'success',
+                    });
+                },
+                onError: () => {
+                    setToast({
+                        message: 'Terjadi kesalahan saat menghapus staff.',
+                        type: 'error',
+                    });
+                },
             });
         }
     };
@@ -95,42 +101,60 @@ export default function StaffIndex({ staffs: initialStaffs }: Props) {
         form.append('name', formData.nama);
         form.append('position', formData.posisi);
 
+        const options = {
+            preserveScroll: true,
+            onSuccess: () => {
+                setToast({
+                    message: editingData
+                        ? 'Staff berhasil disimpan!'
+                        : 'Staff berhasil ditambahkan!',
+                    type: 'success',
+                });
+                setEditingData(null);
+                setFormData({
+                    nama: '',
+                    posisi: '',
+                });
+                setIsAdding(false);
+            },
+            onError: () => {
+                setToast({
+                    message: editingData
+                        ? 'Terjadi kesalahan saat menyimpan staff.'
+                        : 'Terjadi kesalahan saat menambahkan staff.',
+                    type: 'error',
+                });
+            },
+        };
+
         if (editingData) {
-            router.post(`/admin/staff/${editingData.id}`, form, {
-                preserveScroll: true,
-                onSuccess: () => {
-                    setEditingData(null);
-                    setFormData({
-                        nama: '',
-                        posisi: '',
-                    });
-                },
-            });
+            router.post(`/admin/staff/${editingData.id}`, form, options);
         } else {
-            router.post('/admin/staff', form, {
-                preserveScroll: true,
-                onSuccess: () => {
-                    setIsAdding(false);
-                    setFormData({
-                        nama: '',
-                        posisi: '',
-                    });
-                },
-            });
+            router.post('/admin/staff', form, options);
         }
     };
 
     return (
-        <AdminPageContainer title="Manajemen Staff">
+        <AdminPageContainer
+            title="Manajemen Staff"
+            breadcrumbs={[
+                { text: 'Home', href: '/' },
+                { text: 'Dashboard', href: '/admin' },
+                { text: 'Staff' },
+            ]}
+        >
+            {toast && (
+                <Toaster
+                    message={toast.message}
+                    type={toast.type}
+                    duration={3000}
+                    onClose={() => setToast(null)}
+                />
+            )}
+
             {!isAdding && !editingData && (
                 <div className="mb-6">
-                    <button
-                        onClick={handleAdd}
-                        className="bg-emerald-500 hover:bg-emerald-600 text-white flex items-center gap-2 rounded px-6 py-2.5 font-medium"
-                    >
-                        <span className="text-xl leading-none">+</span>
-                        <span>Tambah Staff</span>
-                    </button>
+                    <AddButton handleAdd={handleAdd} title="Staff" />
                 </div>
             )}
 

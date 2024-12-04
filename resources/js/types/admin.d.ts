@@ -1,4 +1,3 @@
-// resources/js/types/admin.d.ts
 export type FieldType = 'text' | 'textarea' | 'image' | 'file';
 
 export interface FormField {

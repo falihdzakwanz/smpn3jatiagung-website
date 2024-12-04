@@ -1,18 +1,22 @@
+import { FiEdit2 } from 'react-icons/fi';
+
 interface Proptypes {
-    onClick?: () => void;
+    item: any;
+    onEdit: (item: any) => void;
 }
 
 const EditButton = (props: Proptypes) => {
-    const { onClick } = props;
+    const { onEdit, item } = props;
 
     return (
-        <button 
-            className="bg-color-succes rounded-md px-4 py-2 text-color-white"
-            type="button"
-            onClick={onClick}
-        
-        >Edit</button>
+        <button
+            onClick={() => onEdit(item)}
+            className="text-color-white flex items-center gap-1 rounded bg-color-purple px-4 py-1 transition duration-300 hover:text-color-darker-purple"
+        >
+            <FiEdit2 size={16} />
+            <span>Edit</span>
+        </button>
     );
-}
+};
 
 export default EditButton;

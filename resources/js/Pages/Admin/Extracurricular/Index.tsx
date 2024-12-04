@@ -1,28 +1,16 @@
 import AdminForm from '@/Components/admin/AdminForm';
 import AdminPageContainer from '@/Components/admin/AdminPageContainer';
 import AdminTable from '@/Components/admin/AdminTable';
+import Toaster from '@/Components/Toaster';
+import AddButton from '@/Components/ui/AddButton';
+import { Column, FormField } from '@/types/admin';
 import { Extracurricular } from '@/types/extracurricular';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
 
-interface Column {
-    key: string;
-    label: string;
-    type?: 'text' | 'textarea' | 'image' | 'file';
-    width?: string;
-}
-
-interface FormField {
-    key: string;
-    label: string;
-    type: 'text' | 'textarea' | 'image' | 'file';
-    placeholder?: string;
-}
-
 interface Props {
     ekstrakurikuler: Extracurricular[];
 }
-
 interface FormData {
     nama: string;
     deskripsi: string;
@@ -45,6 +33,11 @@ export default function ExtracurricularIndex({ ekstrakurikuler }: Props) {
         foto_kegiatan_2: null,
         foto_kegiatan_3: null,
     });
+
+    const [toast, setToast] = useState<{
+        message: string;
+        type: 'success' | 'error';
+    } | null>(null);
 
     const columns: Column[] = [
         {
@@ -136,7 +129,22 @@ export default function ExtracurricularIndex({ ekstrakurikuler }: Props) {
 
     const handleDelete = (id: number) => {
         if (confirm('Apakah Anda yakin ingin menghapus ekstrakurikuler ini?')) {
-            router.delete(`/admin/ekstrakurikuler/${id}`);
+            router.delete(`/admin/ekstrakurikuler/${id}`, {
+                onSuccess: () => {
+                    setToast({
+                        message: 'Ekstrakurikuler berhasil dihapus!',
+                        type: 'success',
+                    });
+                },
+                onError: () => {
+                    setToast({
+                        message:
+                            'Terjadi kesalahan saat menghapus ekstrakurikuler.',
+                        type: 'error',
+                    });
+                },
+                preserveScroll: true,
+            });
         }
     };
 
@@ -169,50 +177,67 @@ export default function ExtracurricularIndex({ ekstrakurikuler }: Props) {
             form.append('foto_kegiatan_3', formData.foto_kegiatan_3);
         }
 
+        const options = {
+            onSuccess: () => {
+                setToast({
+                    message: editingData
+                        ? 'Ekstrakurikuler berhasil disimpan!'
+                        : 'Ekstrakurikuler berhasil ditambahkan!',
+                    type: 'success',
+                });
+                setEditingData(null);
+                setFormData({
+                    nama: '',
+                    deskripsi: '',
+                    foto_judul: null,
+                    foto_kegiatan_1: null,
+                    foto_kegiatan_2: null,
+                    foto_kegiatan_3: null,
+                });
+                setIsAdding(false);
+            },
+            onError: () => {
+                setToast({
+                    message: editingData
+                        ? 'Terjadi kesalahan saat menyimpan ekstrakurikuler.'
+                        : 'Terjadi kesalahan saat menambahkan ekstrakurikuler.',
+                    type: 'error',
+                });
+            },
+            preserveScroll: true,
+        };
+
         if (editingData) {
-            router.post(`/admin/ekstrakurikuler/${editingData.id}`, form, {
-                onSuccess: () => {
-                    setEditingData(null);
-                    setFormData({
-                        nama: '',
-                        deskripsi: '',
-                        foto_judul: null,
-                        foto_kegiatan_1: null,
-                        foto_kegiatan_2: null,
-                        foto_kegiatan_3: null,
-                    });
-                },
-                preserveScroll: true,
-            });
+            router.post(
+                `/admin/ekstrakurikuler/${editingData.id}`,
+                form,
+                options,
+            );
         } else {
-            router.post('/admin/ekstrakurikuler', form, {
-                onSuccess: () => {
-                    setIsAdding(false);
-                    setFormData({
-                        nama: '',
-                        deskripsi: '',
-                        foto_judul: null,
-                        foto_kegiatan_1: null,
-                        foto_kegiatan_2: null,
-                        foto_kegiatan_3: null,
-                    });
-                },
-                preserveScroll: true,
-            });
+            router.post('/admin/ekstrakurikuler', form, options);
         }
     };
 
     return (
-        <AdminPageContainer title="Daftar Ekstrakurikuler">
+        <AdminPageContainer
+            title="Daftar Ekstrakurikuler"
+            breadcrumbs={[
+                { text: 'Home', href: '/' },
+                { text: 'Dashboard', href: '/admin' },
+                { text: 'Ekstrakurikuler' },
+            ]}
+        >
+            {toast && (
+                <Toaster
+                    message={toast.message}
+                    type={toast.type}
+                    duration={3000}
+                    onClose={() => setToast(null)}
+                />
+            )}
             {!isAdding && !editingData && (
                 <div className="mb-6">
-                    <button
-                        onClick={handleAdd}
-                        className="bg-emerald-500 hover:bg-emerald-600 text-white flex items-center gap-2 rounded px-6 py-2.5 font-medium"
-                    >
-                        <span className="text-xl leading-none">+</span>
-                        <span>Tambah Ekstrakurikuler</span>
-                    </button>
+                    <AddButton handleAdd={handleAdd} title="Ekstrakurikuler" />
                 </div>
             )}
 
@@ -238,4 +263,3 @@ export default function ExtracurricularIndex({ ekstrakurikuler }: Props) {
         </AdminPageContainer>
     );
 }
-

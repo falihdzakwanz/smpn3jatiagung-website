@@ -1,23 +1,12 @@
 import AdminForm from '@/Components/admin/AdminForm';
 import AdminPageContainer from '@/Components/admin/AdminPageContainer';
 import AdminTable from '@/Components/admin/AdminTable';
+import Toaster from '@/Components/Toaster';
+import AddButton from '@/Components/ui/AddButton';
+import { Column, FormField } from '@/types/admin';
 import { Module } from '@/types/module';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
-
-interface Column {
-    key: string;
-    label: string;
-    type?: 'text' | 'textarea' | 'image' | 'file';
-    width?: string;
-}
-
-interface FormField {
-    key: string;
-    label: string;
-    type: 'text' | 'textarea' | 'image' | 'file';
-    placeholder?: string;
-}
 
 interface Props {
     modules: Module[];
@@ -40,6 +29,11 @@ export default function ModulesIndex({ modules }: Props) {
         file: '',
     });
 
+    const [toast, setToast] = useState<{
+        message: string;
+        type: 'success' | 'error';
+    } | null>(null);
+
     const columns: Column[] = [
         { key: 'nama', label: 'Nama', type: 'text' },
         { key: 'penerbit', label: 'Penerbit', type: 'text' },
@@ -49,9 +43,24 @@ export default function ModulesIndex({ modules }: Props) {
     ];
 
     const formFields: FormField[] = [
-        { key: 'nama', label: 'Nama', type: 'text', placeholder: 'Masukkan nama modul' },
-        { key: 'penerbit', label: 'Penerbit', type: 'text', placeholder: 'Masukkan penerbit' },
-        { key: 'deskripsi', label: 'Deskripsi', type: 'textarea', placeholder: 'Masukkan deskripsi' },
+        {
+            key: 'nama',
+            label: 'Nama',
+            type: 'text',
+            placeholder: 'Masukkan nama modul',
+        },
+        {
+            key: 'penerbit',
+            label: 'Penerbit',
+            type: 'text',
+            placeholder: 'Masukkan penerbit',
+        },
+        {
+            key: 'deskripsi',
+            label: 'Deskripsi',
+            type: 'textarea',
+            placeholder: 'Masukkan deskripsi',
+        },
         { key: 'file', label: 'File', type: 'file' },
     ];
 
@@ -90,7 +99,21 @@ export default function ModulesIndex({ modules }: Props) {
 
     const handleDelete = (id: number) => {
         if (confirm('Apakah Anda yakin ingin menghapus modul ini?')) {
-            router.delete(`/admin/modul/${id}`);
+            router.delete(`/admin/modul/${id}`, {
+                onSuccess: () => {
+                    setToast({
+                        message: 'Modul berhasil dihapus!',
+                        type: 'success',
+                    });
+                },
+                onError: () => {
+                    setToast({
+                        message: 'Terjadi kesalahan saat menghapus modul.',
+                        type: 'error',
+                    });
+                },
+                preserveScroll: true,
+            });
         }
     };
 
@@ -112,46 +135,62 @@ export default function ModulesIndex({ modules }: Props) {
             form.append('file', formData.file);
         }
 
+        const options = {
+            onSuccess: () => {
+                setToast({
+                    message: editingData
+                        ? 'Modul berhasil disimpan!'
+                        : 'Modul berhasil ditambahkan!',
+                    type: 'success',
+                });
+                setEditingData(null);
+                setFormData({
+                    nama: '',
+                    penerbit: '',
+                    deskripsi: '',
+                    file: '',
+                });
+                setIsAdding(false);
+            },
+            onError: () => {
+                setToast({
+                    message: editingData
+                        ? 'Terjadi kesalahan saat menyimpan modul.'
+                        : 'Terjadi kesalahan saat menambahkan modul.',
+                    type: 'error',
+                });
+            },
+            preserveScroll: true,
+        };
+
         if (editingData) {
-            router.post(`/admin/modul/${editingData.id}`, form, {
-                onSuccess: () => {
-                    setEditingData(null);
-                    setFormData({
-                        nama: '',
-                        penerbit: '',
-                        deskripsi: '',
-                        file: '',
-                    });
-                },
-                preserveScroll: true,
-            });
+            router.post(`/admin/modul/${editingData.id}`, form, options);
         } else {
-            router.post('/admin/modul', form, {
-                onSuccess: () => {
-                    setIsAdding(false);
-                    setFormData({
-                        nama: '',
-                        penerbit: '',
-                        deskripsi: '',
-                        file: '',
-                    });
-                },
-                preserveScroll: true,
-            });
+            router.post('/admin/modul', form, options);
         }
     };
 
     return (
-        <AdminPageContainer title="Daftar Modul">
+        <AdminPageContainer
+            title="Daftar Modul"
+            breadcrumbs={[
+                { text: 'Home', href: '/' },
+                { text: 'Dashboard', href: '/admin' },
+                { text: 'Modul' },
+            ]}
+        >
+            {toast && (
+                <Toaster
+                    message={toast.message}
+                    type={toast.type}
+                    duration={3000}
+                    onClose={() => setToast(null)}
+                />
+            )}
+
             {!isAdding && !editingData && (
                 <div className="mb-6">
-                    <button
-                        onClick={handleAdd}
-                        className="bg-emerald-500 hover:bg-emerald-600 text-white flex items-center gap-2 rounded px-6 py-2.5 font-medium"
-                    >
-                        <span className="text-xl leading-none">+</span>
-                        <span>Tambah Modul</span>
-                    </button>
+                    <AddButton handleAdd={handleAdd} title="Modul" />
                 </div>
             )}
 

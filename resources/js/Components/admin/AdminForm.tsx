@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FiFile, FiImage } from 'react-icons/fi';
-
-type FieldType = 'text' | 'textarea' | 'image' | 'file';
+import Tooltip from '../ToolTip';
+import { FieldType } from '@/types/admin';
 
 interface FormField {
     key: string;
@@ -47,7 +47,7 @@ const AdminForm = ({
         <div className="space-y-4">
             {fields.map((field) => (
                 <div key={field.key} className="space-y-2">
-                    <label className="text-gray-700 block text-sm font-medium">
+                    <label className="text-gray-700 block text-base font-medium">
                         {field.label}
                     </label>
 
@@ -71,7 +71,7 @@ const AdminForm = ({
                                         `/storage/${values[field.key]}`
                                     }
                                     alt="Preview"
-                                    className="h-20 w-20 rounded object-cover"
+                                    className="h-40 min-h-40 w-60 min-w-60 rounded object-cover"
                                 />
                             )}
                             <input
@@ -86,15 +86,17 @@ const AdminForm = ({
                                 className="hidden"
                                 id={field.key}
                             />
-                            <label
-                                htmlFor={field.key}
-                                className="text-white flex cursor-pointer items-center gap-1 rounded-md bg-[#7166BA] px-3 py-1 text-sm hover:bg-[#6357AB]"
-                            >
-                                <FiImage className="h-4 w-4" />
-                                {values[field.key]
-                                    ? 'Ganti Gambar'
-                                    : 'Upload Gambar'}
-                            </label>
+                            <Tooltip text="max 2MB: jpeg, png, jpg">
+                                <label
+                                    htmlFor={field.key}
+                                    className="bg-color-purple hover:text-color-darker-purple flex cursor-pointer items-center gap-1 rounded-md px-4 py-2 text-base text-color-white transition-all duration-300"
+                                >
+                                    <FiImage className="h-4 w-4" />
+                                    {values[field.key]
+                                        ? 'Ganti Gambar'
+                                        : 'Upload Gambar'}
+                                </label>
+                            </Tooltip>
                         </div>
                     ) : field.type === 'file' && hasFile ? (
                         <div className="flex items-center gap-4">
@@ -120,15 +122,17 @@ const AdminForm = ({
                                 className="hidden"
                                 id={field.key}
                             />
-                            <label
-                                htmlFor={field.key}
-                                className="text-white flex cursor-pointer items-center gap-1 rounded-md bg-[#7166BA] px-3 py-1 text-sm hover:bg-[#6357AB]"
-                            >
-                                <FiFile className="h-4 w-4" />
-                                {values[field.key]
-                                    ? 'Ganti File'
-                                    : 'Upload File'}
-                            </label>
+                            <Tooltip text="pdf, doc, docx">
+                                <label
+                                    htmlFor={field.key}
+                                    className="text-color-white bg-color-purple hover:text-color-darker-purple flex cursor-pointer items-center gap-1 rounded-md px-4 py-2 text-base transition-all duration-300"
+                                >
+                                    <FiFile className="h-4 w-4" />
+                                    {values[field.key]
+                                        ? 'Ganti File'
+                                        : 'Upload File'}
+                                </label>
+                            </Tooltip>
                         </div>
                     ) : (
                         <input
@@ -147,13 +151,13 @@ const AdminForm = ({
             <div className="flex justify-end gap-2">
                 <button
                     onClick={onSubmit}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-white rounded px-4 py-1"
+                    className="hover:text-color-darker-purple rounded bg-color-succes px-4 py-2 text-color-white transition-all duration-300"
                 >
                     Save
                 </button>
                 <button
                     onClick={onCancel}
-                    className="bg-gray-500 hover:bg-gray-600 text-white rounded px-4 py-1"
+                    className="bg-color-gray hover:text-color-darker-purple rounded px-4 py-2 text-color-white transition-all duration-300"
                 >
                     Cancel
                 </button>

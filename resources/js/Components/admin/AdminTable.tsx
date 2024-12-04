@@ -1,15 +1,7 @@
-import { FiEdit2, FiFile, FiImage, FiTrash2 } from 'react-icons/fi';
-
-interface BaseItem {
-    id: number;
-}
-
-interface Column {
-    key: string;
-    label: string;
-    type?: 'text' | 'image' | 'file' | 'textarea';
-    width?: string;
-}
+import { FiFile, FiImage } from 'react-icons/fi';
+import EditButton from '../ui/EditButton';
+import DeleteButton from '../ui/DeleteButton';
+import { Column } from '@/types/admin';
 
 interface AdminTableProps {
     items: any[];
@@ -34,13 +26,10 @@ const AdminTable = ({
         <div className="overflow-x-auto">
             <table className="w-full border-collapse">
                 <thead>
-                    <tr className="bg-gray-50">
-                        <th className="border p-3 text-left">NO</th>
+                    <tr className="bg-color-gray">
+                        <th className="border p-1 text-center">NO</th>
                         {columns.map((column) => (
-                            <th
-                                key={column.key}
-                                className={`border p-3 ${column.key === 'actions' ? 'text-center' : 'text-left'} ${column.width || ''}`}
-                            >
+                            <th key={column.key} className={`border p-3 text-center ${column.width || ''}`}>
                                 {column.label}
                             </th>
                         ))}
@@ -48,52 +37,37 @@ const AdminTable = ({
                 </thead>
                 <tbody>
                     {items.map((item, index) => (
-                        <tr key={item.id} className="hover:bg-gray-50">
-                            <td className="border p-3">{index + 1}</td>
+                        <tr key={item.id}>
+                            <td className="border p-1 text-center">{index + 1}</td>
                             {columns.map((column) => (
                                 <td key={column.key} className="border p-3">
                                     {column.key === 'actions' ? (
                                         <div className="flex justify-center gap-2">
-                                            <button
-                                                onClick={() => onEdit(item)}
-                                                className="text-white flex items-center gap-1 rounded bg-[#7166BA] px-4 py-1 transition duration-300 hover:bg-[#6357AB]"
-                                            >
-                                                <FiEdit2 size={16} />
-                                                <span>Edit</span>
-                                            </button>
-                                            <button
-                                                onClick={() =>
-                                                    onDelete(item.id)
-                                                }
-                                                className="bg-red-500 hover:bg-red-600 text-white flex items-center gap-1 rounded px-4 py-1 transition duration-300"
-                                            >
-                                                <FiTrash2 size={16} />
-                                                <span>Hapus</span>
-                                            </button>
+                                            <EditButton onEdit={onEdit} item={item} />
+                                            <DeleteButton onDelete={onDelete} item={item.id} />
                                         </div>
                                     ) : hasImage && column.type === 'image' ? (
                                         item[column.key] ? (
-                                            <img
-                                                src={`/storage/${item[column.key]}`}
-                                                alt="Preview"
-                                                className="h-20 w-20 rounded object-cover"
-                                            />
+                                            <img src={`/storage/${item[column.key]}`} alt="Preview" className="min-h-40 min-w-60 w-60 h-40 rounded object-cover" />
                                         ) : (
-                                            <div className="bg-gray-100 flex h-20 w-20 items-center justify-center rounded">
+                                            <div className="bg-color-gray flex h-40 w-40 items-center justify-center rounded">
                                                 <FiImage className="text-gray-400 h-8 w-8" />
                                             </div>
                                         )
                                     ) : hasFile && column.type === 'file' ? (
-                                        <div className="flex items-center gap-2">
-                                            <FiFile className="text-gray-600" />
-                                            <span className="max-w-[150px] truncate text-sm">
-                                                {item[column.key] || 'No file'}
-                                            </span>
-                                        </div>
+                                        item[column.key] ? (
+                                            <a href={`/storage/${item[column.key]}`} className="flex items-center justify-center gap-2" download>
+                                                <FiFile size={24} />
+                                            </a>
+                                        ) : (
+                                            <div className="flex h-40 w-40 items-center justify-center">
+                                                <FiFile className="text-color-gray h-8 w-8" />
+                                            </div>
+                                        )
                                     ) : column.type === 'textarea' ? (
-                                        <div className="max-h-32 overflow-y-auto">
-                                            {item[column.key]}
-                                        </div>
+                                        <div className="min-w-32 overflow-y-auto text-justify">{item[column.key]}</div>
+                                    ) : column.type === 'text' ? (
+                                        <div className="max-w-max overflow-y-auto text-justify">{item[column.key]}</div>
                                     ) : (
                                         item[column.key]
                                     )}

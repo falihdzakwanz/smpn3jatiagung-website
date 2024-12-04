@@ -3,12 +3,13 @@ import { Head } from '@inertiajs/react';
 
 interface AdminPageContainerProps {
     title: string;
+    breadcrumbs?: { text: string; href?: string }[];
     children: React.ReactNode;
 }
 
-const AdminPageContainer = ({ title, children }: AdminPageContainerProps) => {
+const AdminPageContainer = ({ title, breadcrumbs, children }: AdminPageContainerProps) => {
     return (
-        <AdminLayout>
+        <AdminLayout breadcrumbs={breadcrumbs}>
             <Head title={title} />
             <div className="p-6">
                 <div className="bg-white rounded-lg shadow-sm p-6">
