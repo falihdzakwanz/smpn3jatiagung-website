@@ -1,9 +1,8 @@
-const Quote = (props: any) => {
-    const { text } = props;
+const Quote = () => {
     return (
         <>
-            <div className="relative">
-                <div className="absolute -left-1 md:-left-4 -top-2 h-4 w-4 md:h-7 md:w-7 text-color-primary">
+            <div className="relative mb-8">
+                <div className="absolute -left-1 -top-2 h-4 w-4 text-color-primary md:-left-4 md:h-7 md:w-7">
                     <svg
                         className="max-h-full max-w-full"
                         viewBox="0 0 63 45"
@@ -16,10 +15,29 @@ const Quote = (props: any) => {
                         />
                     </svg>
                 </div>
-                <p className="bg-color-secondary px-8 text-sm md:text-base text-justify text-color-primary">
-                    {text}
-                </p>
-                <div className="absolute -bottom-2 -right-1 md:-right-4 h-4 w-4 md:h-7 md:w-7 text-color-primary">
+                <div className="flex flex-col gap-4 bg-color-secondary px-8 text-justify text-sm text-color-primary md:text-base">
+                    <p className="font-bold">Assalamualaikum Wr. Wb.</p>
+                    <p>Tabik Pun</p>
+                    <p>
+                        Selamat datang di website kami SMPN 3 Jati Agung
+                        Kabupaten Lampung Selatan. Website ini hadir sebagai
+                        media informasi dan komunikasi serta layanan kami bagi
+                        peserta didik, tenaga Pendidik, tenaga kependidikan,
+                        wali murid, stackholder dan masyarakat. Website ini
+                        menyajikan berbagai informasi mengenai kemajuan kegiatan
+                        before and after dan pelaksanaan program kegiatan belajar
+                        dan mengajar di SMPN 3 Jati Agung baik akademik dan non
+                        akademik, intrakurikuler, dan ekstrakurikuler. Seperti
+                        Peneriman Peserta Didik Baru (PPDB), MPLS, kegiatan
+                        Belajar peserta didik, kegiatan Pramuka, Paskibra, Osis,
+                        Rohis, Olah Raga, Tahfiz Al qur an, BBQ, dan lain-lain.
+                        Kami berharap semoga website ini bermanfaat bagi seluruh
+                        keluarga besar SMPN 3 Jati Agung khususnya, dan bagi
+                        pemerintah serta masyarakat umumnya.
+                    </p>
+                    <p className="font-bold">Wassalamualaikum. Wr. Wb.</p>
+                </div>
+                <div className="absolute -bottom-2 -right-1 h-4 w-4 text-color-primary md:-right-4 md:h-7 md:w-7">
                     <svg
                         className="max-h-full max-w-full"
                         viewBox="0 0 71 64"
@@ -35,6 +53,6 @@ const Quote = (props: any) => {
             </div>
         </>
     );
-}
+};
 
 export default Quote;

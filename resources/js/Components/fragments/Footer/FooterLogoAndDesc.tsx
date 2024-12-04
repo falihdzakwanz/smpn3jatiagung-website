@@ -11,9 +11,12 @@ const FooterLogoAndDesc = () => {
                     SPANTIJA
                 </h2>
                 <p className="text-justify text-sm md:text-base">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Repellendus dolore consequuntur accusantium quisquam
-                    veritatis quis totam molestiae optio iste architecto.
+                    SMPN 3 Jati Agung Lampung Selatan didirikan pada tahun 2007,
+                    dengan SK Pendirian Direktur Pembinaan Sekolah Menengah
+                    Pertama Direktorat Jenderal Manajemen Pendidikan Dasar dan
+                    Menengah Departemen Pendidikan Nasional No. 1068/C3/KEP/2007
+                    Tanggal 31 Mei 2007, dan penegerian sekolah sesuai dengan SK
+                    Bupati Lampung Selatan No. 405.A/DIKNAS/HK-LS/2007.
                 </p>
             </div>
         </div>

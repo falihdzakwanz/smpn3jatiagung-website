@@ -7,7 +7,7 @@ const ProfileImage = () => {
                 className="h-48 w-48 overflow-hidden rounded-full object-cover shadow-xl"
             />
             <h3 className="text-lg font-bold text-color-primary md:text-2xl">
-                Ir. Dr. Sihombing Panjaitan
+                Dra. Rd. EMI SULASMI, M. Pd.
             </h3>
         </div>
     );

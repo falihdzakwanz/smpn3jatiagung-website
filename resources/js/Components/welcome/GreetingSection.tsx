@@ -25,16 +25,20 @@ const GreetingSection = () => {
                             </div>
                         </div>
                         <div className="flex-1 text-base md:text-lg">
-                            <blockquote className="text-base text-color-secondary md:text-lg">
-                                <p className="mb-6 leading-relaxed">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Quis quis fermentum elit.
-                                    Maximus tempor placerat non ipsum. Quis quis
-                                    fermentum elit. Maximus tempor placerat non
-                                    ipsum.
+                            <blockquote className="space-y-6 text-color-secondary md:text-lg">
+                                <p>Assalamualaikum Wr. Wb.</p>
+                                <p>Tabik Pun</p>
+                                <p className="text-justify">
+                                    Selamat datang di website kami SMPN 3 Jati
+                                    Agung Kabupaten Lampung Selatan. Website ini
+                                    hadir sebagai media informasi dan komunikasi
+                                    serta layanan kami bagi peserta didik,
+                                    Tenaga Pendidik, Tenaga Kependidikan, Wali
+                                    murid, steak holder dan masyarakat.
                                 </p>
                             </blockquote>
-                            <div>
+
+                            <div className="mt-4">
                                 <Link
                                     href="/sambutan"
                                     className="hover:text-white hover:shadow-red-500/80 text-color-secondary transition-colors duration-300 hover:font-bold hover:underline hover:shadow-lg"
