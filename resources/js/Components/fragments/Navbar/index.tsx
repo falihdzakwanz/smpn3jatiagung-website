@@ -72,8 +72,8 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
         <nav
             className={`fixed left-0 right-0 top-0 z-50 h-24 w-full bg-color-primary font-inter-bold text-sm uppercase tracking-wider shadow-lg transition-all duration-300 md:text-base ${isScrolled || !isHomePage ? 'bg-color-primary' : 'md:bg-opacity-0 md:backdrop-blur-sm'}`}
         >
-            <div className="block h-full md:flex md:flex-row md:items-center md:justify-between md:px-8 lg:px-16">
-                <div className="flex h-full w-full items-center justify-between px-4">
+            <div className="block h-full md:flex md:flex-row md:items-center md:justify-between md:px-6 lg:px-12">
+                <div className="flex h-full w-full items-center justify-between px-3">
                     <NavbarLogo
                         text="SPANTIJA"
                         className={
@@ -87,7 +87,7 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             type="button"
-                            className={`group inline-flex items-center justify-center p-2 ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} transition-all duration-300 hover:text-color-accent`}
+                            className={`group inline-flex items-center justify-center ${isHomePage && !isScrolled ? 'text-color-white' : 'text-color-secondary'} transition-all duration-300 hover:text-color-accent`}
                         >
                             <svg
                                 className="h-6 w-6"

@@ -9,13 +9,13 @@ const NavbarLogo = (props: NavbarLogoProps) => {
     const { text, className } = props;
 
     return (
-        <Link href="/" className={`flex items-center gap-3 ${className}`}>
+        <Link href="/" className={`flex items-center gap-1 ${className}`}>
             <img
-                src="https://salman-gebaeudereinigung.de/wp-content/uploads/2022/10/logo-salman.png"
+                src="/images/logo-sekolah.png"
                 alt="Logo Sekolah"
-                className="h-12 w-auto object-contain"
+                className="h-12 md:h-16 w-auto object-contain"
             />
-            <span className="text-xl font-bold tracking-wider md:text-2xl">
+            <span className="text-base font-bold tracking-wider md:text-lg">
                 {text}
             </span>
         </Link>
