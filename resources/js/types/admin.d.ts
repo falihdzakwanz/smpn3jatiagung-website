@@ -13,8 +13,3 @@ export interface Column {
     type?: FieldType;
     width?: string;
 }
-
-export interface BaseItem {
-    id: number;
-    [key: string]: any;
-}
