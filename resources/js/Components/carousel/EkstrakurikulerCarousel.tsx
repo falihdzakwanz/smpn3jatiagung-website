@@ -38,7 +38,7 @@ const EkstrakurikulerCarousel = ({ ekstrakurikuler }: Proptypes) => {
 
     if (ekstrakurikuler.length === 0) {
         return (
-            <p className="text-center">
+            <p className="text-center text-color-primary">
                 Tidak ada ekstrakurikuler yang tersedia saat ini.
             </p>
         );
