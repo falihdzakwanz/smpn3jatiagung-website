@@ -1,4 +1,3 @@
-// File: resources/js/Pages/Admin/Dashboard.tsx
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head } from '@inertiajs/react';
 
@@ -6,7 +5,7 @@ export default function Dashboard() {
     return (
         <AdminLayout
             breadcrumbs={[
-                { text: 'Home', href: '/admin' },
+                { text: 'Home', href: '/' },
                 { text: 'Dashboard' }
             ]}
         >

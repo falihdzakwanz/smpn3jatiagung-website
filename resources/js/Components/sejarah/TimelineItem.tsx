@@ -1,4 +1,3 @@
-// resources/js/components/sejarah/TimelineItem.tsx
 interface TimelineItemProps {
     title: string;
     content: string;
@@ -6,41 +5,48 @@ interface TimelineItemProps {
     align: 'left' | 'right';
 }
 
-export default function TimelineItem({ title, content, image, align }: TimelineItemProps) {
+export default function TimelineItem({
+    title,
+    content,
+    image,
+    align,
+}: TimelineItemProps) {
     return (
-        <div className="flex items-start justify-center gap-8 relative">
+        <div className="relative flex items-start justify-center gap-8">
             {align === 'left' ? (
                 <>
-                    {/* Left side - Image & Title */}
                     <div className="w-[45%] text-right">
-                        <h3 className="font-libre text-2xl text-color-primary mb-4">{title}</h3>
-                        <img 
-                            src={image} 
-                            alt={title} 
+                        <h3 className="font-libre mb-4 text-2xl text-color-primary">
+                            {title}
+                        </h3>
+                        <img
+                            src={image}
+                            alt={title}
                             className="inline-block rounded-lg shadow-xl"
                         />
                     </div>
-                    {/* Dot */}
-                    <div className="w-2 h-2 bg-color-primary rounded-full mt-10" />
-                    {/* Right side - Text */}
+                    <div className="mt-10 h-2 w-2 rounded-full bg-color-primary" />
                     <div className="w-[45%]">
-                        <p className="text-color-primary text-justify">{content}</p>
+                        <p className="text-justify text-color-primary">
+                            {content}
+                        </p>
                     </div>
                 </>
             ) : (
                 <>
-                    {/* Left side - Text */}
                     <div className="w-[45%] text-right">
-                        <p className="text-color-primary text-justify">{content}</p>
+                        <p className="text-justify text-color-primary">
+                            {content}
+                        </p>
                     </div>
-                    {/* Dot */}
-                    <div className="w-2 h-2 bg-color-primary rounded-full mt-10" />
-                    {/* Right side - Image & Title */}
+                    <div className="mt-10 h-2 w-2 rounded-full bg-color-primary" />
                     <div className="w-[45%]">
-                        <h3 className="font-libre text-2xl text-color-primary mb-4">{title}</h3>
-                        <img 
-                            src={image} 
-                            alt={title} 
+                        <h3 className="font-libre mb-4 text-2xl text-color-primary">
+                            {title}
+                        </h3>
+                        <img
+                            src={image}
+                            alt={title}
                             className="rounded-lg shadow-xl"
                         />
                     </div>

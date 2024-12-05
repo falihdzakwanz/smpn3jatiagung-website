@@ -151,6 +151,7 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
                         <div
                             className={`${subMenuOpen.isProfile ? 'hidden' : 'block'} w-full bg-color-primary px-4 md:absolute md:left-0 md:top-full md:hidden md:w-48 md:flex-col md:px-0 md:group-hover:flex`}
                         >
+                            <NavLink href="/sambutan" text="Sambutan Kepala Sekolah" />
                             <NavLink
                                 href="/sejarah"
                                 text="Visi, Misi, dan Sejarah Sekolah"
