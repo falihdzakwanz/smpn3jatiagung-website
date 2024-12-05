@@ -12,13 +12,19 @@ const EkstrakurikulerCarousel = ({ ekstrakurikuler }: Proptypes) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const nextSlide = () => {
-        setCurrentIndex((prev) => (prev + 1) % ekstrakurikuler.length);
+        if (ekstrakurikuler.length > 0) {
+            setCurrentIndex((prev) => (prev + 1) % ekstrakurikuler.length);
+        }
     };
 
     const prevSlide = () => {
-        setCurrentIndex((prev) => 
-            (prev - 1 + ekstrakurikuler.length) % ekstrakurikuler.length
-        );
+        if (ekstrakurikuler.length > 0) {
+            setCurrentIndex(
+                (prev) =>
+                    (prev - 1 + ekstrakurikuler.length) %
+                    ekstrakurikuler.length,
+            );
+        }
     };
 
     const getVisibleItems = () => {
@@ -29,6 +35,14 @@ const EkstrakurikulerCarousel = ({ ekstrakurikuler }: Proptypes) => {
         }
         return items;
     };
+
+    if (ekstrakurikuler.length === 0) {
+        return (
+            <p className="text-center">
+                Tidak ada ekstrakurikuler yang tersedia saat ini.
+            </p>
+        );
+    }
 
     return (
         <div className="relative flex w-full flex-col items-center">

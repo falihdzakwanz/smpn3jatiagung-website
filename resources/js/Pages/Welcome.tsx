@@ -10,11 +10,11 @@ import ContactSection from '@/Components/welcome/ContactSection';
 import GreetingSection from '@/Components/welcome/GreetingSection';
 
 interface Proptypes {
-    prestasi: Achievement[];
-    ekstrakurikuler: Extracurricular[];
+    prestasi?: Achievement[];
+    ekstrakurikuler?: Extracurricular[];
 }
 
-const Welcome = ({ prestasi, ekstrakurikuler }: Proptypes) => {
+const Welcome = ({ prestasi = [], ekstrakurikuler = [] }: Proptypes) => {
     const [scrollY, setScrollY] = useState(0);
 
     useEffect(() => {

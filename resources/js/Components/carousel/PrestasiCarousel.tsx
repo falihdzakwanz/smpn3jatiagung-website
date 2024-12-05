@@ -1,36 +1,42 @@
-import { Achievement } from "@/types/achievement";
-import { formatDate } from "@/utils/formatDate";
-import { Link } from "@inertiajs/react";
+import { Achievement } from '@/types/achievement';
+import { formatDate } from '@/utils/formatDate';
+import { Link } from '@inertiajs/react';
 
 interface Proptypes {
     prestasi: Achievement[];
 }
 
 const PrestasiSection = ({ prestasi }: Proptypes) => {
+    if (!prestasi || prestasi.length === 0) {
+        return (
+            <p className="text-center text-color-secondary">
+                Tidak ada prestasi yang tersedia saat ini.
+            </p>
+        );
+    }
 
     return (
-        <div className="relative w-full flex flex-col items-center">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="relative flex w-full flex-col items-center">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                 {prestasi.map((item, index) => (
-                    <Link 
+                    <Link
                         key={index}
                         href="/prestasi"
-                        className="group bg-color-accent/50 p-4 rounded-xl shadow-xl 
-                                 hover:bg-color-accent transform hover:-translate-y-1 transition-all duration-300"
+                        className="group transform rounded-xl bg-color-accent/50 p-4 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-color-accent"
                     >
                         <div className="flex flex-col gap-4">
-                            <div className="w-full h-56 rounded-lg overflow-hidden shadow-lg">
+                            <div className="h-56 w-full overflow-hidden rounded-lg shadow-lg">
                                 <img
                                     src={`storage/${item.gambar}`}
                                     alt={item.judul}
-                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
                             </div>
                             <div>
-                                <h3 className="text-lg text-color-secondary font-bold mb-2 group-hover:text-color-white transition-colors duration-300 line-clamp-2">
+                                <h3 className="mb-2 line-clamp-2 text-lg font-bold text-color-secondary transition-colors duration-300 group-hover:text-color-white">
                                     {item.judul}
                                 </h3>
-                                <p className="text-sm text-color-secondary/90 group-hover:text-color-white/90 transition-colors duration-300">
+                                <p className="text-sm text-color-secondary/90 transition-colors duration-300 group-hover:text-color-white/90">
                                     {formatDate(item.created_at)}
                                 </p>
                             </div>
@@ -38,12 +44,10 @@ const PrestasiSection = ({ prestasi }: Proptypes) => {
                     </Link>
                 ))}
             </div>
-            
-            <Link 
+
+            <Link
                 href="/prestasi"
-                className="mt-8 px-6 py-3 bg-color-accent text-color-white rounded-full 
-                         shadow-lg hover:bg-color-secondary hover:text-color-primary transition-colors duration-300
-                         focus:outline-none focus:ring-2 focus:ring-color-accent"
+                className="mt-8 rounded-full bg-color-accent px-6 py-3 text-color-white shadow-lg transition-colors duration-300 hover:bg-color-secondary hover:text-color-primary focus:outline-none focus:ring-2 focus:ring-color-accent"
             >
                 Lihat Lebih Banyak
             </Link>
