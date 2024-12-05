@@ -1,4 +1,4 @@
-import { getImageSrc } from "@/utils/getImageSrc";
+import { getImageSrc } from '@/utils/getImageSrc';
 
 interface Proptypes {
     imageSrc: string | File | null;

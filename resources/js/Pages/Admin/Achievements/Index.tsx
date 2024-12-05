@@ -174,7 +174,7 @@ export default function NewsIndex({ prestasi }: Props) {
 
             {!isAdding && !editingData && (
                 <div className="mb-6">
-                    <AddButton handleAdd={handleAdd} title='Prestasi'/>
+                    <AddButton handleAdd={handleAdd} title="Prestasi" />
                 </div>
             )}
 

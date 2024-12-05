@@ -25,15 +25,15 @@ const Quote = () => {
                         peserta didik, tenaga Pendidik, tenaga kependidikan,
                         wali murid, stackholder dan masyarakat. Website ini
                         menyajikan berbagai informasi mengenai kemajuan kegiatan
-                        before and after dan pelaksanaan program kegiatan belajar
-                        dan mengajar di SMPN 3 Jati Agung baik akademik dan non
-                        akademik, intrakurikuler, dan ekstrakurikuler. Seperti
-                        Peneriman Peserta Didik Baru (PPDB), MPLS, kegiatan
-                        Belajar peserta didik, kegiatan Pramuka, Paskibra, Osis,
-                        Rohis, Olah Raga, Tahfiz Al qur an, BBQ, dan lain-lain.
-                        Kami berharap semoga website ini bermanfaat bagi seluruh
-                        keluarga besar SMPN 3 Jati Agung khususnya, dan bagi
-                        pemerintah serta masyarakat umumnya.
+                        before and after dan pelaksanaan program kegiatan
+                        belajar dan mengajar di SMPN 3 Jati Agung baik akademik
+                        dan non akademik, intrakurikuler, dan ekstrakurikuler.
+                        Seperti Peneriman Peserta Didik Baru (PPDB), MPLS,
+                        kegiatan Belajar peserta didik, kegiatan Pramuka,
+                        Paskibra, Osis, Rohis, Olah Raga, Tahfiz Al qur an, BBQ,
+                        dan lain-lain. Kami berharap semoga website ini
+                        bermanfaat bagi seluruh keluarga besar SMPN 3 Jati Agung
+                        khususnya, dan bagi pemerintah serta masyarakat umumnya.
                     </p>
                     <p className="font-bold">Wassalamualaikum. Wr. Wb.</p>
                 </div>

@@ -46,7 +46,7 @@ const Card = (props: News) => {
                 <div className="mt-auto flex justify-end">
                     <Link
                         href={route('news.show', formatNameToUrl(judul))}
-                        className="text-sm font-bold text-color-secondary md:text-base hover:text-color-gray transition-all duration-300"
+                        className="text-sm font-bold text-color-secondary transition-all duration-300 hover:text-color-gray md:text-base"
                     >
                         Read More <span>&#187;</span>
                     </Link>

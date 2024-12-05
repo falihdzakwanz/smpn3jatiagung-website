@@ -26,7 +26,9 @@ const GreetingSection = () => {
                         </div>
                         <div className="flex-1 text-base md:text-lg">
                             <blockquote className="space-y-6 text-color-secondary md:text-lg">
-                                <p className="font-bold">Assalamualaikum Wr. Wb.</p>
+                                <p className="font-bold">
+                                    Assalamualaikum Wr. Wb.
+                                </p>
                                 <p>Tabik Pun</p>
                                 <p className="text-justify">
                                     Selamat datang di website kami SMPN 3 Jati

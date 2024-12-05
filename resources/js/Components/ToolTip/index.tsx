@@ -9,9 +9,9 @@ const Tooltip: React.FC<TooltipProps> = ({ text, children }) => {
     return (
         <div className="group relative">
             {children}
-            <div className="bg-color-gray absolute bottom-full left-1/2 z-10 mb-2 hidden w-max -translate-x-1/2 transform rounded px-2 py-1 text-sm text-color-white opacity-0 transition-opacity duration-500 group-hover:block group-hover:opacity-100">
+            <div className="absolute bottom-full left-1/2 z-10 mb-2 hidden w-max -translate-x-1/2 transform rounded bg-color-gray px-2 py-1 text-sm text-color-white opacity-0 transition-opacity duration-500 group-hover:block group-hover:opacity-100">
                 {text}
-                <div className="bg-color-gray absolute left-1/2 top-full -mt-1 h-3 w-3 -translate-x-1/2 rotate-45 transform"></div>
+                <div className="absolute left-1/2 top-full -mt-1 h-3 w-3 -translate-x-1/2 rotate-45 transform bg-color-gray"></div>
             </div>
         </div>
     );

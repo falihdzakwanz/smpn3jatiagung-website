@@ -6,6 +6,6 @@ const SubFooter = () => {
             </p>
         </div>
     );
-}
+};
 
 export default SubFooter;

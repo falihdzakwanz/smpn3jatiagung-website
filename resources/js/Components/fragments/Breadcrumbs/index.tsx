@@ -1,9 +1,9 @@
-import { Link } from "@inertiajs/react";
+import { Link } from '@inertiajs/react';
 
 interface Breadcrumbs {
-    breadcrumbs?: { 
-        text: string; 
-        href?: string 
+    breadcrumbs?: {
+        text: string;
+        href?: string;
     }[];
 }
 
@@ -29,6 +29,6 @@ const Breadcrumbs = ({ breadcrumbs }: Breadcrumbs) => {
             </div>
         </div>
     );
-}
+};
 
 export default Breadcrumbs;

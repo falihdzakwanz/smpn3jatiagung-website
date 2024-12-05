@@ -13,7 +13,7 @@ const NavbarLogo = (props: NavbarLogoProps) => {
             <img
                 src="/images/logo-sekolah.png"
                 alt="Logo Sekolah"
-                className="h-12 md:h-16 w-auto object-contain"
+                className="h-12 w-auto object-contain md:h-16"
             />
             <span className="text-base font-bold tracking-wider md:text-lg">
                 {text}

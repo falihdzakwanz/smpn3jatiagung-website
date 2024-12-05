@@ -135,7 +135,7 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
                 <div
                     className={`${isOpen ? 'block' : 'hidden'} h-full items-center space-x-0 md:flex lg:space-x-1`}
                 >
-                    <div className="group block md:h-full bg-color-primary md:relative md:flex md:items-center md:justify-center md:bg-opacity-0">
+                    <div className="group block bg-color-primary md:relative md:flex md:h-full md:items-center md:justify-center md:bg-opacity-0">
                         <button
                             className="flex w-full items-center justify-start gap-1 border-b border-b-color-secondary px-4 py-2 uppercase text-color-secondary transition-all duration-300 hover:text-color-accent hover:brightness-150 md:min-w-52 md:border-none"
                             onClick={() => toggleSubMenu('isProfile')}
@@ -151,7 +151,10 @@ const Navbar = ({ isHomePage = false }: NavbarProps) => {
                         <div
                             className={`${subMenuOpen.isProfile ? 'hidden' : 'block'} w-full bg-color-primary px-4 md:absolute md:left-0 md:top-full md:hidden md:w-48 md:flex-col md:px-0 md:group-hover:flex`}
                         >
-                            <NavLink href="/sambutan" text="Sambutan Kepala Sekolah" />
+                            <NavLink
+                                href="/sambutan"
+                                text="Sambutan Kepala Sekolah"
+                            />
                             <NavLink
                                 href="/sejarah"
                                 text="Visi, Misi, dan Sejarah Sekolah"

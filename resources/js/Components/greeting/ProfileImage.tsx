@@ -11,6 +11,6 @@ const ProfileImage = () => {
             </h3>
         </div>
     );
-}
+};
 
 export default ProfileImage;

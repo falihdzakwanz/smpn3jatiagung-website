@@ -4,10 +4,10 @@ import InputLabel from '@/Components/ui/InputLabel';
 import PrimaryButton from '@/Components/ui/PrimaryButton';
 import TextInput from '@/Components/ui/TextInput';
 import AuthLayout from '@/Layouts/AuthLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
-export default function Login({status}: {status?: string;}) {
+export default function Login({ status }: { status?: string }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',

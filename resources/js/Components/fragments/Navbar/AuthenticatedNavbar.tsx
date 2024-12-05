@@ -1,8 +1,13 @@
-import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
+import {
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuItems,
+    Transition,
+} from '@headlessui/react';
 import { Link } from '@inertiajs/react';
-import { FiEdit, FiLogOut, FiMenu, FiUser } from 'react-icons/fi';
 import { Fragment } from 'react';
-
+import { FiEdit, FiLogOut, FiMenu, FiUser } from 'react-icons/fi';
 
 interface Proptypes {
     isOpen: boolean;

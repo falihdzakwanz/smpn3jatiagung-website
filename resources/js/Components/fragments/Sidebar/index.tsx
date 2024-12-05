@@ -20,7 +20,7 @@ const Sidebar = (props: Proptypes) => {
         <aside
             className={`fixed left-0 top-0 z-40 h-screen w-[250px] transition-transform ${
                 isOpen ? 'translate-x-0' : '-translate-x-full'
-            } bg-[#464B5E] transition-all duration-300 text-color-white`}
+            } bg-[#464B5E] text-color-white transition-all duration-300`}
         >
             <div className="flex h-[80px] items-center bg-[#2B2E3C] px-4">
                 <h1 className="text-white text-2xl font-bold">

@@ -11,7 +11,7 @@ const EditButton = (props: Proptypes) => {
     return (
         <button
             onClick={() => onEdit(item)}
-            className="text-color-white flex items-center gap-1 rounded bg-color-purple px-4 py-1 transition duration-300 hover:text-color-darker-purple"
+            className="flex items-center gap-1 rounded bg-color-purple px-4 py-1 text-color-white transition duration-300 hover:text-color-darker-purple"
         >
             <FiEdit2 size={16} />
             <span>Edit</span>

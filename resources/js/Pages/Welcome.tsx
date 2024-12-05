@@ -1,13 +1,13 @@
-import { Head } from '@inertiajs/react';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { useState, useEffect } from 'react';
 import EkstrakurikulerCarousel from '@/Components/carousel/EkstrakurikulerCarousel';
 import PrestasiCarousel from '@/Components/carousel/PrestasiCarousel';
-import { Achievement } from '@/types/achievement';
-import { Extracurricular } from '@/types/extracurricular';
-import HeroSection from '@/Components/welcome/HeroSection';
 import ContactSection from '@/Components/welcome/ContactSection';
 import GreetingSection from '@/Components/welcome/GreetingSection';
+import HeroSection from '@/Components/welcome/HeroSection';
+import GuestLayout from '@/Layouts/GuestLayout';
+import { Achievement } from '@/types/achievement';
+import { Extracurricular } from '@/types/extracurricular';
+import { Head } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 
 interface Proptypes {
     prestasi?: Achievement[];
@@ -24,14 +24,15 @@ const Welcome = ({ prestasi = [], ekstrakurikuler = [] }: Proptypes) => {
                 const id = hash.replace('#', '');
                 const element = document.getElementById(id);
                 if (element) {
-                    const headerOffset = 95; 
+                    const headerOffset = 95;
                     const elementPosition = element.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+                    const offsetPosition =
+                        elementPosition + window.scrollY - headerOffset;
 
                     setTimeout(() => {
                         window.scrollTo({
                             top: offsetPosition,
-                            behavior: 'smooth'
+                            behavior: 'smooth',
                         });
                     }, 100);
                 }
@@ -57,32 +58,36 @@ const Welcome = ({ prestasi = [], ekstrakurikuler = [] }: Proptypes) => {
 
             <GreetingSection />
 
-            <div id="ekstrakurikuler"
-            className="relative w-full bg-color-secondary overflow-hidden scroll-mt-24"
+            <div
+                id="ekstrakurikuler"
+                className="relative w-full scroll-mt-24 overflow-hidden bg-color-secondary"
             >
                 <div className="relative py-24">
-                    <h2 className="text-3xl md:text-5xl text-center text-color-primary mb-16 font-bold">
+                    <h2 className="mb-16 text-center text-3xl font-bold text-color-primary md:text-5xl">
                         Ekstrakurikuler
                     </h2>
                     <div className="flex justify-center">
                         <div className="w-full max-w-[1200px] px-4">
-                            <EkstrakurikulerCarousel ekstrakurikuler={ekstrakurikuler}/>
+                            <EkstrakurikulerCarousel
+                                ekstrakurikuler={ekstrakurikuler}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="prestasi"
-            className="relative w-full bg-color-primary overflow-hidden scroll-mt-24"
+            <div
+                id="prestasi"
+                className="relative w-full scroll-mt-24 overflow-hidden bg-color-primary"
             >
-                <div className="absolute inset-0 bg-[url('https://i.pinimg.com/564x/d7/e5/98/d7e598c22f246e6fabad12d7c6a5d0db.jpg')] opacity-5 bg-cover bg-fixed" />
+                <div className="absolute inset-0 bg-[url('https://i.pinimg.com/564x/d7/e5/98/d7e598c22f246e6fabad12d7c6a5d0db.jpg')] bg-cover bg-fixed opacity-5" />
                 <div className="relative py-24">
-                    <h2 className="text-3xl md:text-5xl text-center text-color-secondary mb-16 font-bold">
+                    <h2 className="mb-16 text-center text-3xl font-bold text-color-secondary md:text-5xl">
                         Prestasi
                     </h2>
                     <div className="flex justify-center">
                         <div className="w-full max-w-[1200px] px-4">
-                            <PrestasiCarousel prestasi={prestasi}/>
+                            <PrestasiCarousel prestasi={prestasi} />
                         </div>
                     </div>
                 </div>

@@ -12,14 +12,13 @@ const News = ({ news }: Props) => {
         <GuestLayout>
             <Head title="Berita" />
             <div className="flex w-full flex-col items-center justify-center gap-8 px-8 py-6">
-
                 {news.map((item) => (
                     <Card
                         key={item.id}
                         id={item.id}
                         judul={item.judul}
                         deskripsi={item.deskripsi}
-                        gambar={item.gambar || ""}
+                        gambar={item.gambar || ''}
                     />
                 ))}
             </div>

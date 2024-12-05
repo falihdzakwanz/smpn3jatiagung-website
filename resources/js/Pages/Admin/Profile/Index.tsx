@@ -16,7 +16,7 @@ export default function ProfileIndex() {
             <Head title="Profile" />
 
             <div className="p-6">
-                <div className="bg-color-white rounded-lg p-6 shadow-sm">
+                <div className="rounded-lg bg-color-white p-6 shadow-sm">
                     <div className="mb-6 flex items-center justify-between border-b pb-3">
                         <h1 className="text-2xl font-bold">Profile</h1>
                     </div>

@@ -1,6 +1,11 @@
 import { Link } from '@inertiajs/react';
 
-const NavLink = (props: any) => {
+type Proptypes = {
+    text: string;
+    href: string;
+};
+
+const NavLink = (props: Proptypes) => {
     const { text, href } = props;
     const isActive =
         window.location.pathname === href ||
@@ -10,7 +15,7 @@ const NavLink = (props: any) => {
     return (
         <Link
             href={href}
-            className="group relative block border-b border-b-color-secondary px-4 py-2 capitalize text-color-secondary hover:bg-color-secondary hover:text-color-accent md:border-none w-full"
+            className="group relative block w-full border-b border-b-color-secondary px-4 py-2 capitalize text-color-secondary hover:bg-color-secondary hover:text-color-accent md:border-none"
         >
             <span className="relative">
                 {text}

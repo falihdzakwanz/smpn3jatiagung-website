@@ -3,12 +3,7 @@ import AuthenticatedNavbar from '@/Components/fragments/Navbar/AuthenticatedNavb
 import Sidebar from '@/Components/fragments/Sidebar';
 import { PropsWithChildren, useState } from 'react';
 import { BiNews } from 'react-icons/bi';
-import {
-    FiAward,
-    FiBook,
-    FiBriefcase,
-    FiUsers,
-} from 'react-icons/fi';
+import { FiAward, FiBook, FiBriefcase, FiUsers } from 'react-icons/fi';
 
 interface Props extends PropsWithChildren {
     header?: string;
@@ -59,7 +54,6 @@ export default function AdminLayout({ children, breadcrumbs = [] }: Props) {
             <div
                 className={`${isOpen ? 'ml-[250px]' : 'ml-0'} min-h-screen transition-all duration-300`}
             >
-
                 <AuthenticatedNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
 
                 <Breadcrumbs breadcrumbs={breadcrumbs} />

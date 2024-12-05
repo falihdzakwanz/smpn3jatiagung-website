@@ -3,4 +3,4 @@ export type Achievement = {
     judul: string;
     gambar: string;
     created_at: string;
-}
+};

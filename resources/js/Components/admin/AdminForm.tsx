@@ -1,7 +1,7 @@
+import { FieldType } from '@/types/admin';
 import { useState } from 'react';
 import { FiFile, FiImage } from 'react-icons/fi';
 import Tooltip from '../ToolTip';
-import { FieldType } from '@/types/admin';
 
 interface FormField {
     key: string;
@@ -89,7 +89,7 @@ const AdminForm = ({
                             <Tooltip text="max 2MB: jpeg, png, jpg">
                                 <label
                                     htmlFor={field.key}
-                                    className="bg-color-purple hover:text-color-darker-purple flex cursor-pointer items-center gap-1 rounded-md px-4 py-2 text-base text-color-white transition-all duration-300"
+                                    className="flex cursor-pointer items-center gap-1 rounded-md bg-color-purple px-4 py-2 text-base text-color-white transition-all duration-300 hover:text-color-darker-purple"
                                 >
                                     <FiImage className="h-4 w-4" />
                                     {values[field.key]
@@ -125,7 +125,7 @@ const AdminForm = ({
                             <Tooltip text="pdf, doc, docx">
                                 <label
                                     htmlFor={field.key}
-                                    className="text-color-white bg-color-purple hover:text-color-darker-purple flex cursor-pointer items-center gap-1 rounded-md px-4 py-2 text-base transition-all duration-300"
+                                    className="flex cursor-pointer items-center gap-1 rounded-md bg-color-purple px-4 py-2 text-base text-color-white transition-all duration-300 hover:text-color-darker-purple"
                                 >
                                     <FiFile className="h-4 w-4" />
                                     {values[field.key]
@@ -151,13 +151,13 @@ const AdminForm = ({
             <div className="flex justify-end gap-2">
                 <button
                     onClick={onSubmit}
-                    className="hover:text-color-darker-purple rounded bg-color-succes px-4 py-2 text-color-white transition-all duration-300"
+                    className="rounded bg-color-succes px-4 py-2 text-color-white transition-all duration-300 hover:text-color-darker-purple"
                 >
                     Save
                 </button>
                 <button
                     onClick={onCancel}
-                    className="bg-color-gray hover:text-color-darker-purple rounded px-4 py-2 text-color-white transition-all duration-300"
+                    className="rounded bg-color-gray px-4 py-2 text-color-white transition-all duration-300 hover:text-color-darker-purple"
                 >
                     Cancel
                 </button>

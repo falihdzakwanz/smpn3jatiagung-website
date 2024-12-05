@@ -1,8 +1,8 @@
 import { FiTrash2 } from 'react-icons/fi';
 
 interface Proptypes {
-    item: any;
-    onDelete: (item: any) => void;
+    item: number;
+    onDelete: (item: number) => void;
 }
 
 const DeleteButton = (props: Proptypes) => {
