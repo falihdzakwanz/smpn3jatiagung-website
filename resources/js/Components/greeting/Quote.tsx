@@ -16,9 +16,11 @@ const Quote = () => {
                     </svg>
                 </div>
                 <div className="flex flex-col gap-4 bg-color-secondary px-8 text-justify text-sm text-color-primary md:text-base">
-                    <p className="font-bold">Assalamualaikum Wr. Wb.</p>
-                    <p>Tabik Pun</p>
-                    <p>
+                    <p className="text-lg font-bold md:text-xl">
+                        Assalamualaikum Wr. Wb.
+                    </p>
+                    <p className="md:text-lg">Tabik Pun</p>
+                    <p className="md:text-lg">
                         Selamat datang di website kami SMPN 3 Jati Agung
                         Kabupaten Lampung Selatan. Website ini hadir sebagai
                         media informasi dan komunikasi serta layanan kami bagi
@@ -35,7 +37,9 @@ const Quote = () => {
                         bermanfaat bagi seluruh keluarga besar SMPN 3 Jati Agung
                         khususnya, dan bagi pemerintah serta masyarakat umumnya.
                     </p>
-                    <p className="font-bold">Wassalamualaikum. Wr. Wb.</p>
+                    <p className="text-right text-lg font-bold md:text-xl">
+                        Wassalamualaikum. Wr. Wb.
+                    </p>
                 </div>
                 <div className="absolute -bottom-2 -right-1 h-4 w-4 text-color-primary md:-right-4 md:h-7 md:w-7">
                     <svg
