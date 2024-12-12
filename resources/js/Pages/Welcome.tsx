@@ -80,7 +80,7 @@ const Welcome = ({ prestasi = [], ekstrakurikuler = [] }: Proptypes) => {
                 id="prestasi"
                 className="relative w-full scroll-mt-24 overflow-hidden bg-color-primary"
             >
-                <div className="absolute inset-0 bg-[url('https://i.pinimg.com/564x/d7/e5/98/d7e598c22f246e6fabad12d7c6a5d0db.jpg')] bg-cover bg-fixed opacity-5" />
+                <div className="absolute inset-0 bg-[url('/images/background-prestasi.jpg')] bg-cover bg-fixed bg-center opacity-5" />
                 <div className="relative py-24">
                     <h2 className="mb-16 text-center text-3xl font-bold text-color-secondary md:text-5xl">
                         Prestasi

@@ -20,7 +20,7 @@ const ContactSection = () => {
                             className="group relative block h-80 w-full overflow-hidden rounded-lg shadow-lg"
                         >
                             <img
-                                src="https://i.pinimg.com/736x/88/fc/3d/88fc3db9aa87706aa1340d6e13b54049.jpg"
+                                src="/images/background-sekolah-1.jpg"
                                 alt="Denah Lokasi"
                                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                             />
