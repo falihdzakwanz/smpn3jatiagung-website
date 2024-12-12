@@ -11,16 +11,14 @@ const HeroSection = () => {
     }, []);
 
     return (
-        <div className="relative h-screen w-full overflow-hidden">
+        <div className="relative mt-20 h-[70vh] w-full overflow-hidden md:mt-0 md:h-screen">
             {imageLoaded ? (
                 <div
-                    className="absolute inset-0 h-[120%] w-full"
+                    className="absolute inset-0 h-full w-full bg-cover bg-center md:h-[120%]"
                     style={{
                         transform: `translateY(${scrollY * 0.5}px)`,
                         backgroundImage:
                             'url(/images/background-sekolah-1.jpg)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
                         zIndex: 0,
                     }}
                 />
