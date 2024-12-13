@@ -8,7 +8,7 @@
 
     <title inertia>{{ config('app.name') }}</title>
 
-    <link rel="icon" href="/images/logo-sekolah.png" type="image/png" />
+    <link rel="icon" href="{{ secure_asset('images/logo-sekolah.png') }}" type="image/png" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
