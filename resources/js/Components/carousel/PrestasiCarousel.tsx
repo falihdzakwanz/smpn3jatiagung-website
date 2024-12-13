@@ -7,8 +7,6 @@ interface Proptypes {
 }
 
 const PrestasiSection = ({ prestasi }: Proptypes) => {
-    const baseUrl = import.meta.env.VITE_API_URL;
-
     if (!prestasi || prestasi.length === 0) {
         return (
             <p className="text-center text-color-secondary">
@@ -29,7 +27,7 @@ const PrestasiSection = ({ prestasi }: Proptypes) => {
                         <div className="flex flex-col gap-4">
                             <div className="h-56 w-full overflow-hidden rounded-lg shadow-lg">
                                 <img
-                                    src={`${baseUrl}/storage/${item.gambar}`}
+                                    src={`storage/${item.gambar}`}
                                     alt={item.judul}
                                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />

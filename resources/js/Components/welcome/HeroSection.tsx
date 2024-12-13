@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 
 const HeroSection = () => {
-    const [imageLoaded, setImageLoaded] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(true);
 
     useEffect(() => {
         const img = new Image();
-        const imageUrl = `${import.meta.env.VITE_API_URL}/images/background-sekolah-1.jpg`;
-
-        img.src = imageUrl;
+        img.src = '/images/background-sekolah-1.jpg';
         img.onload = () => setImageLoaded(true);
         img.onerror = () => setImageLoaded(false);
     }, []);
@@ -19,7 +17,8 @@ const HeroSection = () => {
                     className="absolute inset-0 h-full w-full bg-cover bg-center md:h-[120%]"
                     style={{
                         transform: `translateY(${scrollY * 0.5}px)`,
-                        backgroundImage: `url(${import.meta.env.VITE_API_URL}/images/background-sekolah-1.jpg)`,
+                        backgroundImage:
+                            'url(/images/background-sekolah-1.jpg)',
                         zIndex: 0,
                     }}
                 />

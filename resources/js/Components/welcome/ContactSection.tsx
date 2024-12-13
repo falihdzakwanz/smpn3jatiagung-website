@@ -1,6 +1,4 @@
 const ContactSection = () => {
-    const imageUrl = `${import.meta.env.VITE_API_URL}/images/background-sekolah-1.jpg`;
-
     return (
         <div
             id="kontak"
@@ -22,7 +20,7 @@ const ContactSection = () => {
                             className="group relative block h-80 w-full overflow-hidden rounded-lg shadow-lg"
                         >
                             <img
-                                src={imageUrl}
+                                src="/images/background-sekolah-1.jpg"
                                 alt="Denah Lokasi"
                                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                             />

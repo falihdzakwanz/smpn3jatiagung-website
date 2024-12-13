@@ -1,8 +1,6 @@
 import { Link } from '@inertiajs/react';
 
 const GreetingSection = () => {
-    const imageUrl = `${import.meta.env.VITE_API_URL}/images/foto-kepala-sekolah.jpg`;
-
     return (
         <div className="relative w-full bg-color-primary">
             <div className="container relative mx-auto px-4 py-24">
@@ -13,7 +11,7 @@ const GreetingSection = () => {
                     <div className="flex max-w-5xl flex-col items-center gap-12 md:flex-row">
                         <div className="group h-56 w-56 transform overflow-hidden rounded-full shadow-xl transition-all duration-700 hover:scale-105 hover:shadow-2xl">
                             <img
-                                src={imageUrl}
+                                src="/images/foto-kepala-sekolah.jpg"
                                 alt="Kepala Sekolah"
                                 className="h-full w-full transform object-cover object-top transition-transform duration-700 ease-in-out group-hover:scale-110"
                             />
@@ -37,7 +35,7 @@ const GreetingSection = () => {
                             <div className="mt-4">
                                 <Link
                                     href="/sambutan"
-                                    className="hover:text-white text-color-secondary transition-colors duration-300 hover:font-bold hover:underline hover:shadow-lg hover:shadow-color-danger/80"
+                                    className="hover:text-white hover:shadow-red-500/80 text-color-secondary transition-colors duration-300 hover:font-bold hover:underline hover:shadow-lg"
                                 >
                                     Baca selengkapnya...
                                 </Link>
