@@ -10,6 +10,7 @@ interface Proptypes {
 
 const EkstrakurikulerCarousel = ({ ekstrakurikuler }: Proptypes) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const baseUrl = import.meta.env.VITE_API_URL;
 
     const nextSlide = () => {
         if (ekstrakurikuler.length > 0) {
@@ -60,7 +61,7 @@ const EkstrakurikulerCarousel = ({ ekstrakurikuler }: Proptypes) => {
                                 >
                                     <div className="h-72 w-full overflow-hidden">
                                         <img
-                                            src={`storage/${getImageSrc(item.foto_judul)}`}
+                                            src={`${baseUrl}/storage/${getImageSrc(item.foto_judul)}`}
                                             alt={item.nama}
                                             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                         />
