@@ -28,7 +28,7 @@ const GreetingSection = () => {
                                     hadir sebagai media informasi dan komunikasi
                                     serta layanan kami bagi peserta didik,
                                     Tenaga Pendidik, Tenaga Kependidikan, Wali
-                                    murid, steak holder dan masyarakat.
+                                    murid, stakeholder dan masyarakat.
                                 </p>
                             </blockquote>
 
