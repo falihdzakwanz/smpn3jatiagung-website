@@ -53,7 +53,7 @@ class ModulController extends Controller
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $filename = $file->getClientOriginalName() . '_' . time();
+            $filename = $file->time() . '_' getClientOriginalName();
             $path = $file->storeAs('modules', $filename, 'public');
             $modul->file = $path;
         }
@@ -114,7 +114,7 @@ class ModulController extends Controller
 
 
             $file = $request->file('file');
-            $filename = $file->getClientOriginalName() . '_' . time();
+            $filename = $file->time() . '_' getClientOriginalName();
             $path = $file->storeAs('modules', $filename, 'public');
             $modul->file = $path;
         }
