@@ -25,7 +25,7 @@ const Quote = () => {
                         Kabupaten Lampung Selatan. Website ini hadir sebagai
                         media informasi dan komunikasi serta layanan kami bagi
                         peserta didik, tenaga Pendidik, tenaga kependidikan,
-                        wali murid, stackholder dan masyarakat. Website ini
+                        wali murid, stakeholder dan masyarakat. Website ini
                         menyajikan berbagai informasi mengenai kemajuan kegiatan
                         before and after dan pelaksanaan program kegiatan
                         belajar dan mengajar di SMPN 3 Jati Agung baik akademik
